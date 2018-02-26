@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jre1.8.0_144/lib/ext/commons-beanutils-1.9.0.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jre1.8.0_144/lib/ext/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jre1.8.0_144/lib/ext/commons-digester-2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jre1.8.0_144/lib/ext/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jre1.8.0_144/lib/ext/groovy-all-2.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jre1.8.0_144/lib/ext/iText-2.1.7.js2.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jre1.8.0_144/lib/ext/jasperreports-6.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jre1.8.0_144/lib/ext/javax.mail.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jre1.8.0_144/lib/ext/jaybird-full-2.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jre1.8.0_144/lib/ext/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jre1.8.0_144/lib/ext/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jre1.8.0_144/lib/ext/joda-time-2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jre1.8.0_144/lib/ext/jasper-compiler-jdt-5.5.23.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
