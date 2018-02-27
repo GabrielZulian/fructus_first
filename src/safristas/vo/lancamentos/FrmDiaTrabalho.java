@@ -26,6 +26,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.swing.AbstractAction;
@@ -57,6 +58,7 @@ import org.joda.time.DateTimeZone;
 import exceptions.QuantidadeErradaException;
 import exceptions.StringVaziaException;
 import exceptions.ValorErradoException;
+import javafx.scene.control.ComboBox;
 import safristas.bo.EmpregadoBO;
 import safristas.bo.safristas.DiaEmpregadoBO;
 import safristas.bo.safristas.EmpreiteiroBO;
@@ -88,10 +90,10 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 	private JComboBox<String> cbPresenca = new JComboBox<String>(presenca);
 
 	private JLabel lblCodigoDia, lblQntdEmpregados, lblData, lblCodEmpreiteiro, lblBinsOuDia, lblClasificador, lblValorClassificador,
-	lblQntdBinsClassif, lblValorComissaoIroClassif, lblQntdBinsDia, lblValorBinsDia, lblValorOutrosIro,
+	lblQntdBinsClassif, lblValorComissaoIroClassif, lblQntdBins, lblValorBins, lblValorOutrosIro,
 	lblValorDia, lblValorTotalRestoEquipe, lblValorTotal, lblVlrComissao, lblVlrTotalComissao, lblHistorico;
 	public JTextField txtCodigoDia, txtCodEmpreiteiro, txtMostraEmpreiteiro, txtValorClassif, txtQntdBinsClassif,
-	txtValorComissaoIroClassif, txtQntdBinsDia, txtValorBinsDia, txtValorOutrosIro, txtValorTotal, 
+	txtValorComissaoIroClassif, txtQntdBins, txtValorBins, txtValorOutrosIro, txtValorTotal, 
 	txtValorDia, txtValorTotalRestoEquipe, txtVlrComissao, txtVlrTotalComissao;
 	private JButton btnProcuraEmpreiteiro, btnConfirmar, btnCancelar;
 	private JFormattedTextField txtData;
@@ -123,17 +125,16 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 
 	JTable tabela, tabelaEquipe;
 	ModeloTabela modelo, modeloTabEquipe;
-	//	ModeloTabelaDiaSafrista modelo;
 
 	FrmConsultaDia consDia = null;
 
 	static final int COLUNA_PRESENCA = 0;
-	//	static final int COLUNA_MEIOTURNO = 1;
 	static final int COLUNA_CLASSIF = 1;
 	static final int COLUNA_CODIGO = 2;
 	static final int COLUNA_NOME = 3;
 	static final int COLUNA_FUNCAO = 4;
 	static final int COLUNA_VALOR = 5;
+	static final int COLUNA_RATEIO = 6;
 
 	public FrmDiaTrabalho (FrmConsultaDia consDia) {
 		this();
@@ -188,9 +189,9 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		txtValorClassif.setText(decimal.format(consDia.diaBO.getValorClassif()));
 		lblQntdEmpregados.setText(lblQntdEmpregados.getText() + modelo.getRowCount());
 		txtValorDia.setText(decimal.format(consDia.diaBO.getValorDia()));
-		txtQntdBinsDia.setText(String.valueOf(consDia.diaBO.getQntBinsEquipe()));
+		txtQntdBins.setText(String.valueOf(consDia.diaBO.getQntBinsEquipe()));
 		txtQntdBinsClassif.setText(String.valueOf(consDia.diaBO.getQntdBinsClassif()));
-		txtValorBinsDia.setText(decimal.format(consDia.diaBO.getValorBins()));
+		txtValorBins.setText(decimal.format(consDia.diaBO.getValorBins()));
 		totalResto = consDia.diaBO.getValorTotalResto();
 		totalGeral = consDia.diaBO.getValorTotal();
 		txtValorTotalRestoEquipe.setText(decimal.format(consDia.diaBO.getValorTotalResto()));
@@ -211,7 +212,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 
 		super("Lançamento Dia",false,true,false,true);
 
-		setSize(916, 716);
+		setSize(960, 716);
 		setResizable(true);
 		setTitle("Lançar Dia - Safristas");
 		setFrameIcon(new ImageIcon(getClass().getResource("/icons/icon_logo_varaschin.gif")));
@@ -258,6 +259,16 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		constraints.anchor = GridBagConstraints.NORTH;
 		painelEsq.add(rolagemTabelaEquipe, constraints);
 
+		tabelaEquipe.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2 && controlelistener) {
+					selecionaEquipe();
+				}
+			}
+		});
+
 		lblQntdEmpregados = new JLabel("Qntd. Empregados: ");
 		lblQntdEmpregados.setFont(f);
 		constraints.gridx = 0;
@@ -272,9 +283,8 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 
 		ArrayList<Object> dados = new ArrayList<Object>();
 
-		String[] colunas = new String[] {"Presença", "Classif.", "Código", "Nome", "Função", "Valor"};
-
-		boolean[] edicao = {true, true, false, false, false, false, false};
+		String[] colunas = new String[] {"Presença", "Classif.", "Código", "Nome", "Função", "Valor", "Rateio"};
+		boolean[] edicao = {true, true, false, false, false, false, false, false};
 
 		modelo = new ModeloTabela(dados, colunas, edicao);
 		tabela = new JTable(modelo);
@@ -294,6 +304,8 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		tabela.getColumnModel().getColumn(COLUNA_VALOR).setPreferredWidth(84);
 		tabela.getColumnModel().getColumn(COLUNA_VALOR).setResizable(true);
 		tabela.getColumnModel().getColumn(COLUNA_VALOR).setCellRenderer(NumberRenderer.getCurrencyRenderer());
+		tabela.getColumnModel().getColumn(COLUNA_RATEIO).setPreferredWidth(70);
+		tabela.getColumnModel().getColumn(COLUNA_RATEIO).setResizable(true);
 		tabela.getTableHeader().setReorderingAllowed(false); 
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tabela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -318,16 +330,21 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 						JOptionPane.showInternalMessageDialog(FrmDiaTrabalho.this, "Empregado não está presente p/ ser classificador", "Erro" , JOptionPane.ERROR_MESSAGE);
 						modelo.setValueAt(false, linha, COLUNA_CLASSIF);
 					} else {
-						distribuiValores();
+						//distribuiValores();
+						distribuiValoresEmpregadosPadrao();
 					}
 				}	
 			}
 		});
-
+		
 		cbPresenca.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				distribuiValores();
+				//distribuiValores();
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					distribuiValoresEmpregadosPadrao();
+				}
+				
 			}
 		});
 
@@ -438,16 +455,6 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		painelCima.add(btnProcuraEmpreiteiro, constraints);
 		constraints.ipady = 0;
 
-		tabelaEquipe.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2 && controlelistener) {
-					selecionaEquipe();
-				}
-			}
-		});
-
 		painelGeral.add(painelCima, BorderLayout.NORTH);
 
 		//------------------------------------------------------
@@ -482,7 +489,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		constraints.anchor = GridBagConstraints.WEST;
 		painelMeio.add(painelrBtns, constraints);
 
-		lblValorClassificador = new JLabel("Valores classificadores");
+		lblValorClassificador = new JLabel("Valor classificador R$");
 		lblValorClassificador.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 1;
@@ -500,10 +507,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			@Override
 			public void focusLost(FocusEvent e) {
 
-				for (int x = 0; x < modelo.getRowCount(); x++)
-					modelo.setValueAt(0.0, x, COLUNA_VALOR);
-
-				distribuiValores();
+				distribuiValoresEmpregadosPadrao();
 			}
 		});
 
@@ -523,7 +527,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		constraints.anchor = GridBagConstraints.WEST;
 		painelMeio.add(txtQntdBinsClassif, constraints);
 
-		lblValorComissaoIroClassif = new JLabel("Valor comis. empreiteiro classif.");
+		lblValorComissaoIroClassif = new JLabel("Valor comis. empreiteiro classif. R$");
 		lblValorComissaoIroClassif.setFont(f);
 		constraints.gridx = 2;
 		constraints.gridy = 2;
@@ -553,45 +557,46 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			}
 		});
 
-		lblQntdBinsDia = new JLabel("Quantidade bins equipe");
-		lblQntdBinsDia.setFont(f);
+		lblQntdBins = new JLabel("Qntd bins equipe");
+		lblQntdBins.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 3;
 		constraints.gridwidth = 1;
 		constraints.anchor = GridBagConstraints.EAST;
-		painelMeio.add(lblQntdBinsDia, constraints);
+		painelMeio.add(lblQntdBins, constraints);
 
-		txtQntdBinsDia = new JTextField(5);
-		txtQntdBinsDia.setFont(f);
+		txtQntdBins = new JTextField(5);
+		txtQntdBins.setFont(f);
 		constraints.gridx = 1;
 		constraints.gridy = 3;
 		constraints.anchor = GridBagConstraints.WEST;
-		painelMeio.add(txtQntdBinsDia, constraints);
+		painelMeio.add(txtQntdBins, constraints);
 
-		lblValorBinsDia = new JLabel("Valor bins");
-		lblValorBinsDia.setFont(f);
+		lblValorBins = new JLabel("Valor bins R$");
+		lblValorBins.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 4;
 		constraints.anchor = GridBagConstraints.EAST;
-		painelMeio.add(lblValorBinsDia, constraints);
+		painelMeio.add(lblValorBins, constraints);
 
-		txtValorBinsDia = new JTextField(10);
-		txtValorBinsDia.setFont(f);
-		txtValorBinsDia.setText("0,00");
+		txtValorBins = new JTextField(10);
+		txtValorBins.setFont(f);
+		txtValorBins.setText("0,00");
 		constraints.gridx = 1;
 		constraints.gridy = 4;
 		constraints.anchor = GridBagConstraints.WEST;
-		painelMeio.add(txtValorBinsDia, constraints);
+		painelMeio.add(txtValorBins, constraints);
 
-		txtValorBinsDia.addFocusListener(new FocusAdapter() {
+		txtValorBins.addFocusListener(new FocusAdapter() {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				distribuiValores();
+				configuraRateioInicial();
+				distribuiValoresEmpregadosPadrao();
 			}
 		});
 
-		lblValorDia = new JLabel("Valor dia");
+		lblValorDia = new JLabel("Valor dia R$");
 		lblValorDia.setFont(f);
 		lblValorDia.setForeground(Color.lightGray);
 		constraints.gridx = 0;
@@ -617,7 +622,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			}
 		});
 
-		lblValorTotalRestoEquipe = new JLabel("Valor total resto equipe");
+		lblValorTotalRestoEquipe = new JLabel("Valor total p/ rateio R$");
 		lblValorTotalRestoEquipe.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 6;
@@ -634,7 +639,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		constraints.anchor = GridBagConstraints.WEST;
 		painelMeio.add(txtValorTotalRestoEquipe, constraints);
 
-		lblValorTotal = new JLabel("Valor total equipe");
+		lblValorTotal = new JLabel("Valor total equipe R$");
 		lblValorTotal.setFont(f);
 		constraints.gridx = 2;
 		constraints.gridy = 6;
@@ -654,7 +659,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		painelMeio.add(txtValorTotal, constraints);
 		constraints.gridwidth = 1;
 
-		lblVlrComissao = new JLabel("Valor comissão empreiteiro");
+		lblVlrComissao = new JLabel("Valor comissão R$");
 		lblVlrComissao.setFont(f);
 		constraints.anchor = GridBagConstraints.EAST;
 		constraints.gridx = 0;
@@ -696,7 +701,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			}
 		});
 
-		lblVlrTotalComissao = new JLabel("Valor total comissão empreiteiro");
+		lblVlrTotalComissao = new JLabel("Valor total comissão R$");
 		lblVlrTotalComissao.setFont(f);
 		constraints.anchor = GridBagConstraints.EAST;
 		constraints.gridx = 2;
@@ -814,6 +819,16 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		});
 	}
 
+	protected void configuraRateioInicial() {
+		for (int x = 0; x < getQntdEmpregados(); x++) {
+			if (modelo.getValueAt(x, COLUNA_CLASSIF).toString() == "false" || modelo.getValueAt(x, COLUNA_PRESENCA).toString() == "S") {
+				modelo.setValueAt(Integer.valueOf(txtQntdBins.getText()), x, COLUNA_RATEIO);
+			} else if (modelo.getValueAt(x, COLUNA_PRESENCA).toString() == "M/T") {
+				modelo.setValueAt(Integer.valueOf(txtQntdBins.getText())/2, x, COLUNA_RATEIO);
+			}
+		}
+	}
+
 	private void configInterfaceBins() {
 		rBtnPorBins.setSelected(true);
 		txtValorTotal.setText("");
@@ -821,8 +836,8 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		txtValorDia.setEnabled(false);
 		lblValorDia.setForeground(Color.LIGHT_GRAY);
 
-		txtValorBinsDia.setEnabled(true);
-		lblValorBinsDia.setForeground(Color.BLACK);
+		txtValorBins.setEnabled(true);
+		lblValorBins.setForeground(Color.BLACK);
 	}
 
 	private void configInterfaceDia() {
@@ -832,31 +847,86 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		txtValorDia.setEnabled(true);
 		lblValorDia.setForeground(Color.BLACK);
 
-		txtValorBinsDia.setEnabled(false);
-		txtValorBinsDia.setText("0,00");
-		lblValorBinsDia.setForeground(Color.LIGHT_GRAY);
+		txtValorBins.setEnabled(false);
+		txtValorBins.setText("0,00");
+		lblValorBins.setForeground(Color.LIGHT_GRAY);
+	}
+
+	private int getQntdEmpregados() {
+		return modelo.getRowCount();
+	}
+
+	private void distribuiValoresEmpregadosPadrao() {
+		int qntdBins = Integer.parseInt(txtQntdBins.getText());
+		double valorBins = Double.parseDouble(txtValorBins.getText().replace(',', '.'));
+		double valorClassif = Double.parseDouble(txtValorClassif.getText().replace(',', '.'));
+		int aux = 0, qntdFaltas = 0, qntdEmpregadosPadrao = 0, qntdClassif = 0, qntdClassifMeios = 0;
+		int totalEmpregados = getQntdEmpregados();
+
+		totalGeral = 0;
+		totalResto = qntdBins * valorBins;
+		List<Integer> arrayEmpregadosPadrao = new ArrayList<Integer>();
+
+		do {
+			if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("N")) {
+				modelo.setValueAt(false, aux, COLUNA_CLASSIF);
+				modelo.setValueAt(0, aux, COLUNA_VALOR);
+				modelo.setValueAt(0, aux, COLUNA_RATEIO);
+				qntdFaltas++;
+			} else if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("S") && modelo.getValueAt(aux, COLUNA_CLASSIF).toString() == "true") {
+				modelo.setValueAt(valorClassif, aux, COLUNA_VALOR);
+				modelo.setValueAt(0, aux, COLUNA_RATEIO);
+				totalGeral += valorClassif;
+				qntdClassif++;
+			} else if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("M/T") && modelo.getValueAt(aux, COLUNA_CLASSIF).toString() == "true") {
+				modelo.setValueAt(valorClassif/2, aux, COLUNA_VALOR);
+				modelo.setValueAt(0, aux, COLUNA_RATEIO);
+				totalGeral += valorClassif/2;
+				qntdClassifMeios++;
+			} else {
+				arrayEmpregadosPadrao.add(aux);
+			}
+			aux++;
+		} while(aux < totalEmpregados);
+
+		qntdEmpregadosPadrao = totalEmpregados - qntdFaltas - qntdClassif - qntdClassifMeios;
+		aux = 0;
+
+		do {
+			int rateio = Integer.valueOf(modelo.getValueAt(arrayEmpregadosPadrao.get(aux), COLUNA_RATEIO).toString());
+			double valorIndividual = (rateio * valorBins) / qntdEmpregadosPadrao;
+			modelo.setValueAt(valorIndividual, arrayEmpregadosPadrao.get(aux), COLUNA_VALOR);
+			totalGeral += valorIndividual;
+			aux++;
+		} while (aux < arrayEmpregadosPadrao.size());
+		
+		txtValorTotalRestoEquipe.setText(decimal.format(totalResto));
+		txtValorTotal.setText(decimal.format(totalGeral));
+
+		calculaComissao();
+	}
+
+	private void distribuiValores() {
+		if (rBtnPorBins.isSelected())
+			distribuiValoresBins();
+		else
+			distribuiValoresDia();
 	}
 
 	private void distribuiValoresBins() {
 
 		try {
-			int qntdBins = Integer.parseInt(txtQntdBinsDia.getText());
-			double valorBins = Double.parseDouble(txtValorBinsDia.getText().replace(',', '.'));
+			int qntdBins = Integer.parseInt(txtQntdBins.getText());
+			double valorBins = Double.parseDouble(txtValorBins.getText().replace(',', '.'));
 			double valorClassif = Double.parseDouble(txtValorClassif.getText().replace(',', '.'));
 			double valorAdicional = 0.0;
-			int aux = 0;
-			int qntdFaltas = 0;
-			int qntdEmpregados = 0;
-			int qntdEmpregadosMeios = 0;
-			int qntdClassif = 0;
-			int qntdClassifMeios = 0;
+			int aux = 0, qntdFaltas = 0, qntdEmpregados = 0, qntdEmpregadosMeios = 0, qntdClassif = 0, qntdClassifMeios = 0, presentes = 0;
 			int totalEmpregados = modelo.getRowCount();
-			int presentes = 0;
+
 			totalGeral = 0;
 			totalResto = 0;
 
 			do {
-
 				if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("N")) {
 					qntdFaltas++;
 					modelo.setValueAt(false, aux, COLUNA_CLASSIF);
@@ -932,18 +1002,12 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		try {
 			double valorDia = Double.parseDouble(txtValorDia.getText().replace(',', '.'));
 			double valorClassif = Double.parseDouble(txtValorClassif.getText().replace(',', '.'));
-			int aux = 0;
-			int qntdFaltas = 0;
-			int qntdEmpregados = 0;
-			int qntdEmpregadosMeios = 0;
-			int qntdClassif = 0;
-			int qntdClassifMeios = 0;
+			int aux = 0, qntdFaltas = 0, qntdEmpregados = 0, qntdEmpregadosMeios = 0, qntdClassif = 0, qntdClassifMeios = 0;
 			int totalEmpregados = modelo.getRowCount();
 			totalGeral = 0;
 			totalResto = 0;
 
 			do {
-
 				if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("N")) {
 					qntdFaltas++;
 					modelo.setValueAt(false, aux, COLUNA_CLASSIF);
@@ -1026,7 +1090,8 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 						new Integer(adoBO.get(index).getCodigo()),
 						adoBO.get(index).getNome(),
 						adoBO.get(index).funcaoBO.getNome(),
-						new Double(0.0)
+						new Double(0.0),
+						new Integer(0)
 				});
 				index++;
 			} while (index < adoBO.size());
@@ -1042,7 +1107,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			double vlrComissao = Double.parseDouble(txtVlrComissao.getText().trim().replace(',', '.'));
 			double valorComissaoIroClassif = Double.parseDouble(txtValorComissaoIroClassif.getText().trim().replace(',', '.'));
 			double outrosValoresIro = Double.parseDouble(txtValorOutrosIro.getText().trim().replace(',', '.'));
-			int qntdBins = Integer.parseInt(txtQntdBinsDia.getText());
+			int qntdBins = Integer.parseInt(txtQntdBins.getText());
 			int qntdEmpregados = 0, qntdEmpregadosMeios = 0, qntdClassif = 0, qntdClassifMeios = 0, x = 0;
 			totalComissao = 0;
 
@@ -1146,13 +1211,13 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 				diaBO.setQntdBinsClassif(Integer.parseInt(txtQntdBinsClassif.getText()));
 			} catch (NumberFormatException e3) {
 				JOptionPane.showMessageDialog(this, "Quantidade de deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				txtQntdBinsDia.requestFocus();
-				txtQntdBinsDia.selectAll();
+				txtQntdBins.requestFocus();
+				txtQntdBins.selectAll();
 			} catch (QuantidadeErradaException e3) {
 				JOptionPane.showMessageDialog(this, "Quantidade de bins incorreta!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				txtQntdBinsDia.requestFocus();
-				txtQntdBinsDia.selectAll();
-				txtQntdBinsDia.getText();
+				txtQntdBins.requestFocus();
+				txtQntdBins.selectAll();
+				txtQntdBins.getText();
 				return;
 			}
 
@@ -1171,30 +1236,30 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			}
 
 			try {
-				diaBO.setQntBinsEquipe(Integer.parseInt(txtQntdBinsDia.getText()));
+				diaBO.setQntBinsEquipe(Integer.parseInt(txtQntdBins.getText()));
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(this, "Quantidade de deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				txtQntdBinsDia.requestFocus();
-				txtQntdBinsDia.selectAll();
+				txtQntdBins.requestFocus();
+				txtQntdBins.selectAll();
 				return;
 			} catch (QuantidadeErradaException e1) {
 				JOptionPane.showMessageDialog(this, "Quantidade de bins incorreta!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				txtQntdBinsDia.requestFocus();
-				txtQntdBinsDia.selectAll();
+				txtQntdBins.requestFocus();
+				txtQntdBins.selectAll();
 				return;
 			}
 
 			try {
-				diaBO.setValorBins(Double.parseDouble(txtValorBinsDia.getText().replace(',', '.')));
+				diaBO.setValorBins(Double.parseDouble(txtValorBins.getText().replace(',', '.')));
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(this, "Valor bins deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				txtValorBinsDia.requestFocus();
-				txtValorBinsDia.selectAll();
+				txtValorBins.requestFocus();
+				txtValorBins.selectAll();
 				return;
 			} catch (ValorErradoException e1) {
 				JOptionPane.showMessageDialog(this, "Valor bins inválido!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				txtValorBinsDia.requestFocus();
-				txtValorBinsDia.selectAll();
+				txtValorBins.requestFocus();
+				txtValorBins.selectAll();
 				return;
 			}
 
@@ -1272,9 +1337,9 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 				} while (cont < modelo.getRowCount());
 
 				if (consDia == null) {
-					txtQntdBinsDia.setText("");
+					txtQntdBins.setText("");
 					txtValorClassif.setText("");
-					txtValorBinsDia.setText("0,00");
+					txtValorBins.setText("0,00");
 					txtValorTotal.setText("");
 					txtValorTotalRestoEquipe.setText("");
 					txtValorClassif.requestFocus();
@@ -1299,7 +1364,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 					doDefaultCloseAction();
 				}
 			} catch (ValorErradoException e1) {
-				
+
 				JOptionPane.showMessageDialog(this, "Valor empregado incorreto!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -1312,24 +1377,17 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 				modelo.setValueAt(0.0, x, COLUNA_VALOR);
 
 			configInterfaceBins();
-			txtQntdBinsDia.setText("0");
+			txtQntdBins.setText("0");
 			txtValorDia.setText("0,00");
 
 		} else if (origem == rBtnPorDia) {
-			
+
 			for (int x = 0; x < modelo.getRowCount(); x++)
 				modelo.setValueAt(0.0, x, COLUNA_VALOR);
 
 			configInterfaceDia();
-			txtValorBinsDia.setText("0,00");
+			txtValorBins.setText("0,00");
 
 		}
-	}
-
-	private void distribuiValores() {
-		if (rBtnPorBins.isSelected())
-			distribuiValoresBins();
-		else
-			distribuiValoresDia();
 	}
 }
