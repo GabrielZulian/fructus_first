@@ -1,5 +1,7 @@
 package safristas.bo.safristas;
 
+import java.math.BigDecimal;
+
 import exceptions.ValorErradoException;
 import safristas.bo.EmpregadoBO;
 
@@ -10,6 +12,7 @@ public class DiaEmpregadoBO {
 	private double valor;
 	private char presenca;
 	private char classificador;
+	private BigDecimal rateio;
 	private char pagou;
 
 	public DiaEmpregadoBO() {
@@ -20,6 +23,7 @@ public class DiaEmpregadoBO {
 		this.valor = 0.0;
 		this.presenca = 'S';
 		this.classificador = 'N';
+		this.rateio = new BigDecimal("0");
 		this.pagou = 'N';
 	}
 
@@ -66,6 +70,14 @@ public class DiaEmpregadoBO {
 
 	public void setClassificador(char classificador) {
 		this.classificador = classificador;
+	}
+	
+	public void setRateio(BigDecimal rateio) {
+		this.rateio = rateio;
+	}
+	
+	public BigDecimal getRateio() {
+		return rateio;
 	}
 
 	public char getPagou() {

@@ -40,6 +40,53 @@ public class EquipeDao {
 				nome + "%'", "empreiteiro.iro_nome, equipe_nome");
 		return equiBO;
 	}
+	
+	public ArrayList <EquipeBO> consultaPorCodEmpreiteiroSomenteAtivas(int cod) {
+		ArrayList<EquipeBO> equiBO = consultaAtivas(cod, "e.equipe_nome");
+		return equiBO;
+	}
+	
+	private ArrayList<EquipeBO> consultaAtivas(int cod, String ordem) {
+		Statement sentenca;
+		ResultSet registros;
+
+		try {
+			sentenca = conexao.createStatement();
+			// faz a consulta
+			registros = sentenca.executeQuery("SELECT DISTINCT e.equipe_codigo, e.equipe_nome FROM equipe e" + 
+					" INNER JOIN empreiteiro i ON e.equipe_codempreiteiro = i.iro_codigo" + 
+					" INNER JOIN empregado a ON a.ado_codequipe = e.equipe_codigo" + 
+					" WHERE a.ado_codequipe IS NOT NULL AND i.iro_codigo = " + cod + " ORDER BY " + ordem);
+
+			if (!registros.next())
+			{
+				JOptionPane.showMessageDialog(null,
+						"Nenhum registro foi encontrado!",
+						"Mensagem", JOptionPane.WARNING_MESSAGE);
+			}
+			else {
+				int i = 0;
+				ArrayList<EquipeBO> equiBO = new ArrayList<EquipeBO>();
+				do {
+					equiBO.add(new EquipeBO());
+					try {
+						equiBO.get(i).setCodigo(registros.getInt("equipe_codigo"));
+						equiBO.get(i).setNome(registros.getString("equipe_nome"));
+					} catch (StringVaziaException e) {}
+					i++;
+				} while (registros.next());
+				return equiBO;   
+			}
+			sentenca.close();
+		} catch (SQLException eSQL) {
+			eSQL.printStackTrace();
+			JOptionPane.showMessageDialog(null,
+					"Não foi possível carregar os dados!\n" +
+							"Mensagem: " + eSQL.getMessage(),
+							"Erro", JOptionPane.ERROR_MESSAGE);
+		}
+		return null;
+	}
 
 	private ArrayList<EquipeBO> consulta(String sentencaSQL, String ordem) {
 		Statement sentenca;
@@ -48,7 +95,8 @@ public class EquipeDao {
 		try {
 			sentenca = conexao.createStatement();
 			// faz a consulta
-			registros = sentenca.executeQuery("SELECT equipe.*, empreiteiro.iro_codigo, empreiteiro.iro_nome FROM equipe INNER JOIN empreiteiro ON equipe_codempreiteiro = iro_codigo WHERE " + sentencaSQL + " Order By " + ordem);
+			registros = sentenca.executeQuery("SELECT equipe.*, empreiteiro.iro_codigo, empreiteiro.iro_nome FROM equipe"
+					+ " INNER JOIN empreiteiro ON equipe_codempreiteiro = iro_codigo WHERE " + sentencaSQL + " Order By " + ordem);
 
 			if (!registros.next())
 			{
