@@ -44,8 +44,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -60,7 +58,6 @@ import org.joda.time.DateTimeZone;
 import exceptions.QuantidadeErradaException;
 import exceptions.StringVaziaException;
 import exceptions.ValorErradoException;
-import javafx.scene.control.ComboBox;
 import safristas.bo.EmpregadoBO;
 import safristas.bo.safristas.DiaEmpregadoBO;
 import safristas.bo.safristas.EmpreiteiroBO;
@@ -336,8 +333,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 						JOptionPane.showInternalMessageDialog(FrmDiaTrabalho.this, "Empregado não está presente p/ ser classificador", "Erro" , JOptionPane.ERROR_MESSAGE);
 						modelo.setValueAt(false, linha, COLUNA_CLASSIF);
 					} else {
-						//distribuiValores();
-						distribuiValoresPorBinsERateio();
+						distribuiValores();
 					}
 				} else if (linha >=0 && coluna == COLUNA_RATEIO) {
 					if (e.getClickCount() == 2 &&
@@ -376,7 +372,6 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					distribuiValoresPorBinsERateio();
 				}
-				
 			}
 		});
 
@@ -853,14 +848,20 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		Integer qntdEmpregadosADiminuir = 0;
 		
 		for (Boolean mudou : mudouRateio) {
-			if (mudou == Boolean.TRUE)
+			if (mudou)
 				qntdEmpregadosADiminuir++;
+		}
+		
+		for (int x = 0; x < getQntdEmpregados(); x++) {
+			if (modelo.getValueAt(x, COLUNA_CLASSIF).toString() == "true" || modelo.getValueAt(x, COLUNA_PRESENCA).toString() == "N") {
+				qntdEmpregadosADiminuir++;
+			}
 		}
 		
 		Double valorRateioASerDistribuido = (double) ((valorInicial - valorRateio)/(getQntdEmpregados()-qntdEmpregadosADiminuir));
 		
 		for (int x = 0; x < getQntdEmpregados(); x++) {
-			if (x != linha && !mudouRateio.get(x)) {
+			if (x != linha && !mudouRateio.get(x) && (modelo.getValueAt(x, COLUNA_CLASSIF).toString() == "false" || modelo.getValueAt(x, COLUNA_PRESENCA).toString() == "S")) {
 				Double valorAtual = Double.parseDouble(modelo.getValueAt(x, COLUNA_RATEIO).toString());
 				modelo.setValueAt(valorAtual+valorRateioASerDistribuido, x, COLUNA_RATEIO); 
 			}
@@ -881,6 +882,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 	}
 
 	private void configInterfaceBins() {
+		mudouRateio.clear();
 		rBtnPorBins.setSelected(true);
 		txtValorTotal.setText("");
 		txtValorTotalRestoEquipe.setText("");
@@ -910,6 +912,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 	}
 
 	private void distribuiValoresPorBinsERateio() {
+		try {
 		int qntdBins = Integer.parseInt(txtQntdBins.getText());
 		double valorBins = Double.parseDouble(txtValorBins.getText().replace(',', '.'));
 		double valorClassif = Double.parseDouble(txtValorClassif.getText().replace(',', '.'));
@@ -957,6 +960,9 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		txtValorTotal.setText(decimal.format(totalGeral));
 
 		calculaComissao();
+		} catch (NumberFormatException e) {
+			System.out.println("Ainda não é possível calcular (bins)");
+		}
 	}
 
 	private void distribuiValores() {
@@ -970,63 +976,49 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		try {
 			double valorDia = Double.parseDouble(txtValorDia.getText().replace(',', '.'));
 			double valorClassif = Double.parseDouble(txtValorClassif.getText().replace(',', '.'));
-			int aux = 0, qntdFaltas = 0, qntdEmpregados = 0, qntdEmpregadosMeios = 0, qntdClassif = 0, qntdClassifMeios = 0;
+			int aux = 0, qntdEmpregados = 0, qntdEmpregadosMeios = 0;
 			int totalEmpregados = getQntdEmpregados();
 			totalGeral = 0;
 			totalResto = 0;
-
+			double valor = 0;
+			
 			do {
 				if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("N")) {
-					qntdFaltas++;
 					modelo.setValueAt(false, aux, COLUNA_CLASSIF);
 					modelo.setValueAt(0, aux, COLUNA_VALOR);
 				}
 
 				if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("S") && modelo.getValueAt(aux, COLUNA_CLASSIF).toString() == "false") {
+					valor = valorDia;
+					modelo.setValueAt(valor, aux, COLUNA_VALOR);
+					totalGeral += valor;
 					qntdEmpregados++;
 				}
 
 				if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("M/T") && modelo.getValueAt(aux, COLUNA_CLASSIF).toString() == "false") {
+					valor = (valorDia/2);
+					modelo.setValueAt(valor, aux, COLUNA_VALOR);
+					totalGeral += valor;
 					qntdEmpregadosMeios++;
 				}
 
 				if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("S") && modelo.getValueAt(aux, COLUNA_CLASSIF).toString() == "true") {
-					qntdClassif++;
-				}
-
-				if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("M/T") && modelo.getValueAt(aux, COLUNA_CLASSIF).toString() == "true") {
-					qntdClassifMeios++;
-				}
-
-				aux++;
-			} while(aux < totalEmpregados);
-
-			totalResto = (qntdEmpregados * valorDia) + ((valorDia/2) * qntdEmpregadosMeios);
-
-			aux = 0;
-
-			double valor = 0;
-			do {
-				if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("M/T") && modelo.getValueAt(aux, COLUNA_CLASSIF).toString() == "false") {
-					valor = (valorDia/2);
-					modelo.setValueAt(valor, aux, COLUNA_VALOR);
-					totalGeral += valor;
-				} else if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("S") && modelo.getValueAt(aux, COLUNA_CLASSIF).toString() == "false") {
-					valor = valorDia;
-					modelo.setValueAt(valor, aux, COLUNA_VALOR);
-					totalGeral += valor;
-				} else if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("S") && modelo.getValueAt(aux, COLUNA_CLASSIF).toString() == "true") {
 					valor = valorClassif;
 					modelo.setValueAt(valor, aux, COLUNA_VALOR);
 					totalGeral += valor;
-				} else if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("M/T") && modelo.getValueAt(aux, COLUNA_CLASSIF).toString() == "true") {
+				}
+
+				if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("M/T") && modelo.getValueAt(aux, COLUNA_CLASSIF).toString() == "true") {
 					valor = valorClassif/2;
 					modelo.setValueAt(valor, aux, COLUNA_VALOR);
 					totalGeral += valor;
 				}
+
 				aux++;
 				valor = 0;
 			} while(aux < totalEmpregados);
+
+			totalResto = (qntdEmpregados * valorDia) + ((valorDia/2) * qntdEmpregadosMeios);
 
 			txtValorTotalRestoEquipe.setText(decimal.format(totalResto));
 			txtValorTotal.setText(decimal.format(totalGeral));
@@ -1037,7 +1029,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 	}
 
 	public void selecionaEquipe() {
-		for (int i = modelo.getRowCount() - 1; i >= 0; i--)
+		for (int i = getQntdEmpregados() - 1; i >= 0; i--)
 			modelo.removeRow(i);
 
 		adoBO = adoDao.consultaPorCodEquipe(Integer.parseInt(modeloTabEquipe.getValueAt(tabelaEquipe.getSelectedRow(), 0).toString()));
@@ -1057,7 +1049,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 				index++;
 			} while (index < adoBO.size());
 
-			lblQntdEmpregados.setText("Qntd. Empregados: " + modelo.getRowCount());
+			lblQntdEmpregados.setText("Qntd. Empregados: " + getQntdEmpregados());
 
 		} catch (NullPointerException e1) {}
 	}
@@ -1091,7 +1083,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 				}
 
 				x++;
-			} while (x<modelo.getRowCount());
+			} while (x < getQntdEmpregados());
 
 			if (rBtnPorBins.isSelected())
 				totalComissao = vlrComissao*qntdBins;
@@ -1269,7 +1261,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 				int cont = 0;
 				char presenca = 'S';
 
-				if (!txtCodigoDia.getText().equals("-"))
+				if (!txtCodigoDia.getText().equals("-")) //verifica se é alteração para excluir os dados e gravar novamente
 					diaAdoDao.excluir(Integer.parseInt(txtCodigoDia.getText()));
 
 				do {
@@ -1291,6 +1283,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 					diaAdoBO.get(cont).setPresenca(presenca);
 					diaAdoBO.get(cont).setValor(Double.parseDouble(modelo.getValueAt(cont, COLUNA_VALOR).toString()));
 					diaAdoBO.get(cont).setRateio(new BigDecimal(modelo.getValueAt(cont, COLUNA_RATEIO).toString()));
+					System.out.println(new BigDecimal(modelo.getValueAt(cont, COLUNA_RATEIO).toString()).toString());
 					diaAdoBO.get(cont).diaBO.setCodigo(diaBO.getCodigo());
 
 					diaAdoDao.incluir(diaAdoBO.get(cont));
@@ -1335,8 +1328,10 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			doDefaultCloseAction();
 		} else if (origem == rBtnPorBins) {
 
-			for (int x = 0; x < modelo.getRowCount(); x++)
+			for (int x = 0; x < modelo.getRowCount(); x++) {
 				modelo.setValueAt(0.0, x, COLUNA_VALOR);
+				modelo.setValueAt(0, x, COLUNA_RATEIO);
+			}
 
 			configInterfaceBins();
 			txtQntdBins.setText("0");
@@ -1344,8 +1339,10 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 
 		} else if (origem == rBtnPorDia) {
 
-			for (int x = 0; x < modelo.getRowCount(); x++)
+			for (int x = 0; x < modelo.getRowCount(); x++) {
 				modelo.setValueAt(0.0, x, COLUNA_VALOR);
+				modelo.setValueAt(0, x, COLUNA_RATEIO);
+			}
 
 			configInterfaceDia();
 			txtValorBins.setText("0,00");

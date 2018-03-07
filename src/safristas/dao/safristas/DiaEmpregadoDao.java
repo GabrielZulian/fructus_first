@@ -20,47 +20,23 @@ public class DiaEmpregadoDao {
 		conexao = Conexao.conectaBanco();
 	}
 
-	public ArrayList <DiaEmpregadoBO> consultaPorCodigo(int cod)
-	{                             //where ado_codigo = xxx, "order by ado_codigo"
+	public ArrayList <DiaEmpregadoBO> consultaPorCodigo(int cod) {
 		ArrayList<DiaEmpregadoBO> diaAdoBO = consulta("diaemp_codigo =" + cod, "diaemp_codigo");
 		return diaAdoBO;
 	}
 
-	public ArrayList <DiaEmpregadoBO> consultaPorData(String nome)
-	{
+	public ArrayList <DiaEmpregadoBO> consultaPorData(String nome) {
 		ArrayList<DiaEmpregadoBO> diaAdoBO = consulta("dia_data LIKE '%" +
 				nome + "%'", "dia_data");
 		return diaAdoBO;
 	}
-	//
-	//	public ArrayList <LancaDiaBO> consultaPorCodEmpreiteiro(int cod)
-	//	{
-	//		ArrayList<LancaDiaBO> diaBO = consulta("dia_codempreiteiro =" + cod, "dia_codempreiteiro");
-	//		return diaBO;
-	//	}
-	//
-	//	public ArrayList <LancaDiaBO> consultaPorNomeEmpreiteiro (String nome)
-	//	{
-	//		ArrayList<LancaDiaBO> diaBO = consulta("empreiteiro.iro_nome LIKE '%" +
-	//				nome + "%'", "empreiteiro.iro_nome");
-	//		return diaBO;
-	//	}
-	//
-	public ArrayList <DiaEmpregadoBO> consultaPorCodEquipe(int cod)
-	{
+
+	public ArrayList <DiaEmpregadoBO> consultaPorCodEquipe(int cod) {
 		ArrayList<DiaEmpregadoBO> diaAdoBO = consulta("equipe.equipe_codigo =" + cod, "equipe.equipe_codigo");
 		return diaAdoBO;
 	}
-	//
-	//	public ArrayList <LancaDiaBO> consultaPorNomeEquipe (String nome)
-	//	{
-	//		ArrayList<LancaDiaBO> diaBO = consulta("equipe.equipe_nome LIKE '%" +
-	//				nome + "%'", "equipe.equipe_nome");
-	//		return diaBO;
-	//	}
-	//
-	public ArrayList <DiaEmpregadoBO> consultaPorCodigoDia (int cod)
-	{
+
+	public ArrayList <DiaEmpregadoBO> consultaPorCodigoDia (int cod) {
 		ArrayList<DiaEmpregadoBO> diaAdoBO = consulta("diaemp_codigodia =" + cod, "diaemp_codigodia");
 		return diaAdoBO;
 	}
@@ -98,10 +74,11 @@ public class DiaEmpregadoDao {
 
 			// faz a consulta
 			registros = sentenca.executeQuery("SELECT diaempregado.diaemp_codigo, diaempregado.diaemp_codempregado, diaempregado.diaemp_codigodia,"
-					+ " diaempregado.diaemp_valoremp, diaempregado.diaemp_presenca, diaempregado.diaemp_classif, diaempregado.diaemp_pagou, empregado.ado_nome, funcao.fun_nome"
+					+ " diaempregado.diaemp_valoremp, diaempregado.diaemp_presenca, diaempregado.diaemp_rateio, diaempregado.diaemp_classif,"
+					+ " diaempregado.diaemp_pagou, empregado.ado_nome, funcao.fun_nome"
 					+ " FROM diaempregado INNER JOIN diatrabalho ON dia_codigo = diaemp_codigodia"
 					+ " INNER JOIN empregado ON diaemp_codempregado = ado_codigo"
-					+ " INNER JOIN funcao ON empregado.ado_codfuncao = funcao.fun_codigo WHERE " + sentencaSQL + "ORDER BY " + ordem);
+					+ " INNER JOIN funcao ON empregado.ado_codfuncao = funcao.fun_codigo WHERE " + sentencaSQL + " ORDER BY " + ordem);
 
 			if (!registros.next()) {
 				JOptionPane.showMessageDialog(null,
@@ -120,6 +97,7 @@ public class DiaEmpregadoDao {
 						diaAdoBO.get(i).diaBO.setCodigo(registros.getInt("diaemp_codigodia"));
 						diaAdoBO.get(i).setValor(registros.getDouble("diaemp_valoremp"));
 						diaAdoBO.get(i).setPresenca(registros.getString("diaemp_presenca").charAt(0));
+						diaAdoBO.get(i).setRateio(registros.getBigDecimal("diaemp_rateio"));
 						diaAdoBO.get(i).setClassificador(registros.getString("diaemp_classif").charAt(0));
 						diaAdoBO.get(i).setPagou(registros.getString("diaemp_pagou").charAt(0));
 						diaAdoBO.get(i).adoBO.funcaoBO.setNome(registros.getString("fun_nome"));
@@ -146,11 +124,12 @@ public class DiaEmpregadoDao {
 			sentenca = conexao.createStatement();
 			String sentencaSQL = null;
 			sentencaSQL = "INSERT INTO diaempregado (" +
-					"diaemp_codigo, diaemp_codempregado, diaemp_valoremp, diaemp_presenca, diaemp_codigodia, diaemp_classif, diaemp_pagou) "+
+					"diaemp_codigo, diaemp_codempregado, diaemp_valoremp, diaemp_presenca, diaemp_rateio, diaemp_codigodia, diaemp_classif, diaemp_pagou) "+
 					"VALUES ((SELECT COALESCE(MAX(diaemp_codigo), 0) + 1 FROM diaempregado), "+ 
 					diaAdoBO.adoBO.getCodigo() + ", " +
 					diaAdoBO.getValor() +", '" +
 					diaAdoBO.getPresenca() + "', " +
+					diaAdoBO.getRateio() + ", " +
 					diaAdoBO.diaBO.getCodigo() + ", '" +
 					diaAdoBO.getClassificador() + "', '" + 
 					"N" + "')";				 	  
@@ -174,7 +153,8 @@ public class DiaEmpregadoDao {
 			sentencaSQL = "UPDATE diaempregado SET diaemp_codempregado = " + 
 					diaAdoBO.adoBO.getCodigo() + ", diaemp_valoremp = " + 
 					diaAdoBO.getValor() + ", diaemp_presenca = '" +
-					diaAdoBO.getPresenca() + "', diaemp_classif = '" +  
+					diaAdoBO.getPresenca() + "', diaemp_rateio = " + 
+					diaAdoBO.getRateio() + ", diaemp_classif = '" +  
 					diaAdoBO.getClassificador() + "' WHERE diaemp_codigodia = " + diaAdoBO.diaBO.getCodigo() + "AND diaemp_codempregado = " + diaAdoBO.adoBO.getCodigo();	 
 
 			sentenca.executeUpdate(sentencaSQL); 
@@ -202,7 +182,7 @@ public class DiaEmpregadoDao {
 				String sentencaSQL ="DELETE FROM diaempregado WHERE diaemp_codigodia = " + cod; 
 				sentenca.executeUpdate(sentencaSQL); 
 				sentenca.close();
-			}catch (SQLException eSQL) {
+			} catch (SQLException eSQL) {
 				eSQL.printStackTrace();
 				JOptionPane.showMessageDialog(null,
 						"Não foi possível realizar a operação!\n" +
