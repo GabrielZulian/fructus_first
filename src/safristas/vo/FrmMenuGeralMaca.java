@@ -62,7 +62,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 	
 	private JMenuItem itemEmpregadorCad, itemEmpreiteiroCad, itemEmpregadoCad, itemEquipeCad, itemCidadeCad, itemFuncaoCad, itemVeiculoCad, itemQuadraCad,
 	itemEmpregadorCon, itemEmpreiteiroCon, itemEmpregadoCon, itemEquipeCon, itemCidadeCon, itemFuncaoCon, itemVeiculoCon, itemQuadraCon,
-	itemLancaDia, itemLançaDiaOut, itemFechamento, itemFechamentoOut, itemAdiantamentos, itemRelEmpregadores, itemRelEmpreiteiros, itemRelEmpregadosSimples,
+	itemLancaDia, itemLancaDiaOut, itemFechamento, itemFechamentoOut, itemAdiantamentos, itemRelEmpregadores, itemRelEmpreiteiros, itemRelEmpregadosSimples,
 	itemRelEmpregadosVisaoGeral, itemRelPagamentos, itemPlanilhaColetaDias, itemVisaoGeral, itemRelDiasTrabalho, itemDetalhes;
 	
 	public FrmMenuGeralMaca() {
@@ -76,7 +76,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 		itemEquipeCad = new JMenuItem("Equipes", new ImageIcon(getClass().getResource("/icons/icon_equipep.gif")));
 		itemCidadeCad = new JMenuItem("Cidades", new ImageIcon(getClass().getResource("/icons/icon_cidadep.gif")));
 		itemFuncaoCad = new JMenuItem("Funções", new ImageIcon(getClass().getResource("/icons/icon_funcaop.gif")));
-		itemVeiculoCad = new JMenuItem("Veículos", new ImageIcon(getClass().getResource("/icons/icon_veiculop.gif")));
+		itemVeiculoCad = new JMenuItem("VeÃ­culos", new ImageIcon(getClass().getResource("/icons/icon_veiculop.gif")));
 		itemQuadraCad = new JMenuItem("Quadras", new ImageIcon(getClass().getResource("/icons/icon_quadrap.gif")));
 
 		menuCadastros.add(itemEmpregadorCad);
@@ -115,13 +115,13 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 		barraMenu.add(menuConsultas);
 
 		itemLancaDia = new JMenuItem("Safristas", new ImageIcon(getClass().getResource("/icons/icon_lanca_dia_frutp.gif")));
-		itemLançaDiaOut = new JMenuItem("Outros", new ImageIcon(getClass().getResource("/icons/icon_lanca_dia_motp.gif")));
+		itemLancaDiaOut = new JMenuItem("Outros", new ImageIcon(getClass().getResource("/icons/icon_lanca_dia_motp.gif")));
 		itemFechamento = new JMenuItem("Safristas", new ImageIcon(getClass().getResource("/icons/icon_pagamento_maca2p.gif")));
 		itemFechamentoOut = new JMenuItem("Outros", new ImageIcon(getClass().getResource("/icons/icon_pagamento_motorista2p.gif")));
 		itemAdiantamentos = new JMenuItem("Adiantamentos", new ImageIcon(getClass().getResource("/icons/icon_adiantamentop.gif")));
 		
 		menuDiaTrabalho.add(itemLancaDia);
-		menuDiaTrabalho.add(itemLançaDiaOut);
+		menuDiaTrabalho.add(itemLancaDiaOut);
 		menuPagamento.add(itemFechamento);
 		menuPagamento.add(itemFechamentoOut);
 		
@@ -155,7 +155,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 		
 		barraMenu.add(menuRelatorio);
 		
-		itemVisaoGeral = new JMenuItem("Visão Geral");
+		itemVisaoGeral = new JMenuItem("VisÃ£o Geral");
 		menuEspeciais.add(itemVisaoGeral);
 		menuEspeciais.setMnemonic(KeyEvent.VK_E);
 		barraMenu.add(menuEspeciais);
@@ -232,7 +232,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 		itemVeiculoCon.addActionListener(this);
 		itemQuadraCon.addActionListener(this);
 		itemLancaDia.addActionListener(this);
-		itemLançaDiaOut.addActionListener(this);
+		itemLancaDiaOut.addActionListener(this);
 		itemFechamento.addActionListener(this);
 		itemFechamentoOut.addActionListener(this);
 		itemAdiantamentos.addActionListener(this);
@@ -415,7 +415,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
 				centralizaInternalFrame(fr, dPane);
-			} else if (origem == itemLançaDiaOut || origem == btnLancaDiaOut) {
+			} else if (origem == itemLancaDiaOut || origem == btnLancaDiaOut) {
 				FrmConsultaDiaOutros fr = new FrmConsultaDiaOutros();
 				fr.setVisible(true);
 				dPane.add(fr);  
@@ -441,7 +441,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 				centralizaInternalFrame(fr, dPane);
 			} else if (origem == btnTrocaModulo) {
 				FrmLogin fr = new FrmLogin();
-				fr.cbModulo.removeItem("Controle colheita Maçã");
+				fr.cbModulo.removeItem("Controle colheita Maï¿½ï¿½");
 				fr.fecha = false;
 				fr.setVisible(true);
 			} else if (origem == itemAdiantamentos) {
