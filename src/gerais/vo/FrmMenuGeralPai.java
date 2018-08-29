@@ -69,7 +69,7 @@ public class FrmMenuGeralPai extends JFrame implements ActionListener {
 		        g.drawImage(imagem, 0, 0, getWidth(), getHeight(), this);
 		    }
 		};
-		
+
 		painelGeral.add(dPane, BorderLayout.CENTER);
 		dPane.putClientProperty("JDesktopPane.dragMode", "outline");
 		//----------------------------------------------------------
@@ -86,7 +86,7 @@ public class FrmMenuGeralPai extends JFrame implements ActionListener {
 		
 		if (!versaoBO.isUltimaVersao()) {
 			JOptionPane.showMessageDialog(this, "Há uma nova versão do sistema disponível! Favor utilizá-la.\n"
-					+ "Sua versão: " + VersaoBO.getVersao() + "\nÚltima versão: " + versaoBO.getUltimaVersao(), "Versão Desatualizada", 1);
+					+ "Sua versão: " + versaoBO.getVersao() + "\nÚltima versão: " + versaoBO.getUltimaVersao(), "Versão Desatualizada", 1);
 		}	
 	}
 

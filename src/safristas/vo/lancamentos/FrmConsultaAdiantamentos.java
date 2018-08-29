@@ -41,7 +41,7 @@ public class FrmConsultaAdiantamentos extends FrmConsultaPai {
 		btnExcluir.setVisible(false);
 		btnIncluir.setText("Selecionar (F1)");
 		btnIncluir.setIcon(new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
-		cbConsulta.setSelectedItem("SituaÃ§Ã£o");
+		cbConsulta.setSelectedItem("Situação");
 		txtDadoConsulta.setText("N");
 		txtDadoConsulta.setEditable(false);
 		cbConsulta.setEnabled(false);
@@ -56,12 +56,12 @@ public class FrmConsultaAdiantamentos extends FrmConsultaPai {
 		cbConsulta.removeItem("Nome");
 		cbConsulta.addItem("Data");
 		cbConsulta.addItem("Valor");
-		cbConsulta.addItem("Situaï¿½ï¿½o");
+		cbConsulta.addItem("Situação");
 		cbConsulta.setSelectedItem("Data");
 
 		ArrayList<Object> dados = new ArrayList<Object>();
 
-		String[] colunas = new String[] {"Cï¿½digo", "Data Lanï¿½amento", "Nome", "Valor", "Situaï¿½ï¿½o"};
+		String[] colunas = new String[] {"Código", "Data Lançamento", "Nome", "Valor", "Situação"};
 
 		boolean[] edicao = {false, false, false, false, false};
 
@@ -141,11 +141,11 @@ public class FrmConsultaAdiantamentos extends FrmConsultaPai {
 		for (int i = modelo.getRowCount() - 1; i >= 0; i--)
 			modelo.removeRow(i);
 
-		if (super.cbConsulta.getSelectedItem().equals("Cï¿½digo")) {
+		if (super.cbConsulta.getSelectedItem().equals("Código")) {
 			try{
 				adiantBO = adiantDao.consultaPorCodigo(Integer.parseInt(super.txtDadoConsulta.getText()));
 			}catch(NumberFormatException e1){
-				JOptionPane.showMessageDialog(this, "O cï¿½digo deve ser numï¿½rico", "Erro",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "O código deve ser numérico", "Erro",JOptionPane.ERROR_MESSAGE);
 				super.txtDadoConsulta.selectAll();
 				super.txtDadoConsulta.requestFocus();
 				return;
@@ -154,8 +154,8 @@ public class FrmConsultaAdiantamentos extends FrmConsultaPai {
 			adiantBO = adiantDao.consultaPorData(super.txtDadoConsulta.getText());
 		} else if (super.cbConsulta.getSelectedItem().equals("Valor")) {
 			adiantBO = adiantDao.consultaPorValor(Double.parseDouble(super.txtDadoConsulta.getText().replace(',', '.')));
-		} else if (super.cbConsulta.getSelectedItem().equals("SituaÃ§Ã£o")) {
-			adiantBO = adiantDao.consultaPorSituacao(super.txtDadoConsulta.getText().charAt(0));
+		} else if (super.cbConsulta.getSelectedItem().equals("Situação")) {
+			adiantBO = adiantDao.consultaPorSituação(super.txtDadoConsulta.getText().charAt(0));
 		}
 
 		int indice = 0;

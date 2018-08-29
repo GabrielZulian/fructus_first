@@ -39,7 +39,7 @@ public class AdiantamentoDao {
 		return adiantBO;
 	}
 	
-	public ArrayList <AdiantamentoBO> consultaPorSituacao(char pagou) {
+	public ArrayList <AdiantamentoBO> consultaPorSituação(char pagou) {
 		ArrayList<AdiantamentoBO> adiantBO = consulta("adi_pagou LIKE '%" +
 				pagou + "%'", "adi_codigo");
 		return adiantBO;
@@ -98,7 +98,7 @@ public class AdiantamentoDao {
 		}catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Nï¿½o foi possï¿½vel carregar os dados!\n" +
+					"Não foi possível carregar os dados!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -118,7 +118,7 @@ public class AdiantamentoDao {
 
 		} catch (SQLException eSQL) {
 			eSQL.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Nï¿½o foi possï¿½vel carregar os dados!\n" +"Mensagem: " + eSQL.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Não foi possível carregar os dados!\n" +"Mensagem: " + eSQL.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 		return 0;
 	}
@@ -135,7 +135,7 @@ public class AdiantamentoDao {
 		catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Nï¿½o foi possï¿½vel realizar a operaï¿½ï¿½o!\n" +
+					"Não foi possível realizar a operação!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -153,7 +153,7 @@ public class AdiantamentoDao {
 		catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Nï¿½o foi possï¿½vel realizar a operaï¿½ï¿½o!\n" +
+					"Não foi possível realizar a operação!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -178,7 +178,7 @@ public class AdiantamentoDao {
 		catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Nï¿½o foi possï¿½vel realizar a inclusï¿½o!\n" +
+					"Não foi possível realizar a inclusão!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -201,7 +201,7 @@ public class AdiantamentoDao {
 		catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Nï¿½o foi possï¿½vel realizar a inclusï¿½o!\n" +
+					"Não foi possível realizar a inclusão!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -217,8 +217,8 @@ public class AdiantamentoDao {
 		}catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Nï¿½o foi possï¿½vel realizar a operaï¿½ï¿½o!\n" +
-							"Mensagem: Esse registro estï¿½ sendo referenciado por outra tabela",
+					"Não foi possível realizar a operação!\n" +
+							"Mensagem: Esse registro está sendo referenciado por outra tabela",
 							"Erro", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
