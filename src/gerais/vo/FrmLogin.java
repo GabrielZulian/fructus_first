@@ -53,7 +53,7 @@ public class FrmLogin extends JFrame implements ActionListener {
 	private JButton btnConfirmar, btnCancelar;
 	public JComboBox cbUsuarios, cbModulo;
 	public boolean fecha = true;
-	private String[] modulos = {"Controle colheita MaÁ„", "Controle de Pragas", "Controle de Insumos"};
+	private String[] modulos = {"Controle colheita Ma√ß√£", "Controle de Pragas", "Controle de Insumos"};
 	private static ArrayList<UsuarioBO> usuBO;
 	private UsuarioDao usuDao = new UsuarioDao();
 	
@@ -110,7 +110,7 @@ public class FrmLogin extends JFrame implements ActionListener {
 		painelMeio.add(lblLogin, constraints);
 		constraints.gridwidth = 1;
 
-		lblUsuario = new JLabel("Usu·rio");
+		lblUsuario = new JLabel("Usu√°rio");
 		lblUsuario.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 1;
@@ -140,7 +140,7 @@ public class FrmLogin extends JFrame implements ActionListener {
 		constraints.anchor = GridBagConstraints.WEST;
 		painelMeio.add(txtSenha, constraints);	
 
-		lblModulo = new JLabel("MÛdulo");
+		lblModulo = new JLabel("M√≥dulo");
 		lblModulo.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 3;
@@ -315,7 +315,7 @@ public class FrmLogin extends JFrame implements ActionListener {
 				return;
 			} else {
 				usuBO.get(0).setSenha("");
-				if (cbModulo.getSelectedItem().equals("Controle colheita MaÁ„")) {
+				if (cbModulo.getSelectedItem().equals("Controle colheita Ma√ß√£")) {
 					FrmMenuGeralMaca fr = new FrmMenuGeralMaca();
 					fr.setVisible(true);
 				} else if (cbModulo.getSelectedItem().equals("Controle de Pragas")) {
@@ -334,7 +334,7 @@ public class FrmLogin extends JFrame implements ActionListener {
 			else
 				dispose();
 		} else if (origem == cbModulo) {
-			if (cbModulo.getSelectedItem().equals("Controle colheita MaÁ„"))
+			if (cbModulo.getSelectedItem().equals("Controle colheita Ma√ß√£"))
 				lblImg.setIcon(new ImageIcon(getClass().getResource("/icons/img_login.gif")));
 			else if (cbModulo.getSelectedItem().equals("Controle de Pragas"))
 				lblImg.setIcon(new ImageIcon(getClass().getResource("/icons/img_login_pragas.gif")));

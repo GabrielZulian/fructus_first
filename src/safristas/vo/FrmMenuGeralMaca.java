@@ -50,10 +50,10 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 
 	private JMenu menuCadastros = new JMenu("Cadastros");
 	private JMenu menuConsultas = new JMenu("Consultas");
-	private JMenu menuPag = new JMenu("LanÁamentos");
+	private JMenu menuPag = new JMenu("Lan√ßamentos");
 	private JMenu menuDiaTrabalho = new JMenu("Dia de trabalho");
 	private JMenu menuPagamento = new JMenu("Pagamento/Fechamento");
-	private JMenu menuRelatorio = new JMenu("RelatÛrios");
+	private JMenu menuRelatorio = new JMenu("Relat√≥rios");
 	private JMenu menuEspeciais = new JMenu("Especiais");
 	private JMenu menuPlanilhas = new JMenu("Planilhas");
 	private JMenu menuRelEmpregados = new JMenu("Empregados");
@@ -62,21 +62,21 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 	
 	private JMenuItem itemEmpregadorCad, itemEmpreiteiroCad, itemEmpregadoCad, itemEquipeCad, itemCidadeCad, itemFuncaoCad, itemVeiculoCad, itemQuadraCad,
 	itemEmpregadorCon, itemEmpreiteiroCon, itemEmpregadoCon, itemEquipeCon, itemCidadeCon, itemFuncaoCon, itemVeiculoCon, itemQuadraCon,
-	itemLancaDia, itemLanÁaDiaOut, itemFechamento, itemFechamentoOut, itemAdiantamentos, itemRelEmpregadores, itemRelEmpreiteiros, itemRelEmpregadosSimples,
+	itemLancaDia, itemLancaDiaOut, itemFechamento, itemFechamentoOut, itemAdiantamentos, itemRelEmpregadores, itemRelEmpreiteiros, itemRelEmpregadosSimples,
 	itemRelEmpregadosVisaoGeral, itemRelPagamentos, itemPlanilhaColetaDias, itemVisaoGeral, itemRelDiasTrabalho, itemDetalhes;
 	
 	public FrmMenuGeralMaca() {
 		super();
 		
-		setTitle("¡rea de trabalho - Colheita maÁ„");
+		setTitle("√Årea trabalho - Colheita ma√ß√£");
 		
 		itemEmpregadorCad = new JMenuItem("Empregadores", new ImageIcon(getClass().getResource("/icons/icon_empregadorp.gif")));
 		itemEmpreiteiroCad = new JMenuItem("Empreiteiros", new ImageIcon(getClass().getResource("/icons/icon_empreiteirop.gif")));
 		itemEmpregadoCad = new JMenuItem("Empregados", new ImageIcon(getClass().getResource("/icons/icon_empregadop.gif")));
 		itemEquipeCad = new JMenuItem("Equipes", new ImageIcon(getClass().getResource("/icons/icon_equipep.gif")));
 		itemCidadeCad = new JMenuItem("Cidades", new ImageIcon(getClass().getResource("/icons/icon_cidadep.gif")));
-		itemFuncaoCad = new JMenuItem("FunÁıes", new ImageIcon(getClass().getResource("/icons/icon_funcaop.gif")));
-		itemVeiculoCad = new JMenuItem("VeÌculos", new ImageIcon(getClass().getResource("/icons/icon_veiculop.gif")));
+		itemFuncaoCad = new JMenuItem("Fun√ß√µes", new ImageIcon(getClass().getResource("/icons/icon_funcaop.gif")));
+		itemVeiculoCad = new JMenuItem("Ve√≠culos", new ImageIcon(getClass().getResource("/icons/icon_veiculop.gif")));
 		itemQuadraCad = new JMenuItem("Quadras", new ImageIcon(getClass().getResource("/icons/icon_quadrap.gif")));
 
 		menuCadastros.add(itemEmpregadorCad);
@@ -97,8 +97,8 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 		itemEmpregadoCon = new JMenuItem("Empregados", new ImageIcon(getClass().getResource("/icons/icon_empregadop.gif")));
 		itemEquipeCon = new JMenuItem("Equipes", new ImageIcon(getClass().getResource("/icons/icon_equipep.gif")));
 		itemCidadeCon = new JMenuItem("Cidades", new ImageIcon(getClass().getResource("/icons/icon_cidadep.gif")));
-		itemFuncaoCon = new JMenuItem("FunÁıes", new ImageIcon(getClass().getResource("/icons/icon_funcaop.gif")));
-		itemVeiculoCon = new JMenuItem("VeÌculos", new ImageIcon(getClass().getResource("/icons/icon_veiculop.gif")));
+		itemFuncaoCon = new JMenuItem("Fun√ß√µes", new ImageIcon(getClass().getResource("/icons/icon_funcaop.gif")));
+		itemVeiculoCon = new JMenuItem("VeÔøΩculos", new ImageIcon(getClass().getResource("/icons/icon_veiculop.gif")));
 		itemQuadraCon = new JMenuItem("Quadras", new ImageIcon(getClass().getResource("/icons/icon_quadrap.gif")));
 		
 		menuConsultas.add(itemEmpregadorCon);
@@ -115,13 +115,13 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 		barraMenu.add(menuConsultas);
 
 		itemLancaDia = new JMenuItem("Safristas", new ImageIcon(getClass().getResource("/icons/icon_lanca_dia_frutp.gif")));
-		itemLanÁaDiaOut = new JMenuItem("Outros", new ImageIcon(getClass().getResource("/icons/icon_lanca_dia_motp.gif")));
+		itemLancaDiaOut = new JMenuItem("Outros", new ImageIcon(getClass().getResource("/icons/icon_lanca_dia_motp.gif")));
 		itemFechamento = new JMenuItem("Safristas", new ImageIcon(getClass().getResource("/icons/icon_pagamento_maca2p.gif")));
 		itemFechamentoOut = new JMenuItem("Outros", new ImageIcon(getClass().getResource("/icons/icon_pagamento_motorista2p.gif")));
 		itemAdiantamentos = new JMenuItem("Adiantamentos", new ImageIcon(getClass().getResource("/icons/icon_adiantamentop.gif")));
 		
 		menuDiaTrabalho.add(itemLancaDia);
-		menuDiaTrabalho.add(itemLanÁaDiaOut);
+		menuDiaTrabalho.add(itemLancaDiaOut);
 		menuPagamento.add(itemFechamento);
 		menuPagamento.add(itemFechamentoOut);
 		
@@ -135,7 +135,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 		itemRelEmpregadores = new JMenuItem("Empregadores", new ImageIcon(getClass().getResource("/icons/icon_empregadorp.gif")));
 		itemRelEmpreiteiros = new JMenuItem("Empreiteiros", new ImageIcon(getClass().getResource("/icons/icon_empreiteirop.gif")));
 		itemRelEmpregadosSimples = new JMenuItem("Simples", new ImageIcon(getClass().getResource("/icons/icon_empregadop.gif")));
-		itemRelEmpregadosVisaoGeral = new JMenuItem("Vis„o geral", new ImageIcon(getClass().getResource("/icons/icon_equipep.gif")));
+		itemRelEmpregadosVisaoGeral = new JMenuItem("Vis√£o geral", new ImageIcon(getClass().getResource("/icons/icon_equipep.gif")));
 		itemRelPagamentos = new JMenuItem("Pagamentos", new ImageIcon(getClass().getResource("/icons/icon_pagamento.gif")));
 		itemRelDiasTrabalho = new JMenuItem("Dias trabalhados");
 		itemPlanilhaColetaDias = new JMenuItem("Planilha p/ coleta de dias", new ImageIcon(getClass().getResource("/icons/icon_relatoriop.gif")));
@@ -155,7 +155,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 		
 		barraMenu.add(menuRelatorio);
 		
-		itemVisaoGeral = new JMenuItem("Vis„o Geral");
+		itemVisaoGeral = new JMenuItem("Vis√£o Geral");
 		menuEspeciais.add(itemVisaoGeral);
 		menuEspeciais.setMnemonic(KeyEvent.VK_E);
 		barraMenu.add(menuEspeciais);
@@ -176,22 +176,22 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 		btnEquipes = new JButton(new ImageIcon(getClass().getResource("/icons/icon_equipe.gif")));
 		btnEquipes.setToolTipText("Consulta de Equipes");
 		btnFuncoes = new JButton(new ImageIcon(getClass().getResource("/icons/icon_funcao.gif")));
-		btnFuncoes.setToolTipText("Consulta de FunÁıes");
+		btnFuncoes.setToolTipText("Consulta de Fun√ß√µes");
 		btnVeiculos = new JButton(new ImageIcon(getClass().getResource("/icons/icon_veiculo.gif")));
-		btnVeiculos.setToolTipText("Consulta de VeÌculos");
+		btnVeiculos.setToolTipText("Consulta de Ve√≠culos");
 		btnQuadras = new JButton(new ImageIcon(getClass().getResource("/icons/icon_quadra.gif")));
 		btnQuadras.setToolTipText("Consulta de Quadras");
 		btnCidades = new JButton(new ImageIcon(getClass().getResource("/icons/icon_cidade.gif")));
 		btnCidades.setToolTipText("Consulta de Cidades");
 
 		btnLancaDia = new JButton(new ImageIcon(getClass().getResource("/icons/icon_lanca_dia_frut.gif")));
-		btnLancaDia.setToolTipText("LanÁar dia trabalho Safristas");
+		btnLancaDia.setToolTipText("Lan√ßar dia trabalho Safristas");
 		btnLancaDiaOut = new JButton(new ImageIcon(getClass().getResource("/icons/icon_lanca_dia_mot.gif")));
-		btnLancaDiaOut.setToolTipText("LanÁar dia trabalho Outros");
+		btnLancaDiaOut.setToolTipText("Lan√ßar dia trabalho Outros");
 		btnPagamento = new JButton(new ImageIcon(getClass().getResource("/icons/icon_pagamento_maca2.gif")));
-		btnPagamento.setToolTipText("LanÁar pagamento Safristas");
+		btnPagamento.setToolTipText("Lan√ßar pagamento Safristas");
 		btnPagamentoOut = new JButton(new ImageIcon(getClass().getResource("/icons/icon_pagamento_motorista2.gif")));
-		btnPagamentoOut.setToolTipText("LanÁar pagamento Outros");
+		btnPagamentoOut.setToolTipText("Lan√ßar pagamento Outros");
 
 		barra.add(btnEmpregadores);
 		barra.add(btnEmpreiteiros);
@@ -210,7 +210,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 		barra.add(btnPagamentoOut);
 		
 		btnTrocaModulo = new JButton(new ImageIcon(getClass().getResource("/icons/icon_troca_modulo.gif")));
-		btnTrocaModulo.setToolTipText("Trocar MÛdulo");
+		btnTrocaModulo.setToolTipText("Trocar M√≥dulo");
 		
 		barra.add(Box.createHorizontalGlue());
 		barra.add(btnTrocaModulo);
@@ -232,7 +232,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 		itemVeiculoCon.addActionListener(this);
 		itemQuadraCon.addActionListener(this);
 		itemLancaDia.addActionListener(this);
-		itemLanÁaDiaOut.addActionListener(this);
+		itemLancaDiaOut.addActionListener(this);
 		itemFechamento.addActionListener(this);
 		itemFechamentoOut.addActionListener(this);
 		itemAdiantamentos.addActionListener(this);
@@ -268,7 +268,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			if (origem == itemEmpregadorCad) {
 				FrmCadastraAtrativo fr = new FrmCadastraAtrativo();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
@@ -277,7 +277,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemEmpreiteiroCad) {
 				FrmCadastraEmpreiteiro fr = new FrmCadastraEmpreiteiro();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
@@ -286,7 +286,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemEmpregadoCad) {
 				FrmCadastraEmpregado fr = new FrmCadastraEmpregado();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
@@ -295,7 +295,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemEquipeCad) {
 				FrmCadastraEquipe fr = new FrmCadastraEquipe();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
@@ -304,7 +304,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemCidadeCad) {
 				FrmCadastraCidade fr = new FrmCadastraCidade();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
@@ -313,7 +313,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemQuadraCad) {
 				FrmConsultaQuadra fr = new FrmConsultaQuadra();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
@@ -322,7 +322,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemFuncaoCad) {
 				FrmCadastraFuncao fr = new FrmCadastraFuncao();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
@@ -331,16 +331,16 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemVeiculoCad) {
 				FrmCadastraVeiculo fr = new FrmCadastraVeiculo();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
-				} catch (PropertyVetoException exc) { } 
+				} catch (PropertyVetoException exc) { }
 				centralizaInternalFrame(fr, dPane);
 
 			} else if (origem == itemEmpregadorCon || origem == btnEmpregadores) {
 				FrmConsultaEmpregador fr = new FrmConsultaEmpregador();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
@@ -349,7 +349,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemEmpreiteiroCon || origem == btnEmpreiteiros) {
 				FrmConsultaEmpreiteiro fr = new FrmConsultaEmpreiteiro();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
@@ -358,7 +358,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemEmpregadoCon || origem == btnEmpregados) {
 				FrmConsultaEmpregado fr = new FrmConsultaEmpregado();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
@@ -367,7 +367,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemEquipeCon || origem == btnEquipes) {
 				FrmConsultaEquipe fr = new FrmConsultaEquipe();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
@@ -376,7 +376,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemCidadeCon || origem == btnCidades) {
 				FrmConsultaCidade fr = new FrmConsultaCidade();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { } 
@@ -384,15 +384,15 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemQuadraCon || origem == btnQuadras) {
 				FrmConsultaQuadra fr = new FrmConsultaQuadra();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
-				} catch (PropertyVetoException exc) { } 
+				} catch (PropertyVetoException exc) { }
 				centralizaInternalFrame(fr, dPane);
 			} else if (origem == itemFuncaoCon || origem == btnFuncoes) {
 				FrmConsultaFuncao fr = new FrmConsultaFuncao();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { } 
@@ -401,24 +401,24 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemVeiculoCon || origem == btnVeiculos) {
 				FrmConsultaVeiculo fr = new FrmConsultaVeiculo();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
-				} catch (PropertyVetoException exc) { } 
+				} catch (PropertyVetoException exc) { }
 				centralizaInternalFrame(fr, dPane);
 
 			} else if (origem == itemLancaDia || origem == btnLancaDia) {
 				FrmConsultaDia fr = new FrmConsultaDia();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
 				centralizaInternalFrame(fr, dPane);
-			} else if (origem == itemLanÁaDiaOut || origem == btnLancaDiaOut) {
+			} else if (origem == itemLancaDiaOut || origem == btnLancaDiaOut) {
 				FrmConsultaDiaOutros fr = new FrmConsultaDiaOutros();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
@@ -426,7 +426,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemFechamento || origem == btnPagamento) {
 				FrmConsultaPagamento fr = new FrmConsultaPagamento();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
@@ -434,20 +434,20 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemFechamentoOut || origem == btnPagamentoOut) {
 				FrmConsultaPagamentoOutros fr = new FrmConsultaPagamentoOutros();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
 				centralizaInternalFrame(fr, dPane);
 			} else if (origem == btnTrocaModulo) {
 				FrmLogin fr = new FrmLogin();
-				fr.cbModulo.removeItem("Controle colheita MaÁ„");
+				fr.cbModulo.removeItem("Controle colheita Ma√ß√£");
 				fr.fecha = false;
 				fr.setVisible(true);
 			} else if (origem == itemAdiantamentos) {
 				FrmConsultaAdiantamentos fr = new FrmConsultaAdiantamentos();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
@@ -463,7 +463,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemRelEmpreiteiros) {
 				FrmRelatorioEmpreiteiros fr = new FrmRelatorioEmpreiteiros();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
@@ -471,7 +471,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemRelEmpregadosSimples) {
 				FrmRelatorioEmpregados fr = new FrmRelatorioEmpregados();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
@@ -479,7 +479,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemRelEmpregadosVisaoGeral) {
 				FrmRelatorioEmpregadosVisaoGeral fr = new FrmRelatorioEmpregadosVisaoGeral();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
@@ -487,7 +487,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemRelPagamentos) {
 				FrmRelatorioPagamentos fr = new FrmRelatorioPagamentos();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
@@ -495,7 +495,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemRelDiasTrabalho) {
 				FrmRelatorioDiasTrabalhados fr = new FrmRelatorioDiasTrabalhados();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }
@@ -503,7 +503,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 			} else if (origem == itemPlanilhaColetaDias) {
 				FrmPlanilhaColetaDias fr = new FrmPlanilhaColetaDias();
 				fr.setVisible(true);
-				dPane.add(fr);  
+				dPane.add(fr);
 				try {
 					fr.setSelected(true);
 				} catch (PropertyVetoException exc) { }

@@ -100,7 +100,7 @@ public class ContagemDao {
 		}catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível carregar os dados!\n" +
+					"Nï¿½o foi possï¿½vel carregar os dados!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -143,7 +143,7 @@ public class ContagemDao {
 		}catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível carregar os dados!\n" +
+					"Nï¿½o foi possï¿½vel carregar os dados!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -188,7 +188,7 @@ public class ContagemDao {
 		}catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível carregar os dados!\n" +
+					"Nï¿½o foi possï¿½vel carregar os dados!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -213,7 +213,7 @@ public class ContagemDao {
 
 		} catch (SQLException eSQL) {
 			eSQL.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Não foi possível carregar os dados!\n" +"Mensagem: " + eSQL.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "NÃ£o foi possÃ­vel carregar os dados!\n" +"Mensagem: " + eSQL.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 		return data;
 	}
@@ -236,7 +236,7 @@ public class ContagemDao {
 
 		} catch (SQLException eSQL) {
 			eSQL.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Não foi possível carregar os dados!\n" +"Mensagem: " + eSQL.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "NÃ£o foi possÃ­vel carregar os dados!\n" +"Mensagem: " + eSQL.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 		return data;
 	}
@@ -247,14 +247,14 @@ public class ContagemDao {
 		try {
 			sentenca = conexao.createStatement();
 			registros = sentenca.executeQuery("SELECT MAX(cont_codigo) FROM contagem");
-			if(registros.next())
+			if (registros.next())
 				return registros.getInt(1);  
 			else 
 				JOptionPane.showMessageDialog(null, "Nenhum registro foi encontrado!", "Mensagem", JOptionPane.WARNING_MESSAGE);
 
 		} catch (SQLException eSQL) {
 			eSQL.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Não foi possível carregar os dados!\n" +"Mensagem: " + eSQL.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "NÃ£o foi possÃ­vel carregar os dados!\n" +"Mensagem: " + eSQL.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 		return 0;
 	}
@@ -277,7 +277,7 @@ public class ContagemDao {
 		catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível realizar a inclusão!\n" +
+					"NÃ£o foi possÃ­vel carregar os dados!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -300,7 +300,7 @@ public class ContagemDao {
 //		catch (SQLException eSQL) {
 //			eSQL.printStackTrace();
 //			JOptionPane.showMessageDialog(null,
-//					"Não foi possível realizar a inclusão!\n" +
+//					"Nï¿½o foi possï¿½vel realizar a inclusï¿½o!\n" +
 //							"Mensagem: " + eSQL.getMessage(),
 //							"Erro", JOptionPane.ERROR_MESSAGE);
 //		}
@@ -316,8 +316,8 @@ public class ContagemDao {
 		}catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível realizar a operação!\n" +
-							"Mensagem: Esse registro está sendo referenciado por outra tabela",
+					"NÃ£o foi possÃ­vel realizar a operaÃ§Ã£o!\n" +
+							"Mensagem: Esse registro estï¿½ sendo referenciado por outra tabela",
 							"Erro", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

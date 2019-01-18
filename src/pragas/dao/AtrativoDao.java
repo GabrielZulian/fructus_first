@@ -64,7 +64,7 @@ public class AtrativoDao {
 		}catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"N„o foi possÌvel carregar os dados!\n" +
+					"N√£o foi poss√≠vel carregar os dados!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -87,7 +87,7 @@ public class AtrativoDao {
 		catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"N„o foi possÌvel realizar a inclus„o!\n" +
+					"N√£o foi poss√≠vel realizar a inclus√£o!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -104,11 +104,10 @@ public class AtrativoDao {
 
 			sentenca.executeUpdate(sentencaSQL); 
 			sentenca.close();
-		}
-		catch (SQLException eSQL) {
+		} catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"N„o foi possÌvel realizar a inclus„o!\n" +
+					"N√£o foi poss√≠vel realizar a altera√ß√£o!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -118,14 +117,14 @@ public class AtrativoDao {
 		Statement sentenca;
 		try {
 			sentenca = conexao.createStatement();
-			String sentencaSQL ="DELETE FROM atrativo WHERE atrat_codigo = " + cod; 
-			sentenca.executeUpdate(sentencaSQL); 
+			String sentencaSQL ="DELETE FROM atrativo WHERE atrat_codigo = " + cod;
+			sentenca.executeUpdate(sentencaSQL);
 			sentenca.close();
-		}catch (SQLException eSQL) {
+		} catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"N„o foi possÌvel realizar a operaÁ„o!\n" +
-							"Mensagem: Esse registro est· sendo referenciado por outra tabela",
+					"N√£o foi poss√≠vel realizar a exclus√£o!\n" +
+							"Mensagem: Esse registro est√° sendo referenciado por outra tabela",
 							"Erro", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

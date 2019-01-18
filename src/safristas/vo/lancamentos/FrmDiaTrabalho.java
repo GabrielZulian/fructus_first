@@ -44,6 +44,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -81,14 +82,16 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 	lblQntdBinsClassif, lblValorComissaoIroClassif, lblQntdBins, lblValorBins, lblValorOutrosIro,
 	lblValorDia, lblValorTotalRestoEquipe, lblValorTotal, lblVlrComissao, lblVlrTotalComissao, lblHistorico;
 	public JTextField txtCodigoDia, txtCodEmpreiteiro, txtMostraEmpreiteiro, txtValorClassif, txtQntdBinsClassif,
-	txtValorComissaoIroClassif, txtQntdBins, txtValorBins, txtValorOutrosIro, txtValorTotal, 
+	txtValorComissaoIroClassif, txtQntdBins, txtValorBins, txtValorOutrosIro, txtValorTotal,
 	txtValorDia, txtValorTotalRestoEquipe, txtVlrComissao, txtVlrTotalComissao;
 	private JButton btnProcuraEmpreiteiro, btnConfirmar, btnCancelar;
 	private JFormattedTextField txtData;
 	private JTextArea txtAreaObserv;
 	private JRadioButton rBtnPorBins, rBtnPorDia;
+	private JTabbedPane tabbedPane = new JTabbedPane();
 	private ButtonGroup grupo;
 	private JPanel painelGeral = new JPanel();
+	private JPanel painelMeioSacolas = new JPanel();
 	private JPanel painelCima = new JPanel();
 	private JPanel painelEsq = new JPanel();
 	private JPanel painelMeioBorder = new JPanel();
@@ -213,11 +216,11 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 
 	public FrmDiaTrabalho() {
 
-		super("Lançamento Dia",false,true,false,true);
+		super("LanÃ§amento Dia",false,true,false,true);
 
 		setSize(974, 716);
 		setResizable(true);
-		setTitle("Lançar Dia - Safristas");
+		setTitle("LanÃ§ar Dia - Safristas");
 		setFrameIcon(new ImageIcon(getClass().getResource("/icons/icon_logo_varaschin.gif")));
 
 		painelGeral.setLayout(new BorderLayout(2, 2));
@@ -236,7 +239,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 
 		ArrayList<Object> dados2 = new ArrayList<Object>();
 
-		String[] colunas2 = new String[] {"Cód.", "Nome"};
+		String[] colunas2 = new String[] {"CÃ³d.", "Nome"};
 
 		boolean[] edicao2 = {false, false};
 
@@ -286,7 +289,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 
 		ArrayList<Object> dados = new ArrayList<Object>();
 
-		String[] colunas = new String[] {"Presença", "Classif.", "Código", "Nome", "Função", "Valor", "Rateio"};
+		String[] colunas = new String[] {"PresenÃ§a", "Classif.", "CÃ³digo", "Nome", "FunÃ§Ã£o", "Valor", "Rateio"};
 		boolean[] edicao = {true, true, false, false, false, false, false};
 
 		modelo = new ModeloTabela(dados, colunas, edicao);
@@ -330,7 +333,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 
 				if (linha >= 0 && coluna == COLUNA_CLASSIF) {
 					if (modelo.getValueAt(linha, COLUNA_PRESENCA).equals("N")) {
-						JOptionPane.showInternalMessageDialog(FrmDiaTrabalho.this, "Empregado não está presente p/ ser classificador", "Erro" , JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showInternalMessageDialog(FrmDiaTrabalho.this, "Empregado nÃ£o estï¿½ presente p/ ser classificador", "Erro" , JOptionPane.ERROR_MESSAGE);
 						modelo.setValueAt(false, linha, COLUNA_CLASSIF);
 					} else {
 						distribuiValores();
@@ -339,7 +342,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 					if (e.getClickCount() == 2 &&
 							modelo.getValueAt(linha, COLUNA_CLASSIF).toString() == ("false") &&
 							!modelo.getValueAt(linha, COLUNA_PRESENCA).equals("N") &&
-							rBtnPorBins.isSelected()) { //verifica os 2 cliques, se não é classificador, se está presente e se a distribuição é por bins
+							rBtnPorBins.isSelected()) { //verifica os 2 cliques, se nï¿½o ï¿½ classificador, se estï¿½ presente e se a distribuiï¿½ï¿½o ï¿½ por bins
 						Double valorInicial = Double.parseDouble(modelo.getValueAt(linha, COLUNA_RATEIO).toString());
 
 						String string = JOptionPane.showInternalInputDialog(FrmDiaTrabalho.this, "Selecione o rateio deste empregado", "Selecionar Rateio", JOptionPane.QUESTION_MESSAGE);
@@ -348,7 +351,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 						try {
 							valorRateio = Double.parseDouble(string.replace(',', '.'));
 						} catch (NumberFormatException erro) {
-							JOptionPane.showInternalMessageDialog(FrmDiaTrabalho.this, "Valor do rateio deve ser numérico", "Erro" , JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showInternalMessageDialog(FrmDiaTrabalho.this, "Valor do rateio deve ser numÃ©rico", "Erro" , JOptionPane.ERROR_MESSAGE);
 						}
 						
 						if (valorRateio > valorInicial) {
@@ -377,7 +380,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 
 		//----------------------------------------------------
 
-		lblCodigoDia = new JLabel("Código");
+		lblCodigoDia = new JLabel("CÃ³digo");
 		lblCodigoDia.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -416,7 +419,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		painelCima.add(txtData, constraints);
 		constraints.gridwidth = 1;
 
-		lblCodEmpreiteiro = new JLabel("Cód. empreiteiro");
+		lblCodEmpreiteiro = new JLabel("CÃ³d. empreiteiro");
 		lblCodEmpreiteiro.setFont(f);
 		constraints.gridx = 5;
 		constraints.gridy = 0;
@@ -462,7 +465,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 						modeloTabEquipe.removeRow(i);
 
 					int i = 0;
-					do{
+					do {
 						modeloTabEquipe.addRow(new Object[] {
 								equiBO.get(i).getCodigo(),
 								equiBO.get(i).getNome()
@@ -489,7 +492,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		constraints.weightx = 1;
 		constraints.weighty = 0;
 
-		lblBinsOuDia = new JLabel("Método distribuição");
+		lblBinsOuDia = new JLabel("MÃ©todo distribuiÃ§Ã£o");
 		lblBinsOuDia.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -533,7 +536,6 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		txtValorClassif.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-
 				distribuiValoresPorBinsERateio();
 			}
 		});
@@ -615,7 +617,6 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		painelMeio.add(txtValorBins, constraints);
 
 		txtValorBins.addFocusListener(new FocusAdapter() {
-
 			@Override
 			public void focusLost(FocusEvent e) {
 				configuraRateioInicial();
@@ -686,7 +687,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		painelMeio.add(txtValorTotal, constraints);
 		constraints.gridwidth = 1;
 
-		lblVlrComissao = new JLabel("Valor comissão R$");
+		lblVlrComissao = new JLabel("Valor comissÃ£o R$");
 		lblVlrComissao.setFont(f);
 		constraints.anchor = GridBagConstraints.EAST;
 		constraints.gridx = 0;
@@ -728,7 +729,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			}
 		});
 
-		lblVlrTotalComissao = new JLabel("Valor total comissão R$");
+		lblVlrTotalComissao = new JLabel("Valor total comissÃ£o R$");
 		lblVlrTotalComissao.setFont(f);
 		constraints.anchor = GridBagConstraints.EAST;
 		constraints.gridx = 2;
@@ -744,7 +745,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		constraints.anchor = GridBagConstraints.WEST;
 		painelMeio.add(txtVlrTotalComissao, constraints);
 
-		lblHistorico = new JLabel("Histórico");
+		lblHistorico = new JLabel("HistÃ³rico");
 		lblHistorico.setFont(f);
 		constraints.anchor = GridBagConstraints.NORTHEAST;
 		constraints.gridx = 0;
@@ -768,7 +769,16 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 
 		painelMeioBorder.add(painelMeio, BorderLayout.CENTER);
 
-		painelGeral.add(painelMeioBorder, BorderLayout.CENTER);
+		tabbedPane.addTab("Dia/Bins", painelMeioBorder);
+		
+		JPanel pnlMeioSacolas = new JPanel();
+		pnlMeioSacolas.setLayout(new BorderLayout(2, 2));
+		
+		pnlMeioSacolas.add(tabela, BorderLayout.NORTH);
+		
+		tabbedPane.addTab("Sacola", pnlMeioSacolas);
+		
+		painelGeral.add(tabbedPane, BorderLayout.CENTER);
 
 		//----------------------------fim painel por equipe------------------------------
 
@@ -816,11 +826,12 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		});
 
 		painelBaixo.setBorder(BorderFactory.createEtchedBorder());
+		
 		painelGeral.add(painelBaixo, BorderLayout.SOUTH);
 
 		Container p = getContentPane();
 		p.add(painelGeral);
-
+		
 		configInterfaceBins();
 
 		btnConfirmar.addActionListener(this);
@@ -961,7 +972,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 
 		calculaComissao();
 		} catch (NumberFormatException e) {
-			System.out.println("Ainda não é possível calcular (bins)");
+			System.out.println("Ainda nÃ£o Ã© possÃ­vel calcular (bins)");
 		}
 	}
 
@@ -1023,7 +1034,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			txtValorTotalRestoEquipe.setText(decimal.format(totalResto));
 			txtValorTotal.setText(decimal.format(totalGeral));
 		} catch (NumberFormatException e) {
-			System.out.println("Ainda não é possível calcular (dia)");
+			System.out.println("Ainda nÃ£o Ã© possÃ­vel calcular (dia)");
 		}
 		calculaComissao();
 	}
@@ -1123,7 +1134,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			try {
 				diaBO.data = new DateTime(df.parse(txtData.getText()));
 			} catch (ParseException e2) {
-				JOptionPane.showMessageDialog(this, "Data inválida!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Data invÃ¡lida!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtCodigoDia.requestFocus();
 				txtCodigoDia.selectAll();
 				return;
@@ -1150,11 +1161,11 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			try {
 				diaBO.setValorClassif(Double.parseDouble(txtValorClassif.getText().trim().replace(',', '.')));
 			} catch (NumberFormatException e4) {
-				JOptionPane.showMessageDialog(this, "Valor classificador deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Valor classificador deve ser numÃ©rico!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtValorClassif.requestFocus();
 				txtValorClassif.selectAll();
 			} catch (ValorErradoException e4) {
-				JOptionPane.showMessageDialog(this, "Valor classificador inválido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Valor classificador invÃ¡lido!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtValorClassif.requestFocus();
 				txtValorClassif.selectAll();
 				return;
@@ -1163,7 +1174,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			try {
 				diaBO.setQntdBinsClassif(Integer.parseInt(txtQntdBinsClassif.getText()));
 			} catch (NumberFormatException e3) {
-				JOptionPane.showMessageDialog(this, "Quantidade de deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Quantidade de deve ser numÃ©rico!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtQntdBins.requestFocus();
 				txtQntdBins.selectAll();
 			} catch (QuantidadeErradaException e3) {
@@ -1177,12 +1188,12 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			try {
 				diaBO.setValorComissIroClassif(Double.parseDouble(txtValorComissaoIroClassif.getText().trim().replace(',', '.')));
 			} catch (NumberFormatException e3) {
-				JOptionPane.showMessageDialog(this, "Valor comissão deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Valor comissï¿½o deve ser numÃ©rico!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtValorComissaoIroClassif.requestFocus();
 				txtValorComissaoIroClassif.selectAll();
 				return;
 			} catch (ValorErradoException e3) {
-				JOptionPane.showMessageDialog(this, "Valor comissão inválido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Valor comissï¿½o invÃ¡lido!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtValorComissaoIroClassif.requestFocus();
 				txtValorComissaoIroClassif.selectAll();
 				return;
@@ -1191,7 +1202,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			try {
 				diaBO.setQntBinsEquipe(Integer.parseInt(txtQntdBins.getText()));
 			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "Quantidade de deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Quantidade de deve ser numÃ©rico!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtQntdBins.requestFocus();
 				txtQntdBins.selectAll();
 				return;
@@ -1205,12 +1216,12 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			try {
 				diaBO.setValorBins(Double.parseDouble(txtValorBins.getText().replace(',', '.')));
 			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "Valor bins deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Valor bins deve ser numÃ©rico!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtValorBins.requestFocus();
 				txtValorBins.selectAll();
 				return;
 			} catch (ValorErradoException e1) {
-				JOptionPane.showMessageDialog(this, "Valor bins inválido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Valor bins invÃ¡lido!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtValorBins.requestFocus();
 				txtValorBins.selectAll();
 				return;
@@ -1219,12 +1230,12 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			try {
 				diaBO.setValorDia(Double.parseDouble(txtValorDia.getText().replace(',', '.')));
 			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "Valor do dia deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Valor do dia deve ser numÃ©rico!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtValorDia.requestFocus();
 				txtValorDia.selectAll();
 				return;
 			} catch (ValorErradoException e1) {
-				JOptionPane.showMessageDialog(this, "Valor do dia inválido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Valor do dia invÃ¡lido!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtValorDia.requestFocus();
 				txtValorDia.selectAll();
 				return;
@@ -1237,7 +1248,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 				diaBO.setValorOutroIro(Double.parseDouble(txtValorOutrosIro.getText().trim().replace(',', '.')));
 				diaBO.setValorTotalComissao(totalComissao);
 			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "Valor deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Valor deve ser numÃ©rico!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				return;
 			} 
 			catch (ValorErradoException e1) {
@@ -1261,7 +1272,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 				int cont = 0;
 				char presenca = 'S';
 
-				if (!txtCodigoDia.getText().equals("-")) //verifica se é alteração para excluir os dados e gravar novamente
+				if (!txtCodigoDia.getText().equals("-")) //verifica se ï¿½ alteraï¿½ï¿½o para excluir os dados e gravar novamente
 					diaAdoDao.excluir(Integer.parseInt(txtCodigoDia.getText()));
 
 				do {

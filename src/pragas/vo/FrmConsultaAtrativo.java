@@ -35,16 +35,16 @@ public class FrmConsultaAtrativo extends FrmConsultaPai {
 		setSize(getWidth()-50, getHeight()-40);
 
 		cbConsulta.removeItem("Nome");
-		cbConsulta.addItem("Descrição");
-		cbConsulta.setSelectedItem("Descrição");
+		cbConsulta.addItem("Descriï¿½ï¿½o");
+		cbConsulta.setSelectedItem("Descriï¿½ï¿½o");
 
 		ArrayList<Object> dados = new ArrayList<Object>();
 
-		String[] colunas = new String[] {"Código", "Descrição", "Dias p/ troca"};
+		String[] colunas = new String[] {"Cï¿½digo", "DescriÃ§Ã£o", "Dias p/ troca"};
 
 		boolean[] edicao = {false, false, false};
 
-		// criação da tabela baseada no modelo ModeloTabela
+		// criaï¿½ï¿½o da tabela baseada no modelo ModeloTabela
 		modelo = new ModeloTabela(dados, colunas, edicao);
 		tabela = new JTable(modelo);
 		tabela.getColumnModel().getColumn(0).setResizable(false);
@@ -121,16 +121,16 @@ public class FrmConsultaAtrativo extends FrmConsultaPai {
 		for (int i = modelo.getRowCount() - 1; i >= 0; i--)
 			modelo.removeRow(i);
 
-		if (super.cbConsulta.getSelectedItem().equals("Código")) {
+		if (super.cbConsulta.getSelectedItem().equals("Cï¿½digo")) {
 			try {
 				atratBO = atratDao.consultaPorCodigo(Integer.parseInt(super.txtDadoConsulta.getText()));
 			} catch(NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "O código deve ser numérico", "Erro", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "O cï¿½digo deve ser numï¿½rico", "Erro", JOptionPane.ERROR_MESSAGE);
 				super.txtDadoConsulta.selectAll();
 				super.txtDadoConsulta.requestFocus();
 				return;
 			}
-		} else if (super.cbConsulta.getSelectedItem().equals("Descrição")) {
+		} else if (super.cbConsulta.getSelectedItem().equals("Descriï¿½ï¿½o")) {
 			atratBO = atratDao.consultaPorNome(super.txtDadoConsulta.getText());
 		}
 

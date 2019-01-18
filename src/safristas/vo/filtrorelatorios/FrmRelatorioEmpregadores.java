@@ -23,8 +23,8 @@ public class FrmRelatorioEmpregadores extends FrmRelatorioPai {
 	protected ButtonGroup grupo;
 
 	public FrmRelatorioEmpregadores() {
-		setTitle("Relatório de Empregadores");
-		lblTitulo.setText("Relatório de Empregadores");
+		setTitle("RelatÃ³rio de Empregadores");
+		lblTitulo.setText("RelatÃ³rio de Empregadores");
 
 		lblTipo = new JLabel("Tipo");
 		lblTipo.setFont(f2);

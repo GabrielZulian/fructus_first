@@ -18,7 +18,7 @@ public class MailIndice {
 	Session session;
 	public MailIndice() {
 		props = new Properties();
-		/** Par‚metros de conex„o com servidor Gmail */
+		/** Par√°metros de conexÔøΩo com servidor Gmail */
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.socketFactory.port", "465");
 		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
@@ -39,7 +39,7 @@ public class MailIndice {
 		String quadrasEIndice = "";
 		String especie = getTipoPragaString(praga);
 
-		quadrasEIndice = "Data  |  Quadra  |  Õndice  <br />";
+		quadrasEIndice = "Data  |  Quadra  |  √çndice<br />";
 		do {
 
 			String indice = String.valueOf(contBO.get(i).getIndiceFinal());
@@ -52,9 +52,9 @@ public class MailIndice {
 
 		} while (i < contBO.size());
 
-		String mensagem = "AtualizaÁ„o do Ìndice de quadras | EspÈcie = " + especie + "<br /><br />" + quadrasEIndice + "<br /> <br />"
-				+ "Esse e-mail È gerado automaticamente, favor n„o responder. <br />"
-				+ "Varaschin Software - v1.1 - LicenÁa Especial";
+		String mensagem = "Atualiza√ß√£o do √≠ndice de quadras | Esp√©cie = " + especie + "<br /><br />" + quadrasEIndice + "<br /> <br />"
+				+ "Esse e-mail √© gerado automaticamente, favor n√£o responder. <br />"
+				+ "Varaschin Software - v1.1 - Licen√ßa Especial";
 		mandaEmail(especie, mensagem);
 	}
 
@@ -63,10 +63,10 @@ public class MailIndice {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("Gabriel Zulian <gabriel@varaschinagro.com.br>")); //Remetente
 
-			Address[] toUser = InternetAddress //Destinat·rio(s)
+			Address[] toUser = InternetAddress //Destinat√°rio(s)
 					.parse("gabriel@varaschinagro.com.br, ermanojr@varaschinagro.com.br");
 			message.setRecipients(Message.RecipientType.TO, toUser);
-			message.setSubject("AtualizaÁ„o Õndice Pomar - " + especie + " | Varaschin Software");//Assunto
+			message.setSubject("Atualiza√ß√£o √çndice Pomar - " + especie + " | Varaschin Software");//Assunto
 			message.setContent(mensagem, "text/html; charset=utf-8");
 			message.saveChanges();
 			Transport.send(message);

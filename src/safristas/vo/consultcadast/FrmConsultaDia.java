@@ -44,13 +44,13 @@ public class FrmConsultaDia extends FrmConsultaPai {
 		cbConsulta.addItem("Nome Empreiteiro");
 		cbConsulta.addItem("Data");
 		cbConsulta.addItem("Valor");
-		cbConsulta.addItem("Cód. Equipe");
-		cbConsulta.addItem("Cód. Empreiteiro");
+		cbConsulta.addItem("CÃ³d Equipe");
+		cbConsulta.addItem("CÃ³d. Empreiteiro");
 		cbConsulta.setSelectedItem("Data");
 
 		ArrayList<Object> dados = new ArrayList<Object>();
 
-		String[] colunas = new String[] {"Código", "Data", "Equipe", "Empreiteiro", "Valor Total Equipe", "Qntd. Bins", "Histórico", "Situação"};
+		String[] colunas = new String[] {"CÃ³digo", "Data", "Equipe", "Empreiteiro", "Valor Total Equipe", "Qntd. Bins", "HistÃ³rico", "SituaÃ§Ã£o"};
 
 		boolean[] edicao = {false, false, false, false, false, false, false};
 
@@ -88,7 +88,7 @@ public class FrmConsultaDia extends FrmConsultaPai {
 			}
 		});
 		tabela.setFocusable(false);
-		super.btnIncluir.setText("Lançar Dia (F1)");
+		super.btnIncluir.setText("LanÃ§ar Dia (F1)");
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -103,7 +103,7 @@ public class FrmConsultaDia extends FrmConsultaPai {
 		for (int i = modelo.getRowCount() - 1; i >= 0; i--)
 			modelo.removeRow(i);
 
-		if (super.cbConsulta.getSelectedItem().equals("Código")) {
+		if (super.cbConsulta.getSelectedItem().equals("CÃ³digo")) {
 			diaBO = diaDao.consultaPorCodigo(Integer.parseInt(super.txtDadoConsulta.getText()));
 		} else if (super.cbConsulta.getSelectedItem().equals("Nome Equipe")) {
 			diaBO = diaDao.consultaPorNomeEquipe(super.txtDadoConsulta.getText());
@@ -113,20 +113,20 @@ public class FrmConsultaDia extends FrmConsultaPai {
 			diaBO = diaDao.consultaPorData(super.txtDadoConsulta.getText());
 		} else if (super.cbConsulta.getSelectedItem().equals("Valor")) {
 			diaBO = diaDao.consultaPorValor(Double.parseDouble(super.txtDadoConsulta.getText()));
-		} else if (super.cbConsulta.getSelectedItem().equals("Cód. Equipe")) {
+		} else if (super.cbConsulta.getSelectedItem().equals("CÃ³d. Equipe")) {
 			try {
 				diaBO = diaDao.consultaPorCodEquipe(Integer.parseInt(super.txtDadoConsulta.getText()));
 			} catch(NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "O código deve ser numérico", "Erro",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "O cï¿½digo deve ser numï¿½rico", "Erro",JOptionPane.ERROR_MESSAGE);
 				super.txtDadoConsulta.selectAll();
 				super.txtDadoConsulta.requestFocus();
 				return;
 			}
-		} else if (super.cbConsulta.getSelectedItem().equals("Cód. Empreiteiro")) {
+		} else if (super.cbConsulta.getSelectedItem().equals("Cï¿½d. Empreiteiro")) {
 			try {
 				diaBO = diaDao.consultaPorCodEmpreiteiro(Integer.parseInt(super.txtDadoConsulta.getText()));
 			} catch(NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "O código deve ser numérico", "Erro",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "O cï¿½digo deve ser numï¿½rico", "Erro",JOptionPane.ERROR_MESSAGE);
 				super.txtDadoConsulta.selectAll();
 				super.txtDadoConsulta.requestFocus();
 				return;
@@ -186,7 +186,7 @@ public class FrmConsultaDia extends FrmConsultaPai {
 	@Override
 	public void excluir() {
 		if (modelo.getValueAt(tabela.getSelectedRow(),7).toString() == "Pago") {
-			JOptionPane.showMessageDialog(this, "Impossível excluir o registro, o mesmo já possui pagamento!", "Excluir Registro",JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "ImpossÃ­vel excluir o registro, o mesmo jÃ¡ possui pagamento!", "Excluir Registro",JOptionPane.ERROR_MESSAGE);
 			return;
 		} else {
 			if (diaAdoDao.excluir(Integer.parseInt(modelo.getValueAt(tabela.getSelectedRow(),0).toString())) == true) {

@@ -38,6 +38,4 @@ public class AtrativoBO {
 	public void setDiasTroca(int diasTroca) {
 		this.diasTroca = diasTroca;
 	}
-	
-	
 }

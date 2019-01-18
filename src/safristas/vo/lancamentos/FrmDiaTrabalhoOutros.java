@@ -129,17 +129,17 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 		} else
 			rBtnOutros.setSelected(true);
 		calculaValores();
-		setTitle("Alterar dia outras funções");
+		setTitle("Alterar dia outras funÃ§Ãµes");
 		btnConfirmar.setText("Alterar (F1)");
 	}
 
 	public FrmDiaTrabalhoOutros() {
 
-		super("Lançamento Dia Outros",false,true,false,true);
+		super("Lanï¿½amento Dia Outros",false,true,false,true);
 
 		setSize(600, 500);
 		setResizable(false);
-		setTitle("Lançar dia outras Funções");
+		setTitle("LanÃ§ar dia outras FunÃ§Ãµes");
 		setFrameIcon(new ImageIcon(getClass().getResource("/icons/icon_logo_varaschin.gif")));
 
 		painelGeral.setLayout(new BorderLayout(2, 2));
@@ -158,7 +158,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 
 		constraints.insets = new Insets(2, 4, 2, 2);
 
-		lblCodigoDia = new JLabel("Código");
+		lblCodigoDia = new JLabel("CÃ³digo");
 		lblCodigoDia.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -230,7 +230,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 		grupo.add(rBtnTrator);
 		grupo.add(rBtnOutros);
 
-		lblCodigoEmpregado = new JLabel("Código empregado");
+		lblCodigoEmpregado = new JLabel("Cï¿½digo empregado");
 		lblCodigoEmpregado.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 3;
@@ -278,7 +278,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 		painelMeio.add(btnProcuraEmpregado, constraints);
 		constraints.ipady = 0;
 
-		lblCodVeiculo = new JLabel("Código veículo");
+		lblCodVeiculo = new JLabel("Cï¿½digo veï¿½culo");
 		lblCodVeiculo.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 4;
@@ -363,7 +363,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 			}
 		});;
 
-		lblNf = new JLabel("Nº nota fiscal");
+		lblNf = new JLabel("Nï¿½ nota fiscal");
 		lblNf.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 7;
@@ -430,7 +430,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 		painelMeio.add(txtValorTotal, constraints);
 		constraints.gridwidth = 1;
 
-		lblHistorico = new JLabel("Histórico");
+		lblHistorico = new JLabel("Histï¿½rico");
 		lblHistorico.setFont(f);
 		constraints.anchor = GridBagConstraints.NORTHEAST;
 		constraints.gridx = 0;
@@ -547,7 +547,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 			lblQntdBins.setEnabled(false);
 			lblQntdBins.setText("Quantidade");
 			txtQntdBins.setEnabled(false);
-			lblValorBins.setText("Valor da diária");
+			lblValorBins.setText("Valor da diï¿½ria");
 			lblLote.setEnabled(false);
 			txtLote.setEnabled(false);
 			lblNf.setEnabled(false);
@@ -617,7 +617,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 			try {
 				diaOutBO.data = new DateTime(df.parse(txtData.getText()));
 			} catch (ParseException e2) {
-				JOptionPane.showMessageDialog(this, "Data inválida!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Data invï¿½lida!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtData.requestFocus();
 				txtData.selectAll();
 				return;
@@ -642,7 +642,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 			if (!txtCodVeiculo.getText().trim().equals("")) {
 				diaOutBO.veicBO.setCodigo(Integer.parseInt(txtCodVeiculo.getText()));
 			} else {
-				JOptionPane.showMessageDialog(this, "Codigo do veículo deve ser preenchido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Codigo do veï¿½culo deve ser preenchido!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtCodEmpregado.requestFocus();
 				txtCodEmpregado.selectAll();
 				return;
@@ -652,7 +652,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 				try {
 					diaOutBO.setQntBins(Integer.parseInt(txtQntdBins.getText()));
 				} catch (NumberFormatException e1) {
-					JOptionPane.showMessageDialog(this, "Quantidade de deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, "Quantidade de deve ser numï¿½rico!", "ERRO", JOptionPane.ERROR_MESSAGE);
 					txtQntdBins.requestFocus();
 					txtQntdBins.selectAll();
 					return;
@@ -670,7 +670,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 			try {
 				diaOutBO.setValorBins(valorbins);
 			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "Valor bins deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Valor bins deve ser numï¿½rico!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtValorBins.requestFocus();
 				txtValorBins.selectAll();
 				return;
@@ -722,7 +722,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 				JOptionPane.showMessageDialog(this, "Registro salvo com sucesso!", "Registro Salvo", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
 			} else {
 				if (consDiaOut.diaOutBO.getPagou() == 'S') {
-					JOptionPane.showMessageDialog(this, "Este dia já contém  ! Exclua o pagamento primeiro, caso deseje alterar este registro.", "Alterar Registro",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, "Este dia jï¿½ contï¿½m  ! Exclua o pagamento primeiro, caso deseje alterar este registro.", "Alterar Registro",JOptionPane.ERROR_MESSAGE);
 					return;
 				} else {
 					diaOutDao.alterar(diaOutBO);

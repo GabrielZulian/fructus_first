@@ -171,11 +171,11 @@ public class FrmPagamentoTotalOutros extends JInternalFrame implements ActionLis
 
 	public FrmPagamentoTotalOutros() {
 
-		super("Pagamento - Fechamento outras funÁıes",true,true,false,true);
+		super("Pagamento - Fechamento outras fun√ß√µes",true,true,false,true);
 
 		setSize(1000, 600);
 		setResizable(false);
-		setTitle("Pagamentos - Fechamento outras funÁıes");
+		setTitle("Pagamentos - Fechamento outras fun√ß√µes");
 		setFrameIcon(new ImageIcon(getClass().getResource("/icons/icon_logo_varaschin.gif")));
 
 		Font f = new Font("Arial", Font.PLAIN, 14);
@@ -201,7 +201,7 @@ public class FrmPagamentoTotalOutros extends JInternalFrame implements ActionLis
 			mascaraData = new MaskFormatter("##/##/####");
 		} catch (ParseException e) {}
 
-		lblCodigo = new JLabel("CÛdigo");
+		lblCodigo = new JLabel("CÔøΩdigo");
 		lblCodigo.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -270,7 +270,7 @@ public class FrmPagamentoTotalOutros extends JInternalFrame implements ActionLis
 		painelCima.add(txtDataFinal, constraints);
 		constraints.gridwidth = 1;
 
-		lblCodEmpregador = new JLabel("CÛd. Empregador");
+		lblCodEmpregador = new JLabel("C√≥d. Empregador");
 		lblCodEmpregador.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 2;
@@ -327,7 +327,7 @@ public class FrmPagamentoTotalOutros extends JInternalFrame implements ActionLis
 		constraints.gridwidth = 1;
 		constraints.ipady = 0;
 
-		cbCaminhoes = new JCheckBox("Caminhıes", true);
+		cbCaminhoes = new JCheckBox("Caminh√µes", true);
 		cbCaminhoes.setFont(f);
 		constraints.gridx = 1;
 		constraints.gridy = 3;
@@ -363,8 +363,8 @@ public class FrmPagamentoTotalOutros extends JInternalFrame implements ActionLis
 
 		ArrayList<Object> dados = new ArrayList<Object>();
 
-		String[] colunas = new String[] {" ", "CÛdigo", "Nome", "VeÌculo", "Valor",  "Descontos", "Valor Final", "Benefici·rio",
-				"Quantidade Dias/Fretes", "FunÁ„o", "CPF", "ObservaÁ„o Desconto", "CÛd Adiant."};
+		String[] colunas = new String[] {" ", "C√≥digo", "Nome", "Ve√≠culo", "Valor",  "Descontos", "Valor Final", "Benefici√°rio",
+				"Quantidade Dias/Fretes", "Fun√ß√£o", "CPF", "Observa√ß√£o Desconto", "C√≥d Adiant"};
 
 		boolean[] edicao = {true, false, false, false, false, false, false, false, false, false, false, false, false};
 
@@ -698,7 +698,7 @@ public class FrmPagamentoTotalOutros extends JInternalFrame implements ActionLis
 			try {
 				pgtoTotalOutBO.data = new DateTime(df.parse(txtData.getText()));
 			} catch (ParseException e1) {
-				JOptionPane.showMessageDialog(this, "Data incorreta ou inv·lida!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Data incorreta ou inv√°lida!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtData.requestFocus();
 				txtData.selectAll();
 				return;
@@ -707,7 +707,7 @@ public class FrmPagamentoTotalOutros extends JInternalFrame implements ActionLis
 			try {
 				pgtoTotalOutBO.dataInicial = new DateTime(df.parse(txtDatainicial.getText()));
 			} catch (ParseException e1) {
-				JOptionPane.showMessageDialog(this, "Data incorreta ou inv·lida!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Data incorreta ou inv√°lida!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtDatainicial.requestFocus();
 				txtDatainicial.selectAll();
 				return;
@@ -716,7 +716,7 @@ public class FrmPagamentoTotalOutros extends JInternalFrame implements ActionLis
 			try {
 				pgtoTotalOutBO.dataFinal = new DateTime(df.parse(txtDataFinal.getText()));
 			} catch (ParseException e1) {
-				JOptionPane.showMessageDialog(this, "Data incorreta ou inv·lida!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Data incorreta ou inv√°lida!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtDataFinal.requestFocus();
 				txtDataFinal.selectAll();
 				return;
@@ -901,7 +901,7 @@ public class FrmPagamentoTotalOutros extends JInternalFrame implements ActionLis
 			FrmMenuGeralMaca.centralizaInternalFrame(fr, getDesktopPane());
 		} else if (origem == btnCancelar) {
 			if (auxSair) {
-				if (JOptionPane.showConfirmDialog(this, "Deseja cancelar a operaÁ„o?", "Cancelar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+				if (JOptionPane.showConfirmDialog(this, "Deseja cancelar a opera√ß√£o?", "Cancelar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
 					doDefaultCloseAction();
 			} else {
 				doDefaultCloseAction();

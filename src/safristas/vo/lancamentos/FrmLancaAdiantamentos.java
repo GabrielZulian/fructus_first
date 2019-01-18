@@ -87,12 +87,12 @@ public class FrmLancaAdiantamentos extends FrmCadastraPai implements ActionListe
 
 		lblImg.setIcon(new ImageIcon(getClass().getResource("/icons/icon_adiantamento.gif")));
 
-		lblTitulo.setText("Lançar Adiantamento");
+		lblTitulo.setText("LanÃ§ar Adiantamento");
 		lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
 
 		//-----------------------------------------------
 
-		lblCodigo = new JLabel("Código");
+		lblCodigo = new JLabel("CÃ³digo");
 		lblCodigo.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -159,7 +159,7 @@ public class FrmLancaAdiantamentos extends FrmCadastraPai implements ActionListe
 		grupo.add(rBtnEmpregado);
 		grupo.add(rBtnEmpreiteiro);
 
-		lblCodEmpregado = new JLabel("Código empregado");
+		lblCodEmpregado = new JLabel("CÃ³digo empregado");
 		lblCodEmpregado.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 3;
@@ -283,7 +283,7 @@ public class FrmLancaAdiantamentos extends FrmCadastraPai implements ActionListe
 					adiantBO.iroBO.setNome(txtMostraEmpregado.getText());
 				}
 			} catch (NumberFormatException erro) {
-				JOptionPane.showMessageDialog(this, "Valor deve ser numérico!", "Valor incorreto", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Valor deve ser numï¿½rico!", "Valor incorreto", JOptionPane.ERROR_MESSAGE);
 				txtCodEmpregado.requestFocus();
 				txtCodEmpregado.selectAll();
 				return;
@@ -292,7 +292,7 @@ public class FrmLancaAdiantamentos extends FrmCadastraPai implements ActionListe
 			try {
 				adiantBO.setValor(Double.parseDouble(txtValorAdiantamento.getText().replace(',', '.')));
 			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "Valor deve ser numérico!", "Valor incorreto", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Valor deve ser numÃ©rico!", "Valor incorreto", JOptionPane.ERROR_MESSAGE);
 				txtValorAdiantamento.requestFocus();
 				txtValorAdiantamento.selectAll();
 				return;

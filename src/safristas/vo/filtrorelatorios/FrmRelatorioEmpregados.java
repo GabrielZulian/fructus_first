@@ -37,9 +37,9 @@ public class FrmRelatorioEmpregados extends FrmRelatorioPai {
 	protected EmpreiteiroDao iroDao = new EmpreiteiroDao();
 
 	public FrmRelatorioEmpregados() {
-		setTitle("Relatório - Empregados");
+		setTitle("RelatÃ³rio - Empregados");
 		setSize(getWidth()+60, getHeight());
-		lblTitulo.setText("Relatório de Empregados");
+		lblTitulo.setText("RelatÃ³rio de Empregados");
 		constraints.insets = new Insets(2, 2, 2, 2);
 		
 		lblTipo = new JLabel("Tipo");
@@ -69,7 +69,7 @@ public class FrmRelatorioEmpregados extends FrmRelatorioPai {
 		grupo.add(rBtnGeral);
 		grupo.add(rBtnComFiltros);
 		
-		lblCodEmpreiteiro = new JLabel("Cód. empreiteiro");
+		lblCodEmpreiteiro = new JLabel("CÃ³d. empreiteiro");
 		lblCodEmpreiteiro.setEnabled(false);
 		lblCodEmpreiteiro.setFont(f2);
 		constraints.gridx = 0;

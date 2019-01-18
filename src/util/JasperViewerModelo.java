@@ -7,7 +7,7 @@ import net.sf.jasperreports.view.JasperViewer;
 public class JasperViewerModelo {
 	
 	public void JasperViewermodelo(JasperViewer view) {
-		view.setTitle("Varaschin Software - Relatórios");
+		view.setTitle("Varaschin Software - RelatÃ³rios");
 		ImageIcon icon = new ImageIcon(getClass().getResource("/icons/icon_logo_varaschin.gif"));
 		view.setIconImage(icon.getImage());
 	}

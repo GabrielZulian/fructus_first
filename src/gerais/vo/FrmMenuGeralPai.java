@@ -47,7 +47,7 @@ public class FrmMenuGeralPai extends JFrame implements ActionListener {
 		setSize(tk.getScreenSize());
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		setLocationRelativeTo(null);
-		setTitle("¡rea de Trabalho");
+		setTitle("ÔøΩrea de Trabalho");
 		setExtendedState(MAXIMIZED_BOTH);
 
 		barraMenu = new JMenuBar();
@@ -85,8 +85,8 @@ public class FrmMenuGeralPai extends JFrame implements ActionListener {
 		versaoBO = versaoDao.consultaVersao();
 		
 		if (!versaoBO.isUltimaVersao()) {
-			JOptionPane.showMessageDialog(this, "H· uma nova vers„o do sistema disponÌvel! Favor utiliz·-la.\n"
-					+ "Sua vers„o: " + versaoBO.getVersao() + "\n⁄ltima vers„o: " + versaoBO.getUltimaVersao(), "Vers„o Desatualizada", 1);
+			JOptionPane.showMessageDialog(this, "H√° uma nova vers√£o do sistema dispon√≠vel! Favor utiliz√°-la.\n"
+					+ "Sua vers√£o: " + versaoBO.getVersao() + "\n√öltima vers√£o: " + versaoBO.getUltimaVersao(), "Vers√£o Desatualizada", 1);
 		}	
 	}
 

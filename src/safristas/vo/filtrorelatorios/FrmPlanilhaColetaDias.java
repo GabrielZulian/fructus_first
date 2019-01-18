@@ -86,13 +86,13 @@ public class FrmPlanilhaColetaDias extends FrmRelatorioPai {
 		painelMeio.add(txtDataFinal, constraints);
 		constraints.gridwidth = 1;
 		
-		lblMaxDias = new JLabel("M·x. 15 dias");
+		lblMaxDias = new JLabel("M√°x. 15 dias");
 		constraints.gridx = 3;
 		constraints.gridy = 1;
 		constraints.anchor = GridBagConstraints.WEST;
 		painelMeio.add(lblMaxDias, constraints);
 		
-		lblCodigoEmpreiteiro = new JLabel("CÛdigo Empreiteiro");
+		lblCodigoEmpreiteiro = new JLabel("C√≥digo empreiteiro");
 		lblCodigoEmpreiteiro.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 2;
@@ -106,7 +106,6 @@ public class FrmPlanilhaColetaDias extends FrmRelatorioPai {
 		constraints.anchor = GridBagConstraints.WEST;
 		painelMeio.add(txtCodEmpreiteiro, constraints);
 		txtCodEmpreiteiro.addFocusListener(new FocusAdapter() {
-			
 			@Override
 			public void focusLost(FocusEvent e) {
 				iroBO = new EmpreiteiroBO();
@@ -147,14 +146,14 @@ public class FrmPlanilhaColetaDias extends FrmRelatorioPai {
 			int codigoEmpreiteiro = Integer.parseInt(txtCodEmpreiteiro.getText());
 			
 			if (Days.daysBetween(dataInicial, dataFinal).getDays() < 0) {
-				JOptionPane.showMessageDialog(this, "PerÌodo incorreto - Data final deve ser maior que a Data Inicial!", "Datas incorretas", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Per√≠odo incorreto - Data final deve ser maior que a Data Inicial!", "Datas incorretas", JOptionPane.ERROR_MESSAGE);
 				txtDataFinal.requestFocus();
 				txtDataFinal.selectAll();
 				return;
 			}
 			
 			if (Days.daysBetween(dataInicial, dataFinal).getDays() > 14) {
-				JOptionPane.showMessageDialog(this, "PerÌodo deve ser de no m·ximo 15 dias!", "Datas incorretas", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Per√≠odo deve ser de no m√°ximo 15 dias!", "Datas incorretas", JOptionPane.ERROR_MESSAGE);
 				txtDataFinal.requestFocus();
 				txtDataFinal.selectAll();
 				return;
