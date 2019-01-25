@@ -74,6 +74,7 @@ import safristas.vo.FrmMenuGeralMaca;
 import safristas.vo.consultcadast.FrmConsultaDia;
 import safristas.vo.consultcadast.FrmConsultaEmpreiteiro;
 import util.ModeloTabela;
+import util.ModeloTabelaSacola;
 import util.NumberRenderer;
 
 public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
@@ -97,14 +98,14 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 	private JPanel painelMeioBorder = new JPanel();
 	private JPanel painelMeio = new JPanel();
 	private JPanel painelBaixo = new JPanel();
-	
+
 	private GridBagConstraints constraints = new GridBagConstraints();
-	
+
 	private Locale brasil = new Locale("pt", "BR");
 	protected DateTimeZone zona = DateTimeZone.forID("Etc/GMT+3");
 	protected DateTime data = new DateTime(zona);
 	private DateFormat df = new SimpleDateFormat("dd/MM/yyyy", brasil);
-	
+
 	private MaskFormatter mascaraData;
 	private DecimalFormat decimal = new DecimalFormat( "#,##0.00" );
 
@@ -113,10 +114,10 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 
 	private String[] presenca = {"S", "N", "M/T"};
 	private JComboBox<String> cbPresenca = new JComboBox<String>(presenca);
-	
+
 	private String[] chaoEscada = {"C", "E", "CE"};
 	private JComboBox<String> cbChaoEscada = new JComboBox<String>(chaoEscada);
-	
+
 	private List<Boolean> mudouRateio = new ArrayList<Boolean>();
 
 	protected LancaDiaBO diaBO;
@@ -131,7 +132,8 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 	protected DiaEmpregadoDao diaAdoDao = new DiaEmpregadoDao();
 
 	JTable tabela, tabelaEquipe, tabelaSacola;
-	ModeloTabela modelo, modeloTabEquipe, modeloTabelaSacola;
+	ModeloTabela modelo, modeloTabEquipe;
+	ModeloTabelaSacola modeloTabelaSacola;
 
 	FrmConsultaDia consDia = null;
 
@@ -142,7 +144,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 	static final int COLUNA_FUNCAO = 4;
 	static final int COLUNA_VALOR = 5;
 	static final int COLUNA_RATEIO = 6;
-	
+
 	static final int COLUNA_SACOLA_PRESENCA = 0;
 	static final int COLUNA_SACOLA_CLASSIF = 1;
 	static final int COLUNA_SACOLA_CHAO_ESCADA = 2;
@@ -178,6 +180,22 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 
 	private JTextField txtValorComissão;
 
+	private JLabel lblValorTotalEqSacola;
+
+	private JTextField txtValorTotalEqSacola;
+
+	private JLabel lblValorTotalEmpreiteiroSacola;
+
+	private JTextField txtValortotalEmpreiteiroSacola;
+
+	private JTextArea txtAreaObservSacola;
+
+	private double valorTotalEquipeSacola;
+
+	private double valorTotalEmpreiteiroSacola;
+
+	private double valorTotalSacola;
+
 	public FrmDiaTrabalho (FrmConsultaDia consDia) {
 		this();
 		this.consDia = consDia;
@@ -197,66 +215,101 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		tabelaEquipe.setColumnSelectionAllowed(false);
 		int i=0;
 
-		do {
-			String presenca = "S";
-			boolean isClassif = false;
+		if (consDia.diaBO.getMetodo() == 'S') { // ---------SACOLA
+			tabbedPane.setSelectedIndex(1);
+			do {
+				String presenca = "S";
+				boolean isClassif = false;
 
-			adoDao.consultaPorCodigo(consDia.diaAdoBO.get(i).adoBO.getCodigo());
+				adoDao.consultaPorCodigo(consDia.diaAdoBO.get(i).adoBO.getCodigo());
 
-			if (consDia.diaAdoBO.get(i).getPresenca() == 'N')
-				presenca = "N";
-			else if (consDia.diaAdoBO.get(i).getPresenca() == 'M')
-				presenca = "M/T";
+				if (consDia.diaAdoBO.get(i).getPresenca() == 'N')
+					presenca = "N";
+				else if (consDia.diaAdoBO.get(i).getPresenca() == 'M')
+					presenca = "M/T";
 
-			if (consDia.diaAdoBO.get(i).getClassificador() == 'S')
-				isClassif = true;
+				if (consDia.diaAdoBO.get(i).getClassificador() == 'S')
+					isClassif = true;
 
-			modelo.addRow(new Object[] {
-					presenca,
-					isClassif,
-					consDia.diaAdoBO.get(i).adoBO.getCodigo(),
-					consDia.diaAdoBO.get(i).adoBO.getNome(),
-					consDia.diaAdoBO.get(i).adoBO.funcaoBO.getNome(),
-					consDia.diaAdoBO.get(i).getValor(),
-					consDia.diaAdoBO.get(i).getRateio()
-			});
-			i++;
-		} while (i < consDia.diaAdoBO.size());
+				modeloTabelaSacola.addRow(new Object[] {
+						presenca,
+						isClassif,
+						consDia.diaAdoBO.get(i).getChaoEscada(),
+						consDia.diaAdoBO.get(i).adoBO.getCodigo(),
+						consDia.diaAdoBO.get(i).adoBO.getNome(),
+						consDia.diaAdoBO.get(i).adoBO.funcaoBO.getNome(),
+						consDia.diaAdoBO.get(i).getQntdSacola(),
+						consDia.diaAdoBO.get(i).getValor()
+				});
+				i++;
+			} while (i < consDia.diaAdoBO.size());
 
-		if (consDia.diaBO.getMetodo() == 'B') {
-			configInterfaceBins();
-		} else {
-			configInterfaceDia();
+			txtValorComissão.setText(decimal.format(consDia.diaBO.getValorComissao()));
+			txtValorTotalEqSacola.setText(decimal.format(consDia.diaBO.getValorTotalResto()));
+			txtValortotalEmpreiteiroSacola.setText(decimal.format(consDia.diaBO.getValorTotalComissao()));
+			lblQntdEmpregados.setText(lblQntdEmpregados.getText() + modeloTabelaSacola.getRowCount());
+		} else { // ---------BINS / DIA
+			do {
+				String presenca = "S";
+				boolean isClassif = false;
+
+				adoDao.consultaPorCodigo(consDia.diaAdoBO.get(i).adoBO.getCodigo());
+
+				if (consDia.diaAdoBO.get(i).getPresenca() == 'N')
+					presenca = "N";
+				else if (consDia.diaAdoBO.get(i).getPresenca() == 'M')
+					presenca = "M/T";
+
+				if (consDia.diaAdoBO.get(i).getClassificador() == 'S')
+					isClassif = true;
+
+				modelo.addRow(new Object[] {
+						presenca,
+						isClassif,
+						consDia.diaAdoBO.get(i).adoBO.getCodigo(),
+						consDia.diaAdoBO.get(i).adoBO.getNome(),
+						consDia.diaAdoBO.get(i).adoBO.funcaoBO.getNome(),
+						consDia.diaAdoBO.get(i).getValor(),
+						consDia.diaAdoBO.get(i).getRateio()
+				});
+				i++;
+			} while (i < consDia.diaAdoBO.size());
+
+			if (consDia.diaBO.getMetodo() == 'B') {
+				configInterfaceBins();
+			} else {
+				configInterfaceDia();
+			}
+
+			txtValorClassif.setText(decimal.format(consDia.diaBO.getValorClassif()));
+			lblQntdEmpregados.setText(lblQntdEmpregados.getText() + modelo.getRowCount());
+			txtValorDia.setText(decimal.format(consDia.diaBO.getValorDia()));
+			txtQntdBins.setText(String.valueOf(consDia.diaBO.getQntBinsEquipe()));
+			txtQntdBinsClassif.setText(String.valueOf(consDia.diaBO.getQntdBinsClassif()));
+			txtValorBins.setText(decimal.format(consDia.diaBO.getValorBins()));
+			totalResto = consDia.diaBO.getValorTotalResto();
+			totalGeral = consDia.diaBO.getValorTotal();
+			txtValorTotalRestoEquipe.setText(decimal.format(consDia.diaBO.getValorTotalResto()));
+			txtValorTotal.setText(decimal.format(consDia.diaBO.getValorTotal()));
+			txtValorComissaoIroClassif.setText(decimal.format(consDia.diaBO.getValorComissIroClassif()));
+			txtValorOutrosIro.setText(decimal.format(consDia.diaBO.getValorOutroIro()));
+			txtVlrComissao.setText(decimal.format(consDia.diaBO.getValorComissao()));
+			totalComissao = consDia.diaBO.getValorTotalComissao();
+			txtVlrTotalComissao.setText(decimal.format(totalComissao));
+			txtAreaObserv.setText(consDia.diaBO.observacao.getText());
 		}
-
-		txtValorClassif.setText(decimal.format(consDia.diaBO.getValorClassif()));
-		lblQntdEmpregados.setText(lblQntdEmpregados.getText() + modelo.getRowCount());
-		txtValorDia.setText(decimal.format(consDia.diaBO.getValorDia()));
-		txtQntdBins.setText(String.valueOf(consDia.diaBO.getQntBinsEquipe()));
-		txtQntdBinsClassif.setText(String.valueOf(consDia.diaBO.getQntdBinsClassif()));
-		txtValorBins.setText(decimal.format(consDia.diaBO.getValorBins()));
-		totalResto = consDia.diaBO.getValorTotalResto();
-		totalGeral = consDia.diaBO.getValorTotal();
-		txtValorTotalRestoEquipe.setText(decimal.format(consDia.diaBO.getValorTotalResto()));
-		txtValorTotal.setText(decimal.format(consDia.diaBO.getValorTotal()));
-		txtValorComissaoIroClassif.setText(decimal.format(consDia.diaBO.getValorComissIroClassif()));
-		txtValorOutrosIro.setText(decimal.format(consDia.diaBO.getValorOutroIro()));
-		txtVlrComissao.setText(decimal.format(consDia.diaBO.getValorComissao()));
-		totalComissao = consDia.diaBO.getValorTotalComissao();
-		txtVlrTotalComissao.setText(decimal.format(totalComissao));
-		txtAreaObserv.setText(consDia.diaBO.observacao.getText());
 
 		if (consDia.diaBO.pgtoBO.getCodigo() != 0)
 			btnConfirmar.setEnabled(false);
-		
+
 		btnConfirmar.setText("Alterar turma (F1)");
 	}
 
 	public FrmDiaTrabalho() {
 
-		super("Lançamento Dia",false,true,false,true);
+		super("Lançamento Dia",true,true,false,true);
 
-		setSize(1020, 716);
+		setSize(1020, 740);
 		setResizable(true);
 		setTitle("Lançar Dia - Safristas");
 		setFrameIcon(new ImageIcon(getClass().getResource("/icons/icon_logo_varaschin.gif")));
@@ -375,13 +428,13 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 
 						String string = JOptionPane.showInternalInputDialog(FrmDiaTrabalho.this, "Selecione o rateio deste empregado", "Selecionar Rateio", JOptionPane.QUESTION_MESSAGE);
 						Double valorRateio = valorInicial;
-						
+
 						try {
 							valorRateio = Double.parseDouble(string.replace(',', '.'));
 						} catch (NumberFormatException erro) {
 							JOptionPane.showInternalMessageDialog(FrmDiaTrabalho.this, "Valor do rateio deve ser numérico", "Erro" , JOptionPane.ERROR_MESSAGE);
 						}
-						
+
 						if (valorRateio > valorInicial) {
 							JOptionPane.showInternalMessageDialog(FrmDiaTrabalho.this, "Valor do rateio deve ser menor que o atual", "Erro" , JOptionPane.ERROR_MESSAGE);
 							modelo.setValueAt(valorInicial, linha, COLUNA_RATEIO);
@@ -395,7 +448,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 				}
 			}
 		});
-		
+
 		cbPresenca.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -798,16 +851,16 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		painelMeioBorder.add(painelMeio, BorderLayout.CENTER);
 
 		tabbedPane.addTab("Dia/Bins", painelMeioBorder);
-		
+
 		JPanel pnlMeioSacolas = new JPanel();
 		pnlMeioSacolas.setLayout(new BorderLayout(2, 2));
-		
+
 		ArrayList<Object> dadosSacola = new ArrayList<Object>();
 
 		String[] colunasSacola = new String[] {"Presença", "Clas/Junt", "C/E/CE", "Código", "Nome", "Função", "Sacolas", "Valor"};
 		boolean[] edicaoSacola = {true, true, true, false, false, false, true, false};
 
-		modeloTabelaSacola = new ModeloTabela(dadosSacola, colunasSacola, edicaoSacola);
+		modeloTabelaSacola = new ModeloTabelaSacola(dadosSacola, colunasSacola, edicaoSacola);
 		tabelaSacola = new JTable(modeloTabelaSacola);
 		tabelaSacola.setFont(f);
 		tabelaSacola.setRowHeight(22);
@@ -842,102 +895,102 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		pnlMeioSacolas.add(rolagemTabelaSacola, BorderLayout.NORTH);
 		constraints.gridheight = 1;
 		constraints.gridwidth = 1;
-		
+
 		JPanel pnlDadosSacola = new JPanel(new GridBagLayout());
-		
+
 		constraints.insets = new Insets(4, 4, 4, 4);
 		constraints.fill = GridBagConstraints.NONE;
 		constraints.weightx = 0;
 		constraints.weighty = 0;
-		
+
 		lblValorSacola = new JLabel("Valor sacola R$");
 		lblValorSacola.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		constraints.anchor = GridBagConstraints.EAST;
 		pnlDadosSacola.add(lblValorSacola, constraints);
-		
+
 		txtValorSacola = new JTextField("0,60", 8);
 		txtValorSacola.setFont(f);
 		constraints.gridx = 1;
 		constraints.gridy = 0;
 		constraints.anchor = GridBagConstraints.WEST;
 		pnlDadosSacola.add(txtValorSacola, constraints);
-		
+
 		lblMetaSacolaChao = new JLabel("Meta sacolas chão");
 		lblMetaSacolaChao.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 1;
 		constraints.anchor = GridBagConstraints.EAST;
 		pnlDadosSacola.add(lblMetaSacolaChao, constraints);
-		
+
 		txtMetaSacolaChao = new JTextField("99", 8);
 		txtMetaSacolaChao.setFont(f);
 		constraints.gridx = 1;
 		constraints.gridy = 1;
 		constraints.anchor = GridBagConstraints.WEST;
 		pnlDadosSacola.add(txtMetaSacolaChao, constraints);
-		
+
 		lblMetaSacolaEscada = new JLabel("Meta sacolas escada");
 		lblMetaSacolaEscada.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 2;
 		constraints.anchor = GridBagConstraints.EAST;
 		pnlDadosSacola.add(lblMetaSacolaEscada, constraints);
-		
+
 		txtMetaSacolaEscada = new JTextField("82,5", 8);
 		txtMetaSacolaEscada.setFont(f);
 		constraints.gridx = 1;
 		constraints.gridy = 2;
 		constraints.anchor = GridBagConstraints.WEST;
 		pnlDadosSacola.add(txtMetaSacolaEscada, constraints);
-		
+
 		lblMetaSacolaChaoEscada = new JLabel("Meta sacolas chão/escada");
 		lblMetaSacolaChaoEscada.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 3;
 		constraints.anchor = GridBagConstraints.EAST;
 		pnlDadosSacola.add(lblMetaSacolaChaoEscada, constraints);
-		
+
 		txtMetaSacolaChaoEscada = new JTextField("90", 8);
 		txtMetaSacolaChaoEscada.setFont(f);
 		constraints.gridx = 1;
 		constraints.gridy = 3;
 		constraints.anchor = GridBagConstraints.WEST;
 		pnlDadosSacola.add(txtMetaSacolaChaoEscada, constraints);
-		
+
 		lblTipoComissao = new JLabel("Tipo Comissão");
 		lblTipoComissao.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 4;
 		constraints.anchor = GridBagConstraints.EAST;
 		pnlDadosSacola.add(lblTipoComissao, constraints);
-		
+
 		rBtnPorPessoa = new JRadioButton("p/ pessoa", true);
 		rBtnPorPessoa.setFont(f);
 		constraints.gridx = 1;
 		constraints.gridy = 4;
 		constraints.anchor = GridBagConstraints.WEST;
 		pnlDadosSacola.add(rBtnPorPessoa, constraints);
-		
+
 		rBtnPorSacola = new JRadioButton("p/ sacola", false);
 		rBtnPorSacola.setFont(f);
 		constraints.gridx = 2;
 		constraints.gridy = 4;
 		constraints.anchor = GridBagConstraints.WEST;
 		pnlDadosSacola.add(rBtnPorSacola, constraints);
-		
+
 		ButtonGroup groupTipoComissao = new ButtonGroup();
 		groupTipoComissao.add(rBtnPorSacola);
 		groupTipoComissao.add(rBtnPorPessoa);
-		
+
 		lblValorComissão = new JLabel("Valor comissão emp. R$");
 		lblValorComissão.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 5;
 		constraints.anchor = GridBagConstraints.EAST;
 		pnlDadosSacola.add(lblValorComissão, constraints);
-		
+
 		txtValorComissão = new JTextField("3,00", 8);
 		txtValorComissão.setFont(f);
 		constraints.gridx = 1;
@@ -949,20 +1002,20 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			public void focusLost(FocusEvent e) {
 				calculaValoresSacolas();
 			}
-			
+
 			@Override
 			public void focusGained(FocusEvent e) {
 			}
 		});
-		
-		JLabel lblValorTotalEqSacola = new JLabel("Valor total equipe R$");
+
+		lblValorTotalEqSacola = new JLabel("Valor total equipe R$");
 		lblValorTotalEqSacola.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 6;
 		constraints.anchor = GridBagConstraints.EAST;
 		pnlDadosSacola.add(lblValorTotalEqSacola, constraints);
 
-		JTextField txtValorTotalEqSacola = new JTextField(10);
+		txtValorTotalEqSacola = new JTextField(10);
 		txtValorTotalEqSacola.setFont(f);
 		txtValorTotalEqSacola.setBackground(new Color(187,244,188));
 		txtValorTotalEqSacola.setEditable(false);
@@ -973,26 +1026,46 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		constraints.anchor = GridBagConstraints.WEST;
 		pnlDadosSacola.add(txtValorTotalEqSacola, constraints);
 		constraints.gridwidth = 1;
-		
-		JLabel lblValorTotalEmpreiteiroSacola = new JLabel("Valor total Empreiteiro R$");
+
+		lblValorTotalEmpreiteiroSacola = new JLabel("Valor total Empreiteiro R$");
 		lblValorTotalEmpreiteiroSacola.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 7;
 		constraints.anchor = GridBagConstraints.EAST;
 		pnlDadosSacola.add(lblValorTotalEmpreiteiroSacola, constraints);
-		
-		JTextField txtValortotalEmpreiteiroSacola = new JTextField(10);
+
+		txtValortotalEmpreiteiroSacola = new JTextField(10);
 		txtValortotalEmpreiteiroSacola.setFont(f);
 		txtValortotalEmpreiteiroSacola.setBackground(new Color(187,244,188));
 		txtValortotalEmpreiteiroSacola.setEditable(false);
 		txtValortotalEmpreiteiroSacola.setFocusable(false);
 		constraints.gridx = 1;
-		constraints.gridy = 7;
+		constraints.gridy = 7;         
 		constraints.gridwidth = 2;
 		constraints.anchor = GridBagConstraints.WEST;
 		pnlDadosSacola.add(txtValortotalEmpreiteiroSacola, constraints);
 		constraints.gridwidth = 1;
-		
+
+		lblHistorico = new JLabel("Histórico");
+		lblHistorico.setFont(f);
+		constraints.anchor = GridBagConstraints.NORTHEAST;
+		constraints.gridx = 0;
+		constraints.gridy = 8;
+		pnlDadosSacola.add(lblHistorico, constraints);
+
+		txtAreaObservSacola = new JTextArea(3, 32);
+		txtAreaObservSacola.setFont(f);
+		txtAreaObservSacola.setLineWrap(true);
+		txtAreaObservSacola.setMargin(new Insets(4, 4, 4, 4));
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.gridx = 1;
+		constraints.gridy = 8;
+		constraints.gridwidth = 3;
+		JScrollPane rolagemObservSacola = new JScrollPane(txtAreaObservSacola);
+		pnlDadosSacola.add(rolagemObservSacola, constraints);
+
+		constraints.gridwidth = 1;
+
 		constraints.gridy++;
 		constraints.gridx = 3;
 		constraints.weightx = 1;
@@ -1000,11 +1073,11 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		JPanel filler = new JPanel();
 		filler.setOpaque(false);
 		pnlDadosSacola.add(filler, constraints);
-		
+
 		pnlMeioSacolas.add(pnlDadosSacola, BorderLayout.CENTER);
-		
+
 		tabbedPane.addTab("Sacola", pnlMeioSacolas);
-		
+
 		painelGeral.add(tabbedPane, BorderLayout.CENTER);
 
 		constraints.weightx = 0;
@@ -1017,12 +1090,14 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2 && controlelistener) {
-					selecionaEquipe();
-					selecionaEquipeSacolas();
+					if (tabbedPane.getSelectedIndex() == 0)
+						selecionaEquipe();
+					else
+						selecionaEquipeSacolas();
 				}
 			}
 		});
-		
+
 		btnConfirmar = new JButton("Confirmar turma (F1)", new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -1053,12 +1128,12 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		});
 
 		painelBaixo.setBorder(BorderFactory.createEtchedBorder());
-		
+
 		painelGeral.add(painelBaixo, BorderLayout.SOUTH);
 
 		Container p = getContentPane();
 		p.add(painelGeral);
-		
+
 		configInterfaceBins();
 
 		btnConfirmar.addActionListener(this);
@@ -1088,10 +1163,11 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		double metaChaoEscada = Double.parseDouble(txtMetaSacolaChaoEscada.getText().replaceAll(",", "."));
 		double valorSacola = Double.parseDouble(txtValorSacola.getText().replaceAll(",", "."));
 		double valorEmpregado = 0.00;
-		
+		valorTotalEquipeSacola = 0.00;
+
 		for (int x = 0; x < getQntdEmpregados(); x++) {
 			if (modeloTabelaSacola.getValueAt(x, COLUNA_SACOLA_PRESENCA).toString() == "S" && modeloTabelaSacola.getValueAt(x, COLUNA_SACOLA_CLASSIF).toString() == "false") {
-				Integer qntdSacolasEmpregado = Integer.getInteger(modeloTabelaSacola.getValueAt(x, COLUNA_SACOLA_QUANT).toString());
+				Integer qntdSacolasEmpregado = Integer.parseInt(modeloTabelaSacola.getValueAt(x, COLUNA_SACOLA_QUANT).toString());
 				if (modeloTabelaSacola.getValueAt(x, COLUNA_SACOLA_CHAO_ESCADA).toString() == "C") {
 					if (qntdSacolasEmpregado > metaChao) {
 						valorEmpregado = (qntdSacolasEmpregado-metaChao) * valorSacola;
@@ -1106,27 +1182,54 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 					}
 				}
 			}
-			
+
 			modeloTabelaSacola.setValueAt(valorEmpregado, x, COLUNA_SACOLA_VALOR);
+
+			valorTotalEquipeSacola += valorEmpregado;
+
+			valorEmpregado = 0.00;
 		}
+
+		txtValorTotalEqSacola.setText(decimal.format(valorTotalEquipeSacola));
+
+		calculaComissaoEmpreiteiroSacola();
+	}
+
+	private void calculaComissaoEmpreiteiroSacola() {
+		int qntdEmpregados = getQntdEmpregados();
+		double valorComissaoEmpreiteiro = Double.parseDouble(txtValorComissão.getText().replace(",", "."));
+		valorTotalEmpreiteiroSacola = 0.00;
+		Integer qntdSacolas = 0;
+
+		if (rBtnPorPessoa.isSelected()) {
+			valorTotalEmpreiteiroSacola = qntdEmpregados * valorComissaoEmpreiteiro;
+		} else if (rBtnPorSacola.isSelected()) {
+			for (int x = 0; x < getQntdEmpregados(); x++) {
+				qntdSacolas += Integer.parseInt(modeloTabelaSacola.getValueAt(x, COLUNA_SACOLA_QUANT).toString());
+			}
+			valorTotalEmpreiteiroSacola = qntdSacolas * valorComissaoEmpreiteiro;
+		}
+
+		txtValortotalEmpreiteiroSacola.setText(decimal.format(valorTotalEmpreiteiroSacola));
+		valorTotalSacola = valorTotalEquipeSacola + valorTotalEmpreiteiroSacola;
 	}
 
 	protected void distribuiRateio(Double valorInicial, Double valorRateio, Integer linha) {
 		Integer qntdEmpregadosADiminuir = 0;
-		
+
 		for (Boolean mudou : mudouRateio) {
 			if (mudou)
 				qntdEmpregadosADiminuir++;
 		}
-		
+
 		for (int x = 0; x < getQntdEmpregados(); x++) {
 			if (modelo.getValueAt(x, COLUNA_CLASSIF).toString() == "true" || modelo.getValueAt(x, COLUNA_PRESENCA).toString() == "N") {
 				qntdEmpregadosADiminuir++;
 			}
 		}
-		
+
 		Double valorRateioASerDistribuido = (double) ((valorInicial - valorRateio)/(getQntdEmpregados()-qntdEmpregadosADiminuir));
-		
+
 		for (int x = 0; x < getQntdEmpregados(); x++) {
 			if (x != linha && !mudouRateio.get(x) && (modelo.getValueAt(x, COLUNA_CLASSIF).toString() == "false" || modelo.getValueAt(x, COLUNA_PRESENCA).toString() == "S")) {
 				Double valorAtual = Double.parseDouble(modelo.getValueAt(x, COLUNA_RATEIO).toString());
@@ -1137,7 +1240,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 
 	protected void configuraRateioInicial() {
 		mudouRateio.clear();
-		
+
 		for (int x = 0; x < getQntdEmpregados(); x++) {
 			if (modelo.getValueAt(x, COLUNA_CLASSIF).toString() == "false" || modelo.getValueAt(x, COLUNA_PRESENCA).toString() == "S") {
 				modelo.setValueAt(Double.valueOf(txtQntdBins.getText()), x, COLUNA_RATEIO);
@@ -1182,53 +1285,53 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 
 	private void distribuiValoresPorBinsERateio() {
 		try {
-		int qntdBins = Integer.parseInt(txtQntdBins.getText());
-		double valorBins = Double.parseDouble(txtValorBins.getText().replace(',', '.'));
-		double valorClassif = Double.parseDouble(txtValorClassif.getText().replace(',', '.'));
-		int aux = 0, qntdFaltas = 0, qntdEmpregadosPadrao = 0, qntdClassif = 0, qntdClassifMeios = 0;
-		int totalEmpregados = getQntdEmpregados();
+			int qntdBins = Integer.parseInt(txtQntdBins.getText());
+			double valorBins = Double.parseDouble(txtValorBins.getText().replace(',', '.'));
+			double valorClassif = Double.parseDouble(txtValorClassif.getText().replace(',', '.'));
+			int aux = 0, qntdFaltas = 0, qntdEmpregadosPadrao = 0, qntdClassif = 0, qntdClassifMeios = 0;
+			int totalEmpregados = getQntdEmpregados();
 
-		totalGeral = 0;
-		totalResto = qntdBins * valorBins;
-		List<Integer> arrayEmpregadosPadrao = new ArrayList<Integer>();
+			totalGeral = 0;
+			totalResto = qntdBins * valorBins;
+			List<Integer> arrayEmpregadosPadrao = new ArrayList<Integer>();
 
-		do {
-			if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("N")) {
-				modelo.setValueAt(false, aux, COLUNA_CLASSIF);
-				modelo.setValueAt(0, aux, COLUNA_VALOR);
-				modelo.setValueAt(0, aux, COLUNA_RATEIO);
-				qntdFaltas++;
-			} else if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("S") && modelo.getValueAt(aux, COLUNA_CLASSIF).toString() == "true") {
-				modelo.setValueAt(valorClassif, aux, COLUNA_VALOR);
-				modelo.setValueAt(0, aux, COLUNA_RATEIO);
-				totalGeral += valorClassif;
-				qntdClassif++;
-			} else if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("M/T") && modelo.getValueAt(aux, COLUNA_CLASSIF).toString() == "true") {
-				modelo.setValueAt(valorClassif/2, aux, COLUNA_VALOR);
-				modelo.setValueAt(0, aux, COLUNA_RATEIO);
-				totalGeral += valorClassif/2;
-				qntdClassifMeios++;
-			} else {
-				arrayEmpregadosPadrao.add(aux);
-			}
-			aux++;
-		} while(aux < totalEmpregados);
+			do {
+				if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("N")) {
+					modelo.setValueAt(false, aux, COLUNA_CLASSIF);
+					modelo.setValueAt(0, aux, COLUNA_VALOR);
+					modelo.setValueAt(0, aux, COLUNA_RATEIO);
+					qntdFaltas++;
+				} else if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("S") && modelo.getValueAt(aux, COLUNA_CLASSIF).toString() == "true") {
+					modelo.setValueAt(valorClassif, aux, COLUNA_VALOR);
+					modelo.setValueAt(0, aux, COLUNA_RATEIO);
+					totalGeral += valorClassif;
+					qntdClassif++;
+				} else if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("M/T") && modelo.getValueAt(aux, COLUNA_CLASSIF).toString() == "true") {
+					modelo.setValueAt(valorClassif/2, aux, COLUNA_VALOR);
+					modelo.setValueAt(0, aux, COLUNA_RATEIO);
+					totalGeral += valorClassif/2;
+					qntdClassifMeios++;
+				} else {
+					arrayEmpregadosPadrao.add(aux);
+				}
+				aux++;
+			} while(aux < totalEmpregados);
 
-		qntdEmpregadosPadrao = totalEmpregados - qntdFaltas - qntdClassif - qntdClassifMeios;
-		aux = 0;
+			qntdEmpregadosPadrao = totalEmpregados - qntdFaltas - qntdClassif - qntdClassifMeios;
+			aux = 0;
 
-		do {
-			Double rateio = Double.valueOf(modelo.getValueAt(arrayEmpregadosPadrao.get(aux), COLUNA_RATEIO).toString());
-			Double valorIndividual = (rateio * valorBins) / qntdEmpregadosPadrao;
-			modelo.setValueAt(valorIndividual, arrayEmpregadosPadrao.get(aux), COLUNA_VALOR);
-			totalGeral += valorIndividual;
-			aux++;
-		} while (aux < arrayEmpregadosPadrao.size());
-		
-		txtValorTotalRestoEquipe.setText(decimal.format(totalResto));
-		txtValorTotal.setText(decimal.format(totalGeral));
+			do {
+				Double rateio = Double.valueOf(modelo.getValueAt(arrayEmpregadosPadrao.get(aux), COLUNA_RATEIO).toString());
+				Double valorIndividual = (rateio * valorBins) / qntdEmpregadosPadrao;
+				modelo.setValueAt(valorIndividual, arrayEmpregadosPadrao.get(aux), COLUNA_VALOR);
+				totalGeral += valorIndividual;
+				aux++;
+			} while (aux < arrayEmpregadosPadrao.size());
 
-		calculaComissao();
+			txtValorTotalRestoEquipe.setText(decimal.format(totalResto));
+			txtValorTotal.setText(decimal.format(totalGeral));
+
+			calculaComissao();
 		} catch (NumberFormatException e) {
 			System.out.println("Ainda não é possível calcular (bins)");
 		}
@@ -1250,7 +1353,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			totalGeral = 0;
 			totalResto = 0;
 			double valor = 0;
-			
+
 			do {
 				if (modelo.getValueAt(aux, COLUNA_PRESENCA).toString().equals("N")) {
 					modelo.setValueAt(false, aux, COLUNA_CLASSIF);
@@ -1437,188 +1540,313 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 				diaBO.iroBO.setNome(txtMostraEmpreiteiro.getText());
 			} catch (StringVaziaException e3) {}
 
-			if (rBtnPorBins.isSelected())
-				diaBO.setMetodo('B');
-			else 
-				diaBO.setMetodo('D');
+			if (tabbedPane.getSelectedIndex() == 0) {
+				if (rBtnPorBins.isSelected())
+					diaBO.setMetodo('B');
+				else 
+					diaBO.setMetodo('D');
 
-			try {
-				diaBO.setValorClassif(Double.parseDouble(txtValorClassif.getText().trim().replace(',', '.')));
-			} catch (NumberFormatException e4) {
-				JOptionPane.showMessageDialog(this, "Valor classificador deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				txtValorClassif.requestFocus();
-				txtValorClassif.selectAll();
-			} catch (ValorErradoException e4) {
-				JOptionPane.showMessageDialog(this, "Valor classificador inválido!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				txtValorClassif.requestFocus();
-				txtValorClassif.selectAll();
-				return;
-			}
-
-			try {
-				diaBO.setQntdBinsClassif(Integer.parseInt(txtQntdBinsClassif.getText()));
-			} catch (NumberFormatException e3) {
-				JOptionPane.showMessageDialog(this, "Quantidade de deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				txtQntdBins.requestFocus();
-				txtQntdBins.selectAll();
-			} catch (QuantidadeErradaException e3) {
-				JOptionPane.showMessageDialog(this, "Quantidade de bins incorreta!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				txtQntdBins.requestFocus();
-				txtQntdBins.selectAll();
-				txtQntdBins.getText();
-				return;
-			}
-
-			try {
-				diaBO.setValorComissIroClassif(Double.parseDouble(txtValorComissaoIroClassif.getText().trim().replace(',', '.')));
-			} catch (NumberFormatException e3) {
-				JOptionPane.showMessageDialog(this, "Valor comiss�o deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				txtValorComissaoIroClassif.requestFocus();
-				txtValorComissaoIroClassif.selectAll();
-				return;
-			} catch (ValorErradoException e3) {
-				JOptionPane.showMessageDialog(this, "Valor comiss�o inválido!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				txtValorComissaoIroClassif.requestFocus();
-				txtValorComissaoIroClassif.selectAll();
-				return;
-			}
-
-			try {
-				diaBO.setQntBinsEquipe(Integer.parseInt(txtQntdBins.getText()));
-			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "Quantidade de deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				txtQntdBins.requestFocus();
-				txtQntdBins.selectAll();
-				return;
-			} catch (QuantidadeErradaException e1) {
-				JOptionPane.showMessageDialog(this, "Quantidade de bins incorreta!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				txtQntdBins.requestFocus();
-				txtQntdBins.selectAll();
-				return;
-			}
-
-			try {
-				diaBO.setValorBins(Double.parseDouble(txtValorBins.getText().replace(',', '.')));
-			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "Valor bins deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				txtValorBins.requestFocus();
-				txtValorBins.selectAll();
-				return;
-			} catch (ValorErradoException e1) {
-				JOptionPane.showMessageDialog(this, "Valor bins inválido!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				txtValorBins.requestFocus();
-				txtValorBins.selectAll();
-				return;
-			}
-
-			try {
-				diaBO.setValorDia(Double.parseDouble(txtValorDia.getText().replace(',', '.')));
-			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "Valor do dia deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				txtValorDia.requestFocus();
-				txtValorDia.selectAll();
-				return;
-			} catch (ValorErradoException e1) {
-				JOptionPane.showMessageDialog(this, "Valor do dia inválido!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				txtValorDia.requestFocus();
-				txtValorDia.selectAll();
-				return;
-			}
-
-			try {
-				diaBO.setValorTotalResto(totalResto);
-				diaBO.setValorTotal(totalGeral);
-				diaBO.setValorComissao(Double.parseDouble(txtVlrComissao.getText().trim().replace(',', '.')));
-				diaBO.setValorOutroIro(Double.parseDouble(txtValorOutrosIro.getText().trim().replace(',', '.')));
-				diaBO.setValorTotalComissao(totalComissao);
-			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "Valor deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				return;
-			} 
-			catch (ValorErradoException e1) {
-				JOptionPane.showMessageDialog(this, "Valor incorreto!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-
-			diaBO.equipeBO.setCodigo(Integer.parseInt(modeloTabEquipe.getValueAt(tabelaEquipe.getSelectedRow(), 0).toString()));
-			try {
-				diaBO.equipeBO.setNome(modeloTabEquipe.getValueAt(tabelaEquipe.getSelectedRow(), 1).toString());
-			} catch (StringVaziaException e2) {}
-
-			diaBO.observacao.setText(txtAreaObserv.getText());
-
-			if (consDia == null)
-				diaDao.incluir(diaBO);
-			else 
-				diaDao.alterar(diaBO);
-
-			try {
-				int cont = 0;
-				char presenca = 'S';
-
-				if (!txtCodigoDia.getText().equals("-")) //verifica se � altera��o para excluir os dados e gravar novamente
-					diaAdoDao.excluir(Integer.parseInt(txtCodigoDia.getText()));
-
-				do {
-					diaAdoBO.add(new DiaEmpregadoBO());
-					int codigoEmpregado = Integer.parseInt(modelo.getValueAt(cont, COLUNA_CODIGO).toString());
-					diaAdoBO.get(cont).adoBO.setCodigo(codigoEmpregado);
-					if (modelo.getValueAt(cont, COLUNA_PRESENCA).toString().equals("N"))
-						presenca = 'N';
-					else if (modelo.getValueAt(cont, COLUNA_PRESENCA).toString().equals("M/T"))
-						presenca = 'M';
-					else if (modelo.getValueAt(cont, COLUNA_PRESENCA).toString().equals("S"))
-						presenca = 'S';
-
-					if (modelo.getValueAt(cont, COLUNA_CLASSIF).toString().equals("true"))
-						diaAdoBO.get(cont).setClassificador('S');
-					else
-						diaAdoBO.get(cont).setClassificador('N');
-
-					diaAdoBO.get(cont).setPresenca(presenca);
-					diaAdoBO.get(cont).setValor(Double.parseDouble(modelo.getValueAt(cont, COLUNA_VALOR).toString()));
-					diaAdoBO.get(cont).setRateio(new BigDecimal(modelo.getValueAt(cont, COLUNA_RATEIO).toString()));
-					System.out.println(new BigDecimal(modelo.getValueAt(cont, COLUNA_RATEIO).toString()).toString());
-					diaAdoBO.get(cont).diaBO.setCodigo(diaBO.getCodigo());
-
-					diaAdoDao.incluir(diaAdoBO.get(cont));
-
-					cont++;
-				} while (cont < getQntdEmpregados());
-
-				if (consDia == null) {
-					txtQntdBins.setText("");
-					txtValorClassif.setText("");
-					txtValorBins.setText("0,00");
-					txtValorTotal.setText("");
-					txtValorTotalRestoEquipe.setText("");
+				try {
+					diaBO.setValorClassif(Double.parseDouble(txtValorClassif.getText().trim().replace(',', '.')));
+				} catch (NumberFormatException e4) {
+					JOptionPane.showMessageDialog(this, "Valor classificador deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
 					txtValorClassif.requestFocus();
-					txtValorDia.setText("0,00");
-					txtVlrComissao.setText("");
-					txtVlrTotalComissao.setText("");
-					txtAreaObserv.setText("");
-					JOptionPane.showMessageDialog(this, "Registro salvo com sucesso!", "Registro Salvo", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
-					try {
-						tabelaEquipe.addRowSelectionInterval(tabelaEquipe.getSelectedRow()+1, tabelaEquipe.getSelectedRow()+1);
-					} catch (IllegalArgumentException erro) {
-						tabelaEquipe.addRowSelectionInterval(0, 0);
-					}
-					selecionaEquipe();
-				} else {
-					int linha = consDia.tabela.getSelectedRow();
-					consDia.modelo.setValueAt(df.format(consDia.diaBO.data.toDate()),linha,1);
-					consDia.modelo.setValueAt(diaBO.equipeBO.getNome(),linha,2);
-					consDia.modelo.setValueAt(diaBO.iroBO.getNome(),linha,3);
-					consDia.modelo.setValueAt(diaBO.getValorTotal(),linha,4);
-					JOptionPane.showMessageDialog(this, "Registro alterado com sucesso!", "Registro Alterado", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
-					doDefaultCloseAction();
+					txtValorClassif.selectAll();
+				} catch (ValorErradoException e4) {
+					JOptionPane.showMessageDialog(this, "Valor classificador inválido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					txtValorClassif.requestFocus();
+					txtValorClassif.selectAll();
+					return;
 				}
-			} catch (ValorErradoException e1) {
 
-				JOptionPane.showMessageDialog(this, "Valor empregado incorreto!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				return;
+				try {
+					diaBO.setQntdBinsClassif(Integer.parseInt(txtQntdBinsClassif.getText()));
+				} catch (NumberFormatException e3) {
+					JOptionPane.showMessageDialog(this, "Quantidade de deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					txtQntdBins.requestFocus();
+					txtQntdBins.selectAll();
+				} catch (QuantidadeErradaException e3) {
+					JOptionPane.showMessageDialog(this, "Quantidade de bins incorreta!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					txtQntdBins.requestFocus();
+					txtQntdBins.selectAll();
+					txtQntdBins.getText();
+					return;
+				}
+
+				try {
+					diaBO.setValorComissIroClassif(Double.parseDouble(txtValorComissaoIroClassif.getText().trim().replace(',', '.')));
+				} catch (NumberFormatException e3) {
+					JOptionPane.showMessageDialog(this, "Valor comiss�o deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					txtValorComissaoIroClassif.requestFocus();
+					txtValorComissaoIroClassif.selectAll();
+					return;
+				} catch (ValorErradoException e3) {
+					JOptionPane.showMessageDialog(this, "Valor comiss�o inválido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					txtValorComissaoIroClassif.requestFocus();
+					txtValorComissaoIroClassif.selectAll();
+					return;
+				}
+
+				try {
+					diaBO.setQntBinsEquipe(Integer.parseInt(txtQntdBins.getText()));
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(this, "Quantidade de deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					txtQntdBins.requestFocus();
+					txtQntdBins.selectAll();
+					return;
+				} catch (QuantidadeErradaException e1) {
+					JOptionPane.showMessageDialog(this, "Quantidade de bins incorreta!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					txtQntdBins.requestFocus();
+					txtQntdBins.selectAll();
+					return;
+				}
+
+				try {
+					diaBO.setValorBins(Double.parseDouble(txtValorBins.getText().replace(',', '.')));
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(this, "Valor bins deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					txtValorBins.requestFocus();
+					txtValorBins.selectAll();
+					return;
+				} catch (ValorErradoException e1) {
+					JOptionPane.showMessageDialog(this, "Valor bins inválido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					txtValorBins.requestFocus();
+					txtValorBins.selectAll();
+					return;
+				}
+
+				try {
+					diaBO.setValorDia(Double.parseDouble(txtValorDia.getText().replace(',', '.')));
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(this, "Valor do dia deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					txtValorDia.requestFocus();
+					txtValorDia.selectAll();
+					return;
+				} catch (ValorErradoException e1) {
+					JOptionPane.showMessageDialog(this, "Valor do dia inválido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					txtValorDia.requestFocus();
+					txtValorDia.selectAll();
+					return;
+				}
+
+				try {
+					diaBO.setValorTotalResto(totalResto);
+					diaBO.setValorTotal(totalGeral);
+					diaBO.setValorComissao(Double.parseDouble(txtVlrComissao.getText().trim().replace(',', '.')));
+					diaBO.setValorOutroIro(Double.parseDouble(txtValorOutrosIro.getText().trim().replace(',', '.')));
+					diaBO.setValorTotalComissao(totalComissao);
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(this, "Valor deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					return;
+				} 
+				catch (ValorErradoException e1) {
+					JOptionPane.showMessageDialog(this, "Valor incorreto!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+
+				diaBO.equipeBO.setCodigo(Integer.parseInt(modeloTabEquipe.getValueAt(tabelaEquipe.getSelectedRow(), 0).toString()));
+				try {
+					diaBO.equipeBO.setNome(modeloTabEquipe.getValueAt(tabelaEquipe.getSelectedRow(), 1).toString());
+				} catch (StringVaziaException e2) {}
+
+				diaBO.observacao.setText(txtAreaObserv.getText());
+
+				if (consDia == null)
+					diaDao.incluir(diaBO);
+				else 
+					diaDao.alterar(diaBO);
+
+				try {
+					int cont = 0;
+					char presenca = 'S';
+
+					if (!txtCodigoDia.getText().equals("-")) //verifica se � altera��o para excluir os dados e gravar novamente
+						diaAdoDao.excluir(Integer.parseInt(txtCodigoDia.getText()));
+
+					do {
+						diaAdoBO.add(new DiaEmpregadoBO());
+						int codigoEmpregado = Integer.parseInt(modelo.getValueAt(cont, COLUNA_CODIGO).toString());
+						diaAdoBO.get(cont).adoBO.setCodigo(codigoEmpregado);
+						if (modelo.getValueAt(cont, COLUNA_PRESENCA).toString().equals("N"))
+							presenca = 'N';
+						else if (modelo.getValueAt(cont, COLUNA_PRESENCA).toString().equals("M/T"))
+							presenca = 'M';
+						else if (modelo.getValueAt(cont, COLUNA_PRESENCA).toString().equals("S"))
+							presenca = 'S';
+
+						if (modelo.getValueAt(cont, COLUNA_CLASSIF).toString().equals("true"))
+							diaAdoBO.get(cont).setClassificador('S');
+						else
+							diaAdoBO.get(cont).setClassificador('N');
+
+						diaAdoBO.get(cont).setPresenca(presenca);
+						diaAdoBO.get(cont).setValor(Double.parseDouble(modelo.getValueAt(cont, COLUNA_VALOR).toString()));
+						diaAdoBO.get(cont).setRateio(new BigDecimal(modelo.getValueAt(cont, COLUNA_RATEIO).toString()));
+						System.out.println(new BigDecimal(modelo.getValueAt(cont, COLUNA_RATEIO).toString()).toString());
+						diaAdoBO.get(cont).diaBO.setCodigo(diaBO.getCodigo());
+
+						diaAdoDao.incluir(diaAdoBO.get(cont));
+
+						cont++;
+					} while (cont < getQntdEmpregados());
+
+					if (consDia == null) {
+						txtQntdBins.setText("");
+						txtValorClassif.setText("");
+						txtValorBins.setText("0,00");
+						txtValorTotal.setText("");
+						txtValorTotalRestoEquipe.setText("");
+						txtValorClassif.requestFocus();
+						txtValorDia.setText("0,00");
+						txtVlrComissao.setText("");
+						txtVlrTotalComissao.setText("");
+						txtAreaObserv.setText("");
+						JOptionPane.showMessageDialog(this, "Registro salvo com sucesso!", "Registro Salvo", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
+						try {
+							tabelaEquipe.addRowSelectionInterval(tabelaEquipe.getSelectedRow()+1, tabelaEquipe.getSelectedRow()+1);
+						} catch (IllegalArgumentException erro) {
+							tabelaEquipe.addRowSelectionInterval(0, 0);
+						}
+						selecionaEquipe();
+					} else {
+						int linha = consDia.tabela.getSelectedRow();
+						consDia.modelo.setValueAt(df.format(consDia.diaBO.data.toDate()),linha,1);
+						consDia.modelo.setValueAt(diaBO.equipeBO.getNome(),linha,2);
+						consDia.modelo.setValueAt(diaBO.iroBO.getNome(),linha,3);
+						consDia.modelo.setValueAt(diaBO.getValorTotal(),linha,4);
+						JOptionPane.showMessageDialog(this, "Registro alterado com sucesso!", "Registro Alterado", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
+						doDefaultCloseAction();
+					}
+				} catch (ValorErradoException e1) {
+
+					JOptionPane.showMessageDialog(this, "Valor empregado incorreto!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+			} else if (tabbedPane.getSelectedIndex() == 1) {  // ----------------------------------- SACOLA
+				if (txtCodigoDia.getText().equals("-"))
+					diaBO.setCodigo(diaDao.getUltimoCod()+1);
+				else
+					diaBO.setCodigo(Integer.parseInt(txtCodigoDia.getText()));
+
+				try {
+					diaBO.data = new DateTime(df.parse(txtData.getText()));
+				} catch (ParseException e2) {
+					JOptionPane.showMessageDialog(this, "Data inválida!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					txtCodigoDia.requestFocus();
+					txtCodigoDia.selectAll();
+					return;
+				}
+
+				if (!txtCodEmpreiteiro.getText().trim().equals("")) {
+					diaBO.iroBO.setCodigo(Integer.parseInt(txtCodEmpreiteiro.getText()));
+				} else {
+					JOptionPane.showMessageDialog(this, "Codigo empreiteiro deve ser preenchido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					txtCodEmpreiteiro.requestFocus();
+					txtCodEmpreiteiro.selectAll();
+					return;
+				}
+
+				try {
+					diaBO.iroBO.setNome(txtMostraEmpreiteiro.getText());
+				} catch (StringVaziaException e3) {
+					JOptionPane.showMessageDialog(this, "Nome empreiteiro inválido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					txtCodEmpreiteiro.requestFocus();
+					txtCodEmpreiteiro.selectAll();
+					return;
+				}
+				diaBO.setMetodo('S');
+
+				try {
+					diaBO.setValorClassif(0.00);
+					diaBO.setQntdBinsClassif(0);
+					diaBO.setValorComissIroClassif(0.00);
+					diaBO.setQntBinsEquipe(0);
+					diaBO.setValorBins(0.00);
+					diaBO.setValorDia(0.00);
+
+					diaBO.setValorTotalResto(valorTotalEquipeSacola);
+					diaBO.setValorTotal(valorTotalSacola);
+					diaBO.setValorComissao(Double.parseDouble(txtValorComissão.getText().trim().replace(',', '.')));
+					diaBO.setValorOutroIro(0.00);
+					diaBO.setValorTotalComissao(valorTotalEmpreiteiroSacola);
+				} catch (ValorErradoException e4) {
+				} catch (QuantidadeErradaException e1) {}
+
+				diaBO.equipeBO.setCodigo(Integer.parseInt(modeloTabEquipe.getValueAt(tabelaEquipe.getSelectedRow(), 0).toString()));
+
+				try {
+					diaBO.equipeBO.setNome(modeloTabEquipe.getValueAt(tabelaEquipe.getSelectedRow(), 1).toString());
+				} catch (StringVaziaException e2) {}
+
+				diaBO.observacao.setText(txtAreaObservSacola.getText());
+
+				if (consDia == null)
+					diaDao.incluir(diaBO);
+				else 
+					diaDao.alterar(diaBO);
+
+				try {
+					int cont = 0;
+					char presenca = 'S';
+
+					if (!txtCodigoDia.getText().equals("-")) //verifica se há alteração para excluir os dados e gravar novamente
+						diaAdoDao.excluir(Integer.parseInt(txtCodigoDia.getText()));
+
+					do {
+						diaAdoBO.add(new DiaEmpregadoBO());
+						int codigoEmpregado = Integer.parseInt(modeloTabelaSacola.getValueAt(cont, COLUNA_SACOLA_CODIGO).toString());
+						diaAdoBO.get(cont).adoBO.setCodigo(codigoEmpregado);
+						if (modeloTabelaSacola.getValueAt(cont, COLUNA_SACOLA_PRESENCA).toString().equals("N"))
+							presenca = 'N';
+						else if (modeloTabelaSacola.getValueAt(cont, COLUNA_SACOLA_PRESENCA).toString().equals("M/T"))
+							presenca = 'M';
+						else if (modeloTabelaSacola.getValueAt(cont, COLUNA_SACOLA_PRESENCA).toString().equals("S"))
+							presenca = 'S';
+
+						if (modeloTabelaSacola.getValueAt(cont, COLUNA_SACOLA_CLASSIF).toString().equals("true"))
+							diaAdoBO.get(cont).setClassificador('S');
+						else
+							diaAdoBO.get(cont).setClassificador('N');
+
+						diaAdoBO.get(cont).setPresenca(presenca);
+						diaAdoBO.get(cont).setChaoEscada(modeloTabelaSacola.getValueAt(cont, COLUNA_SACOLA_CHAO_ESCADA).toString().charAt(0));
+						diaAdoBO.get(cont).setQntdSacola(Integer.parseInt(modeloTabelaSacola.getValueAt(cont, COLUNA_SACOLA_QUANT).toString()));
+						diaAdoBO.get(cont).setValor(Double.parseDouble(modeloTabelaSacola.getValueAt(cont, COLUNA_SACOLA_VALOR).toString()));
+						diaAdoBO.get(cont).setRateio(BigDecimal.ZERO);
+						diaAdoBO.get(cont).diaBO.setCodigo(diaBO.getCodigo());
+
+						diaAdoDao.incluir(diaAdoBO.get(cont));
+
+						cont++;
+					} while (cont < getQntdEmpregados());
+
+					if (consDia == null) {
+						txtValortotalEmpreiteiroSacola.setText("");
+						txtValorTotalEqSacola.setText("");
+						txtAreaObservSacola.setText("");
+						JOptionPane.showMessageDialog(this, "Registro salvo com sucesso!", "Registro Salvo", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
+						try {
+							tabelaEquipe.addRowSelectionInterval(tabelaEquipe.getSelectedRow()+1, tabelaEquipe.getSelectedRow()+1);
+						} catch (IllegalArgumentException erro) {
+							tabelaEquipe.addRowSelectionInterval(0, 0);
+						}
+						selecionaEquipeSacolas();
+					} else {
+						int linha = consDia.tabela.getSelectedRow();
+						consDia.modelo.setValueAt(df.format(consDia.diaBO.data.toDate()),linha,1);
+						consDia.modelo.setValueAt(diaBO.equipeBO.getNome(),linha,2);
+						consDia.modelo.setValueAt(diaBO.iroBO.getNome(),linha,3);
+						consDia.modelo.setValueAt(diaBO.getValorTotal(),linha,4);
+						consDia.modelo.setValueAt(diaBO.getQntBinsEquipe(),linha,5);
+						consDia.modelo.setValueAt(diaBO.observacao.getText(),linha,6);
+						JOptionPane.showMessageDialog(this, "Registro alterado com sucesso!", "Registro Alterado", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
+						doDefaultCloseAction();
+					}
+				} catch (ValorErradoException e1) {
+					JOptionPane.showMessageDialog(this, "Valor empregado incorreto!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 			}
-
 		} else if (origem == btnCancelar) {
 			doDefaultCloseAction();
 		} else if (origem == rBtnPorBins) {

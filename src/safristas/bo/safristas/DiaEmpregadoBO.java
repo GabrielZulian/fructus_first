@@ -12,6 +12,8 @@ public class DiaEmpregadoBO {
 	private double valor;
 	private char presenca;
 	private char classificador;
+	private char chaoEscada;
+	private Integer qntdSacola;
 	private BigDecimal rateio;
 	private char pagou;
 
@@ -23,6 +25,8 @@ public class DiaEmpregadoBO {
 		this.valor = 0.0;
 		this.presenca = 'S';
 		this.classificador = 'N';
+		this.chaoEscada = 'C';
+		this.qntdSacola = 0;
 		this.rateio = new BigDecimal("0");
 		this.pagou = 'N';
 	}
@@ -88,4 +92,19 @@ public class DiaEmpregadoBO {
 		this.pagou = pagou;
 	}
 
+	public void setChaoEscada(char chaoEscada) {
+		this.chaoEscada = chaoEscada;
+	}
+
+	public char getChaoEscada() {
+		return chaoEscada;
+	}
+
+	public Integer getQntdSacola() {
+		return qntdSacola;
+	}
+
+	public void setQntdSacola(Integer qntdSacola) {
+		this.qntdSacola = qntdSacola;
+	}
 }
