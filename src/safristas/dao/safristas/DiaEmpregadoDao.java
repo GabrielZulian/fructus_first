@@ -98,7 +98,10 @@ public class DiaEmpregadoDao {
 						diaAdoBO.get(i).setValor(registros.getDouble("diaemp_valoremp"));
 						diaAdoBO.get(i).setPresenca(registros.getString("diaemp_presenca").charAt(0));
 						diaAdoBO.get(i).setRateio(registros.getBigDecimal("diaemp_rateio"));
-						diaAdoBO.get(i).setChaoEscada(registros.getString("diaemp_chaoescada").charAt(0));
+						if (registros.getString("diaemp_chaoescada") != null)
+							diaAdoBO.get(i).setChaoEscada(registros.getString("diaemp_chaoescada").charAt(0));
+						else
+							diaAdoBO.get(i).setChaoEscada(' ');
 						diaAdoBO.get(i).setQntdSacola(registros.getInt("diaemp_qntdsacola"));
 						diaAdoBO.get(i).setClassificador(registros.getString("diaemp_classif").charAt(0));
 						diaAdoBO.get(i).setPagou(registros.getString("diaemp_pagou").charAt(0));

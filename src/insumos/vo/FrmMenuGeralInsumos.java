@@ -21,7 +21,7 @@ public class FrmMenuGeralInsumos extends FrmMenuGeralPai implements ActionListen
 
 	private JMenu menuCadastros = new JMenu("Cadastros");
 	private JMenu menuConsultas = new JMenu("Consultas");
-	private JMenu menuLancamentos = new JMenu("LanÁamentos");
+	private JMenu menuLancamentos = new JMenu("Lan√ßamentos");
 	private JMenu menuRelatorios = new JMenu("Relatorios");
 	private JMenu menuEspeciais = new JMenu("Especiais");
 	private JMenu menuSobre = new JMenu("Sobre");
@@ -31,13 +31,13 @@ public class FrmMenuGeralInsumos extends FrmMenuGeralPai implements ActionListen
 
 	public FrmMenuGeralInsumos() {
 		super();
-		setTitle("¡rea de trabalho - Insumos");
+		setTitle("√Årea de trabalho - Insumos");
 		menuCadastros.setMnemonic('C');
 		menuLancamentos.setMnemonic('L');
 		menuRelatorios.setMnemonic('R');
 		menuEspeciais.setMnemonic('E');
 		
-		itemCadTalhao = new JMenuItem("Talhıes", new ImageIcon(getClass().getResource("/icons/icon_lavourap.gif")));
+		itemCadTalhao = new JMenuItem("Talh√µes", new ImageIcon(getClass().getResource("/icons/icon_lavourap.gif")));
 		itemCadTalhao.setMnemonic('L');
 		
 		itemCadInsumo = new JMenuItem("Insumos", new ImageIcon(getClass().getResource("/icons/icon_insumop.gif")));
@@ -47,7 +47,7 @@ public class FrmMenuGeralInsumos extends FrmMenuGeralPai implements ActionListen
 		menuCadastros.add(itemCadInsumo);
 		barraMenu.add(menuCadastros);
 		
-		itemConTalhoes = new JMenuItem("Talhıes", new ImageIcon(getClass().getResource("/icons/icon_lavourap.gif")));
+		itemConTalhoes = new JMenuItem("Talh√µes", new ImageIcon(getClass().getResource("/icons/icon_lavourap.gif")));
 		itemConTalhoes.setMnemonic('L');
 		
 		itemConInsumo = new JMenuItem("Insumos", new ImageIcon(getClass().getResource("/icons/icon_insumop.gif")));
@@ -58,16 +58,16 @@ public class FrmMenuGeralInsumos extends FrmMenuGeralPai implements ActionListen
 		
 		barraMenu.add(menuConsultas);
 		
-		itemAplicacao = new JMenuItem("AplicaÁ„o");
+		itemAplicacao = new JMenuItem("Aplica√ß√£o");
 		itemAplicacao.setMnemonic('p');
 		
 		menuLancamentos.add(itemAplicacao);
 		barraMenu.add(menuLancamentos);
 		
-		itemRelAplicacao = new JMenuItem("AplicaÁıes");
+		itemRelAplicacao = new JMenuItem("Aplica√ß√µes");
 		itemRelAplicacao.setMnemonic('p');
 		
-		itemRelVisaoGeralTalhoes = new JMenuItem("Vis„o Geral Talhıes - Residual");
+		itemRelVisaoGeralTalhoes = new JMenuItem("Vis√£o Geral Talh√µes - Residual");
 		itemRelVisaoGeralTalhoes.setMnemonic('V');
 		
 		menuRelatorios.add(itemRelAplicacao);	
@@ -82,27 +82,27 @@ public class FrmMenuGeralInsumos extends FrmMenuGeralPai implements ActionListen
 		//-----------------------------------------------------------
 		
 		btnConLavoura = new JButton(new ImageIcon(getClass().getResource("/icons/icon_lavoura.gif")));
-		btnConLavoura.setToolTipText("Consulta Talhıes");
+		btnConLavoura.setToolTipText("Consulta Talh√µes");
 		
 		btnConInsumo = new JButton(new ImageIcon(getClass().getResource("/icons/icon_insumo.gif")));
 		btnConInsumo.setToolTipText("Consulta Insumos");
 		
 		btnConAplicacao = new JButton(new ImageIcon(getClass().getResource("/icons/icon_aplicacao.gif")));
-		btnConAplicacao.setToolTipText("Consulta AplicaÁıes");
+		btnConAplicacao.setToolTipText("Consulta Aplica√ß√µes");
 		
 		barra.add(btnConLavoura);
 		barra.add(btnConInsumo);
 		barra.addSeparator();
 		barra.add(btnConAplicacao);
 		btnVisaoGeral = new JButton(new ImageIcon(getClass().getResource("/icons/icon_visao_lavouras.gif")));
-		btnVisaoGeral.setToolTipText("Vis„o geral talhıes");
+		btnVisaoGeral.setToolTipText("Vis√£o geral talh√µes");
 		barra.add(btnVisaoGeral);
 		btnVisaoGeral.addActionListener(this);
 		
 		barra.addSeparator();
 		
 		btnTrocaModulo = new JButton(new ImageIcon(getClass().getResource("/icons/icon_troca_modulo.gif")));
-		btnTrocaModulo.setToolTipText("Trocar MÛdulo");
+		btnTrocaModulo.setToolTipText("Trocar M√≥dulo");
 		
 		barra.add(Box.createHorizontalGlue());
 		barra.add(btnTrocaModulo);

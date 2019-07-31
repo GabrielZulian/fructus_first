@@ -37,14 +37,14 @@ public class FrmConsultaDiaOutros extends FrmConsultaPai {
 		setSize(getWidth()+90, getHeight());
 
 		cbConsulta.addItem("Data");
-		cbConsulta.addItem("Função");
-		cbConsulta.addItem("Cód. Função");
+		cbConsulta.addItem("Funï¿½ï¿½o");
+		cbConsulta.addItem("Cï¿½d. Funï¿½ï¿½o");
 		cbConsulta.addItem("Valor");
 		cbConsulta.setSelectedItem("Data");
 
 		ArrayList<Object> dados = new ArrayList<Object>();
 
-		String[] colunas = new String[] {"Código", "Data", "Nome", "Função", "Valor Total", "Histórico", "Situação"};
+		String[] colunas = new String[] {"Cï¿½digo", "Data", "Nome", "Funï¿½ï¿½o", "Valor Total", "Histï¿½rico", "Situaï¿½ï¿½o"};
 
 		boolean[] edicao = {false, false, false, false, false, false, false};
 
@@ -79,7 +79,7 @@ public class FrmConsultaDiaOutros extends FrmConsultaPai {
 			}
 		});
 		tabela.setFocusable(false);
-		super.btnIncluir.setText("Lançar Dia (F1)");
+		super.btnIncluir.setText("Lanï¿½ar Dia (F1)");
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -94,13 +94,13 @@ public class FrmConsultaDiaOutros extends FrmConsultaPai {
 		for (int i = modelo.getRowCount() - 1; i >= 0; i--)
 			modelo.removeRow(i);
 
-		if (super.cbConsulta.getSelectedItem().equals("Código")) {
+		if (super.cbConsulta.getSelectedItem().equals("Cï¿½digo")) {
 			diaOutBO = diaOutDao.consultaPorCodigo(Integer.parseInt(super.txtDadoConsulta.getText()));
 		} else if (super.cbConsulta.getSelectedItem().equals("Nome")) {
 			diaOutBO = diaOutDao.consultaPorNomeEmpregado(super.txtDadoConsulta.getText());
-		} else if (super.cbConsulta.getSelectedItem().equals("Cód. Função")) {
+		} else if (super.cbConsulta.getSelectedItem().equals("Cï¿½d. Funï¿½ï¿½o")) {
 			diaOutBO = diaOutDao.consultaPorCodFuncao(Integer.parseInt(super.txtDadoConsulta.getText()));
-		} else if (super.cbConsulta.getSelectedItem().equals("Função")) {
+		} else if (super.cbConsulta.getSelectedItem().equals("Funï¿½ï¿½o")) {
 			diaOutBO = diaOutDao.consultaPorNomeFuncao(super.txtDadoConsulta.getText());
 		} else if (super.cbConsulta.getSelectedItem().equals("Data")) {
 			diaOutBO = diaOutDao.consultaPorData(super.txtDadoConsulta.getText());
@@ -122,7 +122,6 @@ public class FrmConsultaDiaOutros extends FrmConsultaPai {
 				});
 				indice++;
 			} while (indice < diaOutBO.size());
-			System.out.println(diaOutBO.size());
 		} catch (NullPointerException e) {}
 	}
 
@@ -159,7 +158,7 @@ public class FrmConsultaDiaOutros extends FrmConsultaPai {
 	@Override
 	public void excluir() {
 		if (modelo.getValueAt(tabela.getSelectedRow(),6).toString() == "Pago") {
-			JOptionPane.showMessageDialog(this, "Este dia já contém pagamento! Excluir pagamento primeiro, caso deseje excluir este registro.", "Excluir Registro",JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Este dia jï¿½ contï¿½m pagamento! Excluir pagamento primeiro, caso deseje excluir este registro.", "Excluir Registro",JOptionPane.ERROR_MESSAGE);
 		} else if (diaOutDao.excluir(Integer.parseInt(modelo.getValueAt(tabela.getSelectedRow(),0).toString())) == true) {
 			modelo.removeRow(tabela.getSelectedRow());
 		}

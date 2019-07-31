@@ -35,12 +35,12 @@ public class FrmConsultaAtrativo extends FrmConsultaPai {
 		setSize(getWidth()-50, getHeight()-40);
 
 		cbConsulta.removeItem("Nome");
-		cbConsulta.addItem("Descri��o");
-		cbConsulta.setSelectedItem("Descri��o");
+		cbConsulta.addItem("Descrição");
+		cbConsulta.setSelectedItem("Descrição");
 
 		ArrayList<Object> dados = new ArrayList<Object>();
 
-		String[] colunas = new String[] {"C�digo", "Descrição", "Dias p/ troca"};
+		String[] colunas = new String[] {"Código", "Descrição", "Dias p/ troca"};
 
 		boolean[] edicao = {false, false, false};
 
@@ -121,16 +121,16 @@ public class FrmConsultaAtrativo extends FrmConsultaPai {
 		for (int i = modelo.getRowCount() - 1; i >= 0; i--)
 			modelo.removeRow(i);
 
-		if (super.cbConsulta.getSelectedItem().equals("C�digo")) {
+		if (super.cbConsulta.getSelectedItem().equals("Código")) {
 			try {
 				atratBO = atratDao.consultaPorCodigo(Integer.parseInt(super.txtDadoConsulta.getText()));
 			} catch(NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "O c�digo deve ser num�rico", "Erro", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "O c�digo deve ser numérico", "Erro", JOptionPane.ERROR_MESSAGE);
 				super.txtDadoConsulta.selectAll();
 				super.txtDadoConsulta.requestFocus();
 				return;
 			}
-		} else if (super.cbConsulta.getSelectedItem().equals("Descri��o")) {
+		} else if (super.cbConsulta.getSelectedItem().equals("Descrição")) {
 			atratBO = atratDao.consultaPorNome(super.txtDadoConsulta.getText());
 		}
 

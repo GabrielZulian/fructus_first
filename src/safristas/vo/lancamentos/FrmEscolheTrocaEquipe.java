@@ -24,7 +24,7 @@ public class FrmEscolheTrocaEquipe extends JInternalFrame {
 	protected GridBagConstraints constraints = new GridBagConstraints();
 	
 	public FrmEscolheTrocaEquipe() {
-		super("Desconto / Acréscimo",false,true,false,true);
+		super("Desconto / Acrï¿½scimo",false,true,false,true);
 
 		setFrameIcon(new ImageIcon(getClass().getResource("/icons/icon_logo_varaschin.gif")));
 		setResizable(false);
@@ -44,7 +44,7 @@ public class FrmEscolheTrocaEquipe extends JInternalFrame {
 
 		constraints.insets = new Insets(3, 3, 3, 3);
 
-		lblTitulo = new JLabel("Lançar Descontos e Acréscimos");
+		lblTitulo = new JLabel("LanÃ§ar Descontos e AcrÃ©scimos");
 		lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
 		constraints.gridx = 0;
 		constraints.gridy = 1;
@@ -63,7 +63,6 @@ public class FrmEscolheTrocaEquipe extends JInternalFrame {
 		btnConfirmar.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("F1"), "KEY_F1");
 		btnConfirmar.getActionMap().put("KEY_F1", new AbstractAction() {
 			private static final long serialVersionUID = 5779522274432064950L;
-
 			public void actionPerformed(ActionEvent evt) {
 				btnConfirmar.doClick();
 		    }
@@ -77,7 +76,6 @@ public class FrmEscolheTrocaEquipe extends JInternalFrame {
 		btnCancelar.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("F4"), "KEY_F4");
 		btnCancelar.getActionMap().put("KEY_F4", new AbstractAction() {
 			private static final long serialVersionUID = -7547882810266193631L;
-
 			public void actionPerformed(ActionEvent evt) {
 				btnCancelar.doClick();
 		    }

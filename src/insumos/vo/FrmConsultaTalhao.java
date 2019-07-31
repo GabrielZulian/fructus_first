@@ -44,21 +44,21 @@ public class FrmConsultaTalhao extends FrmConsultaPai {
 
 	public FrmConsultaTalhao() {
 
-		setTitle("Consulta Talhıes");
+		setTitle("Consulta Talh√µes");
 		setSize(getWidth()-76, getHeight()-40);
 
-		cbConsulta.addItem("N˙mero");
-		cbConsulta.addItem("¡rea");
+		cbConsulta.addItem("N√∫mero");
+		cbConsulta.addItem("√Årea");
 //		cbConsulta.addItem("Tipo");
-		cbConsulta.setSelectedItem("N˙mero");
+		cbConsulta.setSelectedItem("N√∫mero");
 
 		ArrayList<Object> dados = new ArrayList<Object>();
 
-		String[] colunas = new String[] {"CÛdigo", "Tipo", "N˙mero", "¡rea"};
+		String[] colunas = new String[] {"C√≥digo", "Tipo", "N√∫mero", "√Årea"};
 
 		boolean[] edicao = {false, false, false};
 
-		// criaÁ„o da tabela baseada no modelo ModeloTabela
+		// criaÔøΩÔøΩo da tabela baseada no modelo ModeloTabela
 		modelo = new ModeloTabela(dados, colunas, edicao);
 		tabela = new JTable(modelo);
 		tabela.getColumnModel().getColumn(0).setResizable(false);
@@ -145,20 +145,20 @@ public class FrmConsultaTalhao extends FrmConsultaPai {
 
 		if (super.txtDadoConsulta.getText().equals("")) {
 				talhaoBO = talhaoDAO.consultaTodos();	
-		} else if (super.cbConsulta.getSelectedItem().equals("N˙mero")) {
+		} else if (super.cbConsulta.getSelectedItem().equals("N√∫mero")) {
 			try {
 				talhaoBO = talhaoDAO.consultaPorNumero(Integer.parseInt(super.txtDadoConsulta.getText()));
 			} catch(NumberFormatException e1){
-				JOptionPane.showMessageDialog(this, "O cÛdigo deve ser numÈrico", "Erro", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "O c√≥digo deve ser num√©rico", "Erro", JOptionPane.ERROR_MESSAGE);
 				super.txtDadoConsulta.selectAll();
 				super.txtDadoConsulta.requestFocus();
 				return;
 			}
-		} else if (super.cbConsulta.getSelectedItem().equals("¡rea")) {
+		} else if (super.cbConsulta.getSelectedItem().equals("√Årea")) {
 			try {
 				talhaoBO = talhaoDAO.consultaPorArea(new BigDecimal(txtDadoConsulta.getText()));
 			} catch(NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "A ·rea deve ser numÈrica", "Erro", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "A √°rea deve ser num√©rica", "Erro", JOptionPane.ERROR_MESSAGE);
 				super.txtDadoConsulta.selectAll();
 				super.txtDadoConsulta.requestFocus();
 				return;

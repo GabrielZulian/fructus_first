@@ -13,8 +13,8 @@ public class LancaDiaBO {
 	private int codigo, qntdBinsClassif, qntBinsEquipe;
 	public EmpreiteiroBO iroBO;
 	public EquipeBO equipeBO; 
-	private double valorBins, valorDia, valorClassif, valorTotalResto, valorTotal, valorComissao, valorComissIroClassif, valorOutroIro,
-	valorTotalComissao;
+	private double valorBins, valorDia, valorSacola, valorSacolaEscada, valorClassif, valorTotalResto, valorTotal, valorComissao, 
+	valorComissIroClassif, valorOutroIro, valorTotalComissao, metaChao, metaEscada, metaChaoEscada;
 	private char metodo;
 	public DateTime data;
 	public TextArea observacao;
@@ -29,12 +29,16 @@ public class LancaDiaBO {
 		this.qntBinsEquipe = 0;
 		this.valorBins = 0;
 		this.valorDia = 0;
-		this.valorDia = 0;
+		this.valorSacola = 0;
+		this.valorSacola = 0;
 		this.valorTotalResto = 0;
 		this.valorComissao = 0;
 		this.valorComissIroClassif = 0;
 		this.valorOutroIro = 0;
 		this.valorTotalComissao = 0;
+		this.metaChao = 0;
+		this.metaEscada = 0;
+		this.metaChaoEscada = 0;
 		this.metodo = 'B';
 		this.observacao = new TextArea();
 		this.pgtoBO = new PagamentoTotalBO();
@@ -79,6 +83,22 @@ public class LancaDiaBO {
 			throw new ValorErradoException();
 		else
 			this.valorBins = valorBins;
+	}
+
+	public double getValorSacola() {
+		return valorSacola;
+	}
+
+	public void setValorSacola(double valorSacola) {
+		this.valorSacola = valorSacola;
+	}
+
+	public double getValorSacolaEscada() {
+		return valorSacolaEscada;
+	}
+
+	public void setValorSacolaEscada(double valorSacolaEscada) {
+		this.valorSacolaEscada = valorSacolaEscada;
 	}
 
 	public double getValorDia() {
@@ -165,6 +185,30 @@ public class LancaDiaBO {
 
 	public void setValorTotalComissao(double valorTotalComissao) {
 		this.valorTotalComissao = valorTotalComissao;
+	}
+
+	public double getMetaChao() {
+		return metaChao;
+	}
+
+	public void setMetaChao(double metaChao) {
+		this.metaChao = metaChao;
+	}
+
+	public double getMetaEscada() {
+		return metaEscada;
+	}
+
+	public void setMetaEscada(double metaEscada) {
+		this.metaEscada = metaEscada;
+	}
+
+	public double getMetaChaoEscada() {
+		return metaChaoEscada;
+	}
+
+	public void setMetaChaoEscada(double metaChaoEscada) {
+		this.metaChaoEscada = metaChaoEscada;
 	}
 
 	public char getMetodo() {

@@ -88,7 +88,7 @@ public class FrmCadastraEmpregado extends FrmCadastraPai{
 		setResizable(false);
 		setSize(getWidth()-150, getHeight()-240);
 
-		lblCodigo = new JLabel("Código");
+		lblCodigo = new JLabel("CÃ³digo");
 		lblCodigo.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 1;
@@ -163,7 +163,7 @@ public class FrmCadastraEmpregado extends FrmCadastraPai{
 		painelMeio.add(txtCPF, constraints);
 		constraints.gridwidth = 1;
 
-		lblCodEquipe = new JLabel("Código Equipe");
+		lblCodEquipe = new JLabel("CÃ³digo Equipe");
 		lblCodEquipe.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 6;
@@ -213,7 +213,7 @@ public class FrmCadastraEmpregado extends FrmCadastraPai{
 		constraints.gridwidth = 1;
 		constraints.ipady = 1;
 
-		lblCodFuncao = new JLabel("Código Função");
+		lblCodFuncao = new JLabel("CÃ³digo FunÃ§Ã£o");
 		lblCodFuncao.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 7;
@@ -312,7 +312,7 @@ public class FrmCadastraEmpregado extends FrmCadastraPai{
 			try {
 				empregado.setCpf(txtCPF.getValue().toString());
 			} catch (CpfInvalidoException e1) {
-				JOptionPane.showMessageDialog(this, "CPF incorreto ou inválido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "CPF incorreto ou invÃ¡lido!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtCPF.selectAll();
 				txtCPF.requestFocus();
 				return;
@@ -322,7 +322,7 @@ public class FrmCadastraEmpregado extends FrmCadastraPai{
 				empregado.funcaoBO.setCodigo(Integer.parseInt(txtCodFuncao.getText()));
 			}
 			else {
-				JOptionPane.showMessageDialog(this, "Código da Função incorreto!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "CÃ³digo FunÃ§Ã£o incorreto!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			empregado.funcaoBO = funDao.consultaPorCodigo(Integer.parseInt(txtCodFuncao.getText())).get(0);
@@ -331,12 +331,12 @@ public class FrmCadastraEmpregado extends FrmCadastraPai{
 				empregado.equipeBO.setCodigo(Integer.parseInt(txtCodEquipe.getText()));
 			}
 			else {
-				JOptionPane.showMessageDialog(this, "Código da Equipe incorreto!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "CÃ³digo da Equipe incorreto!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			empregado.equipeBO = equiDao.consultaPorCodigo(Integer.parseInt(txtCodEquipe.getText())).get(0);
 
-			if (consEmpregado == null && visaoGeral == null) {  // veio da inclusão
+			if (consEmpregado == null && visaoGeral == null) {  // veio da inclusï¿½o
 				adoDao.incluir(empregado);
 				JOptionPane.showMessageDialog(this, "Registro salvo com sucesso!", "Registro Salvo", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
 				txtNome.setText("");

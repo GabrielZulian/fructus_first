@@ -47,7 +47,7 @@ public class FrmConsultaContagem extends FrmConsultaPai {
 		setSize(getWidth()-50, getHeight());
 
 		cbConsulta.addItem("Data");
-		cbConsulta.addItem("EspÈcie");
+		cbConsulta.addItem("Esp√©cie");
 		cbConsulta.addItem("Qntd. Insetos");
 		cbConsulta.addItem("Nro. Quadra");
 		cbConsulta.setSelectedItem("Data");
@@ -56,7 +56,7 @@ public class FrmConsultaContagem extends FrmConsultaPai {
 
 		ArrayList<Object> dados = new ArrayList<Object>();
 
-		String[] colunas = new String[] {"CÛdigo Contagem", "Cod. Quadra", "Data", "Nro Quadra", "Qntd. Insetos", "EspÈcie", "Õndice", "Qntd. Frascos"};
+		String[] colunas = new String[] {"C√≥digo Contagem", "Cod. Quadra", "Data", "Nro Quadra", "Qntd. Insetos", "EspÔøΩcie", "√çndice", "Qntd. Frascos"};
 
 		boolean[] edicao = {false, false, false, false, false, false, false, false, false};
 
@@ -83,7 +83,7 @@ public class FrmConsultaContagem extends FrmConsultaPai {
 		painelGeral.add(rolagemTabela, BorderLayout.CENTER);
 
 		tabela.setFocusable(false);
-		super.btnIncluir.setText("LanÁar (F1)");
+		super.btnIncluir.setText("Lan√ßar (F1)");
 		super.btnAlterar.setEnabled(false);
 	}
 
@@ -104,7 +104,7 @@ public class FrmConsultaContagem extends FrmConsultaPai {
 		ultimaData = contDao.getDataUltimaContagem(Integer.parseInt(modelo.getValueAt(tabela.getSelectedRow(), COL_CODQUADRA).toString()));
 
 		if (dataRegistro.isBefore(ultimaData)) {
-			JOptionPane.showMessageDialog(null, "Data deste registro menor que a ultima data de contagem!", "Erro exclus„o", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Data deste registro menor que a ultima data de contagem!", "Erro exclus√£o", JOptionPane.ERROR_MESSAGE);
 			return;
 		} else if (contDao.excluir(Integer.parseInt(modelo.getValueAt(tabela.getSelectedRow(),0).toString())) == true) {
 			modelo.removeRow(tabela.getSelectedRow());
@@ -125,15 +125,15 @@ public class FrmConsultaContagem extends FrmConsultaPai {
 			try {
 				contBO = contDao.consultaPorQntdInsetos(Integer.parseInt(super.txtDadoConsulta.getText()));
 			} catch (NumberFormatException erro) {
-				JOptionPane.showMessageDialog(null, "Quantidade deve ser numÈrica!", "Erro consulta", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Quantidade deve ser numÔøΩrica!", "Erro consulta", JOptionPane.ERROR_MESSAGE);
 			}
 		} else if (super.cbConsulta.getSelectedItem().equals("Nro. Quadra")) {
 			try {
 				contBO = contDao.consultaPorNroQuadra(Integer.parseInt(super.txtDadoConsulta.getText()));
 			} catch (NumberFormatException erro) {
-				JOptionPane.showMessageDialog(null, "N˙mero Quadra deve ser numÈrico!", "Erro consulta", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "N√∫mero Quadra deve ser num√©rico!", "Erro consulta", JOptionPane.ERROR_MESSAGE);
 			}
-		} else if (super.cbConsulta.getSelectedItem().equals("EspÈcie")) {
+		} else if (super.cbConsulta.getSelectedItem().equals("Esp√©cie")) {
 			contBO = contDao.consultaPorEspecie(super.txtDadoConsulta.getText().charAt(0));
 //				if (rbtnCydia.isSelected()) {
 //					contBO = contDao.consultaPorEspecie('C');

@@ -44,7 +44,7 @@ public class FrmRelatorioPagamentos extends FrmRelatorioPai {
 	protected PagamentoTotalOutrosBO pgTotalOutBO;
 
 	public FrmRelatorioPagamentos() {
-		setTitle("Relatório de Pagamentos");
+		setTitle("RelatÃ³rio de Pagamentos");
 		lblTitulo.setText("Pagamentos");
 		setSize(getWidth()+40, getHeight()-50);
 
@@ -75,7 +75,7 @@ public class FrmRelatorioPagamentos extends FrmRelatorioPai {
 		grupo.add(rBtnSafristas);
 		grupo.add(rBtnOutros);
 
-		lblCodigoPagamento = new JLabel("Código Pagamento");
+		lblCodigoPagamento = new JLabel("CÃ³digo pagamento");
 		lblCodigoPagamento.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 1;

@@ -73,13 +73,13 @@ public class FrmLancaAplicacao extends FrmCadastraPai {
 	public FrmLancaAplicacao() {
 		
 		setSize(getWidth(), getHeight()+20);
-		setTitle("Lançar aplicação");
-		lblTitulo.setText("Lançamento de aplicação");
+		setTitle("Lanï¿½ar aplicaÃ§Ã£o");
+		lblTitulo.setText("Lanï¿½amento de aplicaÃ§Ã£o");
 		lblImg.setIcon(new ImageIcon(getClass().getResource("/icons/icon_lavoura.gif")));
 		
 		setSize(getWidth()-160, getHeight()-250);
 		
-		lblCodigo = new JLabel("Código");
+		lblCodigo = new JLabel("CÃ³digo");
 		lblCodigo.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -96,7 +96,7 @@ public class FrmLancaAplicacao extends FrmCadastraPai {
 		constraints.anchor = GridBagConstraints.WEST;
 		painelMeio.add(txtCodigo, constraints);
 		
-		lblData = new JLabel("Data aplicação");
+		lblData = new JLabel("Data aplicaÃ§Ã£o");
 		lblData.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 1;
@@ -118,7 +118,7 @@ public class FrmLancaAplicacao extends FrmCadastraPai {
 		painelMeio.add(txtData, constraints);
 		constraints.gridwidth = 1;
 
-		lblCodTalhao = new JLabel("Código talhão");
+		lblCodTalhao = new JLabel("CÃ³digo talhÃ£o");
 		lblCodTalhao.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 2;
@@ -140,7 +140,7 @@ public class FrmLancaAplicacao extends FrmCadastraPai {
 				talhaoBO = talhaoDAO.consultaPorCodigo(Integer.parseInt(txtCodigoTalhao.getText())).get(0);
 				
 				if (talhaoBO == null) {
-					JOptionPane.showMessageDialog(null, "Talhão não existente", "ERRO", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "TalhÃ£o nÃ£o existente", "ERRO", JOptionPane.ERROR_MESSAGE);
 					txtCodigoTalhao.requestFocus();
 					txtCodigoTalhao.selectAll();
 					return;
@@ -170,7 +170,7 @@ public class FrmLancaAplicacao extends FrmCadastraPai {
 		painelMeio.add(btnProcuraLavoura, constraints);
 		constraints.ipady = 0;
 
-		lblInsumo = new JLabel("Cód. insumo");
+		lblInsumo = new JLabel("CÃ³d. insumo");
 		lblInsumo.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 3;
@@ -238,7 +238,7 @@ public class FrmLancaAplicacao extends FrmCadastraPai {
 		constraints.anchor = GridBagConstraints.WEST;
 		painelMeio.add(txtMostraUnidade, constraints);
 		
-		lblHistorico = new JLabel("Histórico");
+		lblHistorico = new JLabel("HistÃ³rico");
 		lblHistorico.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 5;
@@ -275,7 +275,7 @@ public class FrmLancaAplicacao extends FrmCadastraPai {
 				else
 					apliBO.setCodigo(Integer.parseInt(txtCodigo.getText()));
 			} catch (CodigoErradoException erro) {
-				JOptionPane.showMessageDialog(this, "Código incorreto", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "CÃ³digo incorreto", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtCodigoTalhao.requestFocus();
 				txtCodigoTalhao.selectAll();
 				return;
@@ -293,7 +293,7 @@ public class FrmLancaAplicacao extends FrmCadastraPai {
 			try {
 				apliBO.talhaoBO.setCodigo(Integer.parseInt(txtCodigoTalhao.getText()));
 			} catch (NumberFormatException erro) {
-				JOptionPane.showMessageDialog(this, "Código talhão incorreto", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "CÃ³digo talhÃ£o incorreto", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtCodigoTalhao.requestFocus();
 				txtCodigoTalhao.selectAll();
 				return;
@@ -302,7 +302,7 @@ public class FrmLancaAplicacao extends FrmCadastraPai {
 			try {
 				apliBO.insumoBO.setCodigo(Integer.parseInt(txtCodInsumo.getText()));
 			} catch (NumberFormatException erro) {
-				JOptionPane.showMessageDialog(this, "Código insumo incorreto", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "CÃ³digo insumo incorreto", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtCodInsumo.requestFocus();
 				txtCodInsumo.selectAll();
 				return;
@@ -320,13 +320,13 @@ public class FrmLancaAplicacao extends FrmCadastraPai {
 			try {
 				apliBO.setHistorico(txtHistorico.getText());
 			} catch (StringVaziaException e1) {
-				JOptionPane.showMessageDialog(this, "Histórico incorreto", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "HistÃ³rico incorreto", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtHistorico.requestFocus();
 				txtHistorico.selectAll();
 				return;
 			}
 
-			if (consAplicacao == null) {   // veio da inclusão
+			if (consAplicacao == null) {   // veio da inclusï¿½o
 				aplicacaoDao.incluir(apliBO);
 				JOptionPane.showMessageDialog(this, "Registro salvo com sucesso!", "Registro Salvo", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
 			} else {

@@ -39,12 +39,12 @@ public class FrmCadastraTalhao extends FrmCadastraPai{
 
 	public FrmCadastraTalhao() {
 
-		setTitle("Cadastro de Talhıes");
+		setTitle("Cadastro de Talh√µes");
 		setSize(540, 260);
-		lblTitulo.setText(super.lblTitulo.getText() + " de Talhıes");
+		lblTitulo.setText(super.lblTitulo.getText() + " de Talh√µes");
 		lblImg.setIcon(new ImageIcon(getClass().getResource("/icons/icon_lavoura.gif")));
 
-		lblCodigo = new JLabel("CÛdigo");
+		lblCodigo = new JLabel("C√≥digo");
 		lblCodigo.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -75,7 +75,7 @@ public class FrmCadastraTalhao extends FrmCadastraPai{
 		constraints.anchor = GridBagConstraints.WEST;
 		painelMeio.add(cbTipo, constraints);
 
-		lblNumero = new JLabel("N˙mero");
+		lblNumero = new JLabel("N√∫mero");
 		lblNumero.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 2;
@@ -90,7 +90,7 @@ public class FrmCadastraTalhao extends FrmCadastraPai{
 		constraints.anchor = GridBagConstraints.WEST;
 		painelMeio.add(txtNumero, constraints);
 
-		lblArea = new JLabel("¡rea (ha)");
+		lblArea = new JLabel("√Årea (ha)");
 		lblArea.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 3;
@@ -124,7 +124,7 @@ public class FrmCadastraTalhao extends FrmCadastraPai{
 			try {
 				talhaoBO.setNumero(Integer.parseInt(txtNumero.getText()));
 			} catch (NumberFormatException erro) {
-				JOptionPane.showMessageDialog(this, "N˙mero incorreto", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "N√∫mero incorreto", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtNumero.requestFocus();
 				txtNumero.selectAll();
 				return;
@@ -133,13 +133,13 @@ public class FrmCadastraTalhao extends FrmCadastraPai{
 			try {
 				talhaoBO.setArea(new BigDecimal(txtArea.getText().replace(',', '.')));
 			} catch (NumberFormatException erro) {
-				JOptionPane.showMessageDialog(this, "¡rea incorreta", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "√Årea incorreta", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtArea.requestFocus();
 				txtArea.selectAll();
 				return;
 			}
 
-			if (consTalhao == null) {  // veio da inclus„o
+			if (consTalhao == null) {  // veio da inclusÔøΩo
 				talhaoDAO.incluir(talhaoBO);
 				JOptionPane.showMessageDialog(this, "Registro salvo com sucesso!", "Registro Salvo", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
 			} else {

@@ -13,21 +13,21 @@ public class Conexao {
 	    try {
 	    	Class.forName("org.firebirdsql.jdbc.FBDriver");
 	        conexao = DriverManager.getConnection(
-//	  	   "jdbc:firebirdsql:172.16.2.250/3050:/BANCOS/BANCO.FDB?defaultResultSetHoldable=True",
-	  	   "jdbc:firebirdsql:localhost/3050:C:/BANCOS/BANCO.FDB?defaultResultSetHoldable=True",
+	  	   "jdbc:firebirdsql:172.16.2.250/3050:/BANCOS/BANCO.FDB?defaultResultSetHoldable=True",
+//	  	   "jdbc:firebirdsql:localhost/3050:C:/BANCOS/BANCO.FDB?defaultResultSetHoldable=True",
 	               "sysdba", "masterkey");
 	    } catch (SQLException eSQL) {
-	      // exceções de SQL
+	      // exceï¿½ï¿½es de SQL
 	      eSQL.printStackTrace();
 	      JOptionPane.showMessageDialog(null,
-	              "Falha na conexão com o banco!\n" +
+	              "Falha na conexÃ£o com o banco!\n" +
 	              "Mensagem: " + eSQL.getMessage(),
 	              "Erro", JOptionPane.ERROR_MESSAGE);
 	    } catch (Exception e) {
-	      // demais exceções
+	      // demais exceï¿½ï¿½es
 	      e.printStackTrace();
 	      JOptionPane.showMessageDialog(null,
-	       	      "Falha na conexão com o banco!\n" +
+	       	      "Falha na conexÃ£o com o banco!\n" +
 	       	      "Mensagem: " + e.getMessage(),
 	              "Erro", JOptionPane.ERROR_MESSAGE);
 	    }
@@ -38,10 +38,10 @@ public class Conexao {
 		 	try {
 		        c.close();
 		      } catch (SQLException eSQL) {
-		        // exceções de SQL
+		        // exceï¿½ï¿½es de SQL
 		       	eSQL.printStackTrace();
 		        JOptionPane.showMessageDialog(null,
-		                "Não foi possível desconectar o banco!\n" +
+		                "NÃ£o foi possÃ­vel desconectar o banco!\n" +
 		                "Mensagem: " + eSQL.getMessage(),
 		                "Erro", JOptionPane.ERROR_MESSAGE);
 		      }

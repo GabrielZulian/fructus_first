@@ -80,7 +80,6 @@ public class FrmLancaAdiantamentos extends FrmCadastraPai implements ActionListe
 		btnConfirmar.setText("Alterar (F1)");
 	}
 
-
 	public FrmLancaAdiantamentos() {
 		setResizable(true);
 		setSize(690, 315);

@@ -55,7 +55,7 @@ public class FrmConsultaEmpregado extends FrmConsultaPai {
 	public FrmConsultaEmpregado (FrmDiaTrabalhoOutros pagOutros) {	
 		this();
 		this.pagOutros = pagOutros;
-		cbConsulta.setSelectedItem("Nome Função");
+		cbConsulta.setSelectedItem("Nome FunÃ§Ã£o");
 		if (pagOutros.rBtnCaminhao.isSelected())
 			txtDadoConsulta.setText("Motorista");
 		else if (pagOutros.rBtnTrator.isSelected())
@@ -87,16 +87,16 @@ public class FrmConsultaEmpregado extends FrmConsultaPai {
 
 		cbConsulta.addItem("Apelido");
 		cbConsulta.addItem("Nome Empreiteiro");
-		cbConsulta.addItem("Nome Função");
+		cbConsulta.addItem("Nome FunÃ§Ã£o");
 		cbConsulta.addItem("Nome Equipe");
 		cbConsulta.addItem("CPF");
-		cbConsulta.addItem("Cód. Empreiteiro");
-		cbConsulta.addItem("Cód. Função");
-		cbConsulta.addItem("Cód. Equipe");
+		cbConsulta.addItem("CÃ³d. Empreiteiro");
+		cbConsulta.addItem("CÃ³d FunÃ§Ã£o");
+		cbConsulta.addItem("CÃ³d. Equipe");
 
 		ArrayList<Object> dados = new ArrayList<Object>();
 
-		String[] colunas = new String[] {"Código", "Nome", "Apelido", "Empreiteiro", "Equipe", "CPF", "Função"};
+		String[] colunas = new String[] {"CÃ³digo", "Nome", "Apelido", "Empreiteiro", "Equipe", "CPF", "FunÃ§Ã£o"};
 
 		boolean[] edicao = {false, false, false, false, false, false, false};
 
@@ -147,11 +147,11 @@ public class FrmConsultaEmpregado extends FrmConsultaPai {
 		for (int i = modelo.getRowCount() - 1; i >= 0; i--)
 			modelo.removeRow(i);
 
-		if (super.cbConsulta.getSelectedItem().equals("Código")) {
+		if (super.cbConsulta.getSelectedItem().equals("cÃ³digo")) {
 			try{
 				adoBO = adoDao.consultaPorCodigo(Integer.parseInt(super.txtDadoConsulta.getText()));
 			}catch(NumberFormatException e1){
-				JOptionPane.showMessageDialog(this, "O código deve ser numérico", "Erro", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "O CÃ³digo deve ser numÃ©rico", "Erro", JOptionPane.ERROR_MESSAGE);
 				super.txtDadoConsulta.selectAll();
 				super.txtDadoConsulta.requestFocus();
 				return;
@@ -162,35 +162,35 @@ public class FrmConsultaEmpregado extends FrmConsultaPai {
 			adoBO = adoDao.consultaPorApelido(super.txtDadoConsulta.getText());
 		} else if (super.cbConsulta.getSelectedItem().equals("Nome Empreiteiro")) {
 			adoBO = adoDao.consultaPorNomeEmpreiteiro(super.txtDadoConsulta.getText());
-		} else if (super.cbConsulta.getSelectedItem().equals("Nome Função")) {
+		} else if (super.cbConsulta.getSelectedItem().equals("Nome FunÃ§Ã£o")) {
 			adoBO = adoDao.consultaPorNomeFuncao(super.txtDadoConsulta.getText());
 		} else if (super.cbConsulta.getSelectedItem().equals("Nome Equipe")) {
 			adoBO = adoDao.consultaPorNomeEquipe(super.txtDadoConsulta.getText());
-		} else if (super.cbConsulta.getSelectedItem().equals("Cód. Empreiteiro")) {
+		} else if (super.cbConsulta.getSelectedItem().equals("CÃ³d. Empreiteiro")) {
 			try{
 				adoBO = adoDao.consultaPorCodEmpreiteiro(Integer.parseInt(super.txtDadoConsulta.getText()));
 			}catch(NumberFormatException e1){
-				JOptionPane.showMessageDialog(this, "O código deve ser numérico", "Erro", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "O cÃ³digo deve ser numÃ©rico", "Erro", JOptionPane.ERROR_MESSAGE);
 				super.txtDadoConsulta.selectAll();
 				super.txtDadoConsulta.requestFocus();
 				return;
 			}
-		} else if (super.cbConsulta.getSelectedItem().equals("Cód. Função")) {
+		} else if (super.cbConsulta.getSelectedItem().equals("CÃ³d. FunÃ§Ã£o")) {
 			try{
 				adoBO = adoDao.consultaPorCodFuncao(Integer.parseInt(super.txtDadoConsulta.getText()));
 			}catch(NumberFormatException e1){
-				JOptionPane.showMessageDialog(this, "O código deve ser numérico", "Erro", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "O cÃ³digo deve ser numÃ©rico", "Erro", JOptionPane.ERROR_MESSAGE);
 				super.txtDadoConsulta.selectAll();
 				super.txtDadoConsulta.requestFocus();
 				return;
 			}
 		} else if (super.cbConsulta.getSelectedItem().equals("CPF")) {
 			adoBO = adoDao.consultaPorCPF(super.txtDadoConsulta.getText());
-		} else if (super.cbConsulta.getSelectedItem().equals("Cód. Equipe")) {
+		} else if (super.cbConsulta.getSelectedItem().equals("CÃ³d. Equipe")) {
 			try{
 				adoBO = adoDao.consultaPorCodEquipe(Integer.parseInt(super.txtDadoConsulta.getText()));
 			}catch(NumberFormatException e1){
-				JOptionPane.showMessageDialog(this, "O código deve ser numérico", "Erro", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "O cÃ³digo deve ser numÃ©rico", "Erro", JOptionPane.ERROR_MESSAGE);
 				super.txtDadoConsulta.selectAll();
 				super.txtDadoConsulta.requestFocus();
 				return;
@@ -232,7 +232,7 @@ public class FrmConsultaEmpregado extends FrmConsultaPai {
 	@Override
 	public void alterar() {
 		if (tabela.getSelectedRow()>=0) {
-			adoBO = new EmpregadoBO();   // criaçao do objeto EmpregadoBO
+			adoBO = new EmpregadoBO();   // criaï¿½ao do objeto EmpregadoBO
 
 			adoBO = adoDao.consultaPorCodigo(Integer.parseInt(modelo.getValueAt(tabela.getSelectedRow(),0).toString())).get(0);
 			FrmCadastraEmpregado fr = new FrmCadastraEmpregado(this);

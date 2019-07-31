@@ -40,23 +40,23 @@ public class FrmConsultaAplicacao extends FrmConsultaPai {
 
 	public FrmConsultaAplicacao() {
 
-		setTitle("Consulta Aplicações");
+		setTitle("Consulta AplicaÃ§Ãµes");
 		setSize(getWidth()-50, getHeight()-40);
 
 		cbConsulta.removeItem("Nome");
-		cbConsulta.addItem("Histórico");
+		cbConsulta.addItem("HistÃ³rico");
 		cbConsulta.addItem("Data");
-		cbConsulta.addItem("Nro. Talhão");
+		cbConsulta.addItem("Nro. TalhÃ£o");
 		cbConsulta.addItem("Insumo");
 		cbConsulta.setSelectedItem("Data");
 
 		ArrayList<Object> dados = new ArrayList<Object>();
 
-		String[] colunas = new String[] {"Código", "Data", "Nro. Talhão", "Tipo Talhão", "Insumo", "Histórico"};
+		String[] colunas = new String[] {"CÃ³digo", "Data", "Nro. TalhÃ£o", "Tipo TalhÃ£o", "Insumo", "HistÃ³rico"};
 
 		boolean[] edicao = {false, false, false, false, false, false};
 
-		// criação da tabela baseada no modelo ModeloTabela
+		// criaï¿½ï¿½o da tabela baseada no modelo ModeloTabela
 		modelo = new ModeloTabela(dados, colunas, edicao);
 		tabela = new JTable(modelo);
 		tabela.getColumnModel().getColumn(CODIGO).setResizable(false);
@@ -138,28 +138,28 @@ public class FrmConsultaAplicacao extends FrmConsultaPai {
 		for (int i = modelo.getRowCount() - 1; i >= 0; i--)
 			modelo.removeRow(i);
 
-		if (super.cbConsulta.getSelectedItem().equals("Código")) {
+		if (super.cbConsulta.getSelectedItem().equals("Cï¿½digo")) {
 			try {
 				aplicacaoBO = aplicacaoDao.consultaPorCodigo(Integer.parseInt(super.txtDadoConsulta.getText()));
 			} catch(NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "O código deve ser numérico", "Erro", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "O cÃ³digo deve ser numÃ©rico", "Erro", JOptionPane.ERROR_MESSAGE);
 				super.txtDadoConsulta.selectAll();
 				super.txtDadoConsulta.requestFocus();
 				return;
 			}
-		} else if (super.cbConsulta.getSelectedItem().equals("Histórico")) {
+		} else if (super.cbConsulta.getSelectedItem().equals("HistÃ³rico")) {
 			aplicacaoBO = aplicacaoDao.consultaPorHistorico(super.txtDadoConsulta.getText());
 		} else if (super.cbConsulta.getSelectedItem().equals("Insumo")) {
 			aplicacaoBO = aplicacaoDao.consultaPorInsumo(super.txtDadoConsulta.getText());
 		} else if (super.cbConsulta.getSelectedItem().equals("Data")) {
 			aplicacaoBO = aplicacaoDao.consultaPorData(super.txtDadoConsulta.getText());
-		} else if (super.cbConsulta.getSelectedItem().equals("Tipo Talhão")) {
+		} else if (super.cbConsulta.getSelectedItem().equals("Tipo TalhÃ£o")) {
 			aplicacaoBO = aplicacaoDao.consultaPorTipoTalhao(super.txtDadoConsulta.getText());
-		} else if (super.cbConsulta.getSelectedItem().equals("Nro. Talhão")) {
+		} else if (super.cbConsulta.getSelectedItem().equals("Nro. TalhÃ£o")) {
 			try {
 				aplicacaoBO = aplicacaoDao.consultaPorNroTalhao(Integer.parseInt(super.txtDadoConsulta.getText()));
 			} catch(NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "O número deve ser numérico", "Erro", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "O nÃºmero deve ser numÃ©rico", "Erro", JOptionPane.ERROR_MESSAGE);
 				super.txtDadoConsulta.selectAll();
 				super.txtDadoConsulta.requestFocus();
 				return;

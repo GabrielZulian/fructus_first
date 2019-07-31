@@ -408,7 +408,6 @@ public class FrmPagamentoTotalOutros extends JInternalFrame implements ActionLis
 		painelInterno.add(rolagemTabela, BorderLayout.CENTER);
 
 		tabela.addMouseListener(new MouseAdapter() {
-
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				int linha = tabela.rowAtPoint(e.getPoint());

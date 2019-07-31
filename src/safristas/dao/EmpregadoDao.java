@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.StringJoiner;
 
 import javax.swing.JOptionPane;
 
@@ -131,7 +133,7 @@ public class EmpregadoDao {
 		}catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível carregar os dados!\n" +
+					"Nï¿½o foi possï¿½vel carregar os dados!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -157,7 +159,7 @@ public class EmpregadoDao {
 		catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível realizar a inclusão!\n" +
+					"Nï¿½o foi possï¿½vel realizar a inclusï¿½o!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -181,7 +183,7 @@ public class EmpregadoDao {
 		catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível realizar a inclusão!\n" +
+					"Nï¿½o foi possï¿½vel realizar a inclusï¿½o!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -197,12 +199,36 @@ public class EmpregadoDao {
 		}catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível realizar a operação!\n" +
-							"Mensagem: Esse registro está sendo referenciado por outra tabela",
+					"Nï¿½o foi possï¿½vel realizar a operaï¿½ï¿½o!\n" +
+							"Mensagem: Esse registro estÃ¡ sendo referenciado por outra tabela",
 							"Erro", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;
+	}
+
+	public void moverEmpregadosParaEquipe(List<Integer> codPessoal, int codEquipe) {
+		
+		String listString = codPessoal.toString();
+		listString = listString.substring(1, listString.length()-1);
+		
+		Statement sentenca;
+		try {
+			sentenca = conexao.createStatement();
+			String sentencaSQL = null;
+			sentencaSQL = "UPDATE empregado SET ado_codequipe = " +
+					codEquipe + " WHERE ado_codigo IN (" + listString + ")";
+
+			sentenca.executeUpdate(sentencaSQL);
+			sentenca.close();
+		}
+		catch (SQLException eSQL) {
+			eSQL.printStackTrace();
+			JOptionPane.showMessageDialog(null,
+					"NÃ£o foi possÃ­vel realizar a troca de equipe!\n" +
+							"Mensagem: " + eSQL.getMessage(),
+							"Erro", JOptionPane.ERROR_MESSAGE);
+		}
 	} 
 
 }

@@ -36,7 +36,7 @@ public class FrmVisaoGeralTalhoes extends JInternalFrame implements ActionListen
 	protected JLabel lblOrdenarPor, lblInfo, lblImg;
 	protected JTextField txtOrdenarPor;
 	protected JComboBox<String> cbOrdenar;
-	protected String[] filtros = {"Número", "Data final", "Data aplicação", "Insumo"};
+	protected String[] filtros = {"NÃºmero", "Data final", "Data aplicaÃ§Ã£o", "Insumo"};
 	protected JButton btnOrdenar, btnCancelar;
 	
 	private ArrayList<PainelVisaoTalhao> paineis = new ArrayList<PainelVisaoTalhao>();
@@ -53,7 +53,7 @@ public class FrmVisaoGeralTalhoes extends JInternalFrame implements ActionListen
 	protected Font f2 = new Font("Tahoma", Font.PLAIN, 14);
 
 	public FrmVisaoGeralTalhoes() {
-		super("Visão geral talhões", false,true,true,false);
+		super("VisÃ£o geral talhÃµes", false,true,true,false);
 		
 		setFrameIcon(new ImageIcon(getClass().getResource("/icons/icon_logo_varaschin.gif")));
 		setResizable(false);
@@ -133,13 +133,13 @@ public class FrmVisaoGeralTalhoes extends JInternalFrame implements ActionListen
 	public void actionPerformed(ActionEvent e) {
 		Object origem = e.getSource();
 		if (origem == btnOrdenar) {
-			if (cbOrdenar.getSelectedItem().toString().equals("Número")) {
+			if (cbOrdenar.getSelectedItem().toString().equals("NÃºmero")) {
 				aplicacaoBO = aplicacaoDao.consultaGeralPorNro();
 				inserePaineis(aplicacaoBO);
 			} else if (cbOrdenar.getSelectedItem().toString().equals("Data final")) {
 				aplicacaoBO = aplicacaoDao.consultaGeralPorDataFinal();
 				inserePaineis(aplicacaoBO);
-			} else if (cbOrdenar.getSelectedItem().toString().equals("Data aplicação")) {
+			} else if (cbOrdenar.getSelectedItem().toString().equals("Data aplicaÃ§Ã£o")) {
 				aplicacaoBO = aplicacaoDao.consultaGeralPorDataApl();
 				inserePaineis(aplicacaoBO);
 			} else if (cbOrdenar.getSelectedItem().toString().equals("Insumo")) {

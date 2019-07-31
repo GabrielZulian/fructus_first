@@ -46,16 +46,16 @@ public class FrmConsultaInsumo extends FrmConsultaPai {
 		setSize(getWidth()-50, getHeight()-40);
 
 		cbConsulta.removeItem("Nome");
-		cbConsulta.addItem("Descrição");
-		cbConsulta.setSelectedItem("Descrição");
+		cbConsulta.addItem("DescriÃ§Ã£o");
+		cbConsulta.setSelectedItem("DescriÃ§Ã£o");
 
 		ArrayList<Object> dados = new ArrayList<Object>();
 
-		String[] colunas = new String[] {"Código", "Descrição", "Residual (Dias)", "Unidade"};
+		String[] colunas = new String[] {"CÃ³digo", "DescriÃ§Ã£o", "Residual (Dias)", "Unidade"};
 
 		boolean[] edicao = {false, false, false, false};
 
-		// criação da tabela baseada no modelo ModeloTabela
+		// criaï¿½ï¿½o da tabela baseada no modelo ModeloTabela
 		modelo = new ModeloTabela(dados, colunas, edicao);
 		tabela = new JTable(modelo);
 		tabela.getColumnModel().getColumn(0).setResizable(false);
@@ -134,16 +134,16 @@ public class FrmConsultaInsumo extends FrmConsultaPai {
 		for (int i = modelo.getRowCount() - 1; i >= 0; i--)
 			modelo.removeRow(i);
 
-		if (super.cbConsulta.getSelectedItem().equals("Código")) {
+		if (super.cbConsulta.getSelectedItem().equals("Cï¿½digo")) {
 			try {
 				insumoBO = insumoDao.consultaPorCodigo(Integer.parseInt(super.txtDadoConsulta.getText()));
 			} catch(NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "O código deve ser numérico", "Erro", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "O cÃ³digo deve ser numÃ©rico", "Erro", JOptionPane.ERROR_MESSAGE);
 				super.txtDadoConsulta.selectAll();
 				super.txtDadoConsulta.requestFocus();
 				return;
 			}
-		} else if (super.cbConsulta.getSelectedItem().equals("Descrição")) {
+		} else if (super.cbConsulta.getSelectedItem().equals("DescriÃ§Ã£o")) {
 			insumoBO = insumoDao.consultaPorNome(super.txtDadoConsulta.getText());
 		}
 

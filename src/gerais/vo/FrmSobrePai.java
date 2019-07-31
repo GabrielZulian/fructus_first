@@ -104,7 +104,7 @@ public class FrmSobrePai extends JFrame implements ActionListener {
 		constraints.anchor = GridBagConstraints.CENTER;
 		painelMeio.add(lblLinha, constraints);
 		
-		lblLicenca = new JLabel("Licença especial e 100% personalizada para");
+		lblLicenca = new JLabel("LicenÃ§a especial e 100% personalizada para");
 		constraints.gridx = 0;
 		constraints.gridy = 5;
 		constraints.anchor = GridBagConstraints.CENTER;

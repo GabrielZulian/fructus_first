@@ -121,14 +121,14 @@ public class FrmDados extends JInternalFrame implements ActionListener {
 		
 		constraints.insets = new Insets(2, 2, 2, 2);
 		
-		lblIndice = new JLabel("Õndice:");
+		lblIndice = new JLabel("√çndice:");
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		constraints.anchor = GridBagConstraints.EAST;
 		painelCima.add(lblIndice, constraints);
 		
 		txtIndice = new JTextField(6);		
-		lblNroFrascos = new JLabel("Frascos na ·rea:");
+		lblNroFrascos = new JLabel("Frascos na √°rea:");
 		constraints.gridx = 0;
 		constraints.gridy = 1;
 		constraints.anchor = GridBagConstraints.EAST;
@@ -146,7 +146,7 @@ public class FrmDados extends JInternalFrame implements ActionListener {
 		
 		ArrayList<Object> dados2 = new ArrayList<Object>();
 
-		String[] colunas2 = new String[] {"Data", "Nro. Insetos", "Õndice"};
+		String[] colunas2 = new String[] {"Data", "Nro. Insetos", "√çndice"};
 
 		boolean[] edicao2 = {false, false, false};
 
@@ -164,7 +164,7 @@ public class FrmDados extends JInternalFrame implements ActionListener {
 		tabela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane rolagemTabelaEquipe = new JScrollPane(tabela);
 		rolagemTabelaEquipe.setPreferredSize(new Dimension(260, 120));
-		painelMeio.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "⁄ltimas AtualizaÁıes"));
+		painelMeio.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "√öltimas Atualiza√ß√µes"));
 		painelMeio.add(rolagemTabelaEquipe);
 		tabela.setFocusable(false);
 		

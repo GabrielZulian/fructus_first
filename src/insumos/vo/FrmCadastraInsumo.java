@@ -47,7 +47,7 @@ public class FrmCadastraInsumo extends FrmCadastraPai{
 		lblTitulo.setText(super.lblTitulo.getText() + " de Insumos");
 		lblImg.setIcon(new ImageIcon(getClass().getResource("/icons/icon_insumo.gif")));
 		
-		lblCodigo = new JLabel("Código");
+		lblCodigo = new JLabel("CÃ³digo");
 		lblCodigo.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -64,7 +64,7 @@ public class FrmCadastraInsumo extends FrmCadastraPai{
 		constraints.anchor = GridBagConstraints.WEST;
 		painelMeio.add(txtCodigo, constraints);
 
-		lblDescricao = new JLabel("Descrição");
+		lblDescricao = new JLabel("DescriÃ§Ã£o");
 		lblDescricao.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 1;
@@ -128,7 +128,7 @@ public class FrmCadastraInsumo extends FrmCadastraPai{
 			try {
 				insumoBO.setDescricao(txtDescricao.getText());
 			} catch (StringVaziaException erro) {
-				JOptionPane.showMessageDialog(this, "Descrição incorreta", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "DescriÃ§Ã£o incorreta", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtDescricao.requestFocus();
 				return;
 			}
@@ -137,7 +137,7 @@ public class FrmCadastraInsumo extends FrmCadastraPai{
 
 			insumoBO.setDiasResidual(Integer.parseInt(spDiasResidual.getValue().toString()));
 
-			if (consInsumo == null){  // veio da inclusão
+			if (consInsumo == null){  // veio da inclusï¿½o
 			insumoDao.incluir(insumoBO);
 				JOptionPane.showMessageDialog(this, "Registro salvo com sucesso!", "Registro Salvo", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
 			} else {

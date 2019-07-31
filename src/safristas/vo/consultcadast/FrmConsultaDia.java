@@ -117,7 +117,7 @@ public class FrmConsultaDia extends FrmConsultaPai {
 			try {
 				diaBO = diaDao.consultaPorCodEquipe(Integer.parseInt(super.txtDadoConsulta.getText()));
 			} catch(NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "O c�digo deve ser num�rico", "Erro",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "O código deve ser numérico", "Erro",JOptionPane.ERROR_MESSAGE);
 				super.txtDadoConsulta.selectAll();
 				super.txtDadoConsulta.requestFocus();
 				return;
@@ -126,7 +126,7 @@ public class FrmConsultaDia extends FrmConsultaPai {
 			try {
 				diaBO = diaDao.consultaPorCodEmpreiteiro(Integer.parseInt(super.txtDadoConsulta.getText()));
 			} catch(NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "O c�digo deve ser num�rico", "Erro",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "O código deve ser numérico", "Erro",JOptionPane.ERROR_MESSAGE);
 				super.txtDadoConsulta.selectAll();
 				super.txtDadoConsulta.requestFocus();
 				return;

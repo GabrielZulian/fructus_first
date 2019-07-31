@@ -42,7 +42,27 @@ public class ReciboSafristas {
 			
 			con.close();
 		} catch (JRException e) {
-			JOptionPane.showMessageDialog(null, "Erro ao gerar o relat髍io! \n Erro: " + e.getMessage() + e.toString(), "Erro Relat髍io", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Erro ao gerar o relat贸rio! \n Erro: " + e.getMessage() + e.toString(), "Erro Relat贸rio", JOptionPane.ERROR_MESSAGE);
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Erro no acesso ao banco de dados! \n Erro: " + e.getMessage(), "Erro Banco de dados", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	public void geraReciboSafristasSacola(String codigosEmpregados) {
+		try {
+			parametros.put("ArrayEmpregados", codigosEmpregados);
+			
+			JasperReport reportSafristas = (JasperReport)JRLoader.loadObject(getClass().getResourceAsStream("/jasper/ReciboSafristasSacola.jasper"));
+			JasperPrint printSafristas = JasperFillManager.fillReport(reportSafristas, parametros, con);
+			JasperViewer view = new JasperViewer(printSafristas, false);
+			view.setTitle("Varaschin Software - Recibos Safristas");
+			ImageIcon icon = new ImageIcon(getClass().getResource("/icons/icon_logo_varaschin.gif"));
+			view.setIconImage(icon.getImage());
+			view.setVisible(true);
+			
+			con.close();
+		} catch (JRException e) {
+			JOptionPane.showMessageDialog(null, "Erro ao gerar o relat贸rio! \n Erro: " + e.getMessage() + e.toString(), "Erro Relat贸rio", JOptionPane.ERROR_MESSAGE);
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Erro no acesso ao banco de dados! \n Erro: " + e.getMessage(), "Erro Banco de dados", JOptionPane.ERROR_MESSAGE);
 		}

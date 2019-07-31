@@ -55,7 +55,7 @@ public class PainelVisaoTalhao extends JPanel {
 		constraints.anchor = GridBagConstraints.WEST;
 		painelGeral.add(txtProduto, constraints);
 		
-		lblDataAplicacao = new JLabel("Data Aplicação:");
+		lblDataAplicacao = new JLabel("Data AplicaÃ§Ã£o:");
 		constraints.gridx = 0;
 		constraints.gridy = 2;
 		constraints.anchor = GridBagConstraints.EAST;

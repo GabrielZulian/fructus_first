@@ -51,7 +51,7 @@ public class FrmCadastraEquipe extends FrmCadastraPai{
 		lblTitulo.setText(super.lblTitulo.getText() + " de Equipes");
 		lblImg.setIcon(new ImageIcon(getClass().getResource("/icons/icon_equipe.gif")));
 
-		lblCodigo = new JLabel("Código Equipe");
+		lblCodigo = new JLabel("CÃ³digo Equipe");
 		lblCodigo.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -84,7 +84,7 @@ public class FrmCadastraEquipe extends FrmCadastraPai{
 		painelMeio.add(txtNome, constraints);
 		constraints.gridwidth = 1;
 
-		lblCodEmpreiteiro = new JLabel("Código Empreiteiro");
+		lblCodEmpreiteiro = new JLabel("CÃ³d. Empreiteiro");
 		lblCodEmpreiteiro.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 2;
@@ -172,7 +172,7 @@ public class FrmCadastraEquipe extends FrmCadastraPai{
 
 			equipe.iroBO = iroDao.consultaPorCodigo(Integer.parseInt(txtCodEmpreiteiro.getText())).get(0);
 
-			if (consEquipe == null) {  // veio da inclusão
+			if (consEquipe == null) {  // veio da inclusï¿½o
 				equiDao.incluir(equipe);
 				JOptionPane.showMessageDialog(this, "Registro salvo com sucesso!", "Registro Salvo", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
 				txtNome.setText("");

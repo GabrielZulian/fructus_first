@@ -31,7 +31,7 @@ public abstract class FrmConsultaPai extends JInternalFrame implements ActionLis
 	protected GridBagConstraints constraints = new GridBagConstraints();
 	protected JComboBox cbConsulta;
 
-	protected String opCbConsulta[] = {"Nome", "Código"};
+	protected String opCbConsulta[] = {"Nome", "CÃ³digo"};
 
 	protected JTextField txtDadoConsulta;
 	protected JButton btnConsultar, btnIncluir, btnAlterar, btnExcluir, btnSair;
@@ -220,7 +220,7 @@ public abstract class FrmConsultaPai extends JInternalFrame implements ActionLis
 			doDefaultCloseAction();
 		} else if (origem == btnExcluir) {
 			try {
-			if (JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir esse registro?", "Confirmar Exclusão", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+			if (JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir esse registro?", "Confirmar Exclusï¿½o", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				excluir();
 			}
 			} catch (ArrayIndexOutOfBoundsException erro) {

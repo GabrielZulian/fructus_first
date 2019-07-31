@@ -135,7 +135,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 
 	public FrmDiaTrabalhoOutros() {
 
-		super("Lan�amento Dia Outros",false,true,false,true);
+		super("Lançamento Dia Outros",false,true,false,true);
 
 		setSize(600, 500);
 		setResizable(false);
@@ -230,7 +230,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 		grupo.add(rBtnTrator);
 		grupo.add(rBtnOutros);
 
-		lblCodigoEmpregado = new JLabel("C�digo empregado");
+		lblCodigoEmpregado = new JLabel("Código Empregado");
 		lblCodigoEmpregado.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 3;
@@ -278,7 +278,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 		painelMeio.add(btnProcuraEmpregado, constraints);
 		constraints.ipady = 0;
 
-		lblCodVeiculo = new JLabel("C�digo ve�culo");
+		lblCodVeiculo = new JLabel("Código Veículo");
 		lblCodVeiculo.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 4;
@@ -301,7 +301,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 					txtCodVeiculo.selectAll();
 					txtCodVeiculo.setText("");
 				} else
-					txtMostraVeiculo.setText(veicBO.get(0).getPlaca() + " - " + veicBO.get(0).getTipoVeiculoString());	
+					txtMostraVeiculo.setText(veicBO.get(0).getPlaca() + " - " + veicBO.get(0).getTipoVeiculoString());
 			}
 		});
 
@@ -363,7 +363,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 			}
 		});;
 
-		lblNf = new JLabel("N� nota fiscal");
+		lblNf = new JLabel("Nº Nota Fiscal");
 		lblNf.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 7;
@@ -430,7 +430,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 		painelMeio.add(txtValorTotal, constraints);
 		constraints.gridwidth = 1;
 
-		lblHistorico = new JLabel("Hist�rico");
+		lblHistorico = new JLabel("Histórico");
 		lblHistorico.setFont(f);
 		constraints.anchor = GridBagConstraints.NORTHEAST;
 		constraints.gridx = 0;
@@ -547,7 +547,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 			lblQntdBins.setEnabled(false);
 			lblQntdBins.setText("Quantidade");
 			txtQntdBins.setEnabled(false);
-			lblValorBins.setText("Valor da di�ria");
+			lblValorBins.setText("Valor da diária");
 			lblLote.setEnabled(false);
 			txtLote.setEnabled(false);
 			lblNf.setEnabled(false);
@@ -617,7 +617,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 			try {
 				diaOutBO.data = new DateTime(df.parse(txtData.getText()));
 			} catch (ParseException e2) {
-				JOptionPane.showMessageDialog(this, "Data inv�lida!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Data inválida!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtData.requestFocus();
 				txtData.selectAll();
 				return;
@@ -642,7 +642,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 			if (!txtCodVeiculo.getText().trim().equals("")) {
 				diaOutBO.veicBO.setCodigo(Integer.parseInt(txtCodVeiculo.getText()));
 			} else {
-				JOptionPane.showMessageDialog(this, "Codigo do ve�culo deve ser preenchido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Codigo do veículo deve ser preenchido!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtCodEmpregado.requestFocus();
 				txtCodEmpregado.selectAll();
 				return;
@@ -652,7 +652,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 				try {
 					diaOutBO.setQntBins(Integer.parseInt(txtQntdBins.getText()));
 				} catch (NumberFormatException e1) {
-					JOptionPane.showMessageDialog(this, "Quantidade de deve ser num�rico!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, "Quantidade de deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
 					txtQntdBins.requestFocus();
 					txtQntdBins.selectAll();
 					return;
@@ -670,7 +670,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 			try {
 				diaOutBO.setValorBins(valorbins);
 			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "Valor bins deve ser num�rico!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Valor bins deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtValorBins.requestFocus();
 				txtValorBins.selectAll();
 				return;
@@ -722,7 +722,7 @@ public class FrmDiaTrabalhoOutros extends JInternalFrame implements ActionListen
 				JOptionPane.showMessageDialog(this, "Registro salvo com sucesso!", "Registro Salvo", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
 			} else {
 				if (consDiaOut.diaOutBO.getPagou() == 'S') {
-					JOptionPane.showMessageDialog(this, "Este dia j� cont�m  ! Exclua o pagamento primeiro, caso deseje alterar este registro.", "Alterar Registro",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, "Este dia já contém  ! Exclua o pagamento primeiro, caso deseje alterar este registro.", "Alterar Registro",JOptionPane.ERROR_MESSAGE);
 					return;
 				} else {
 					diaOutDao.alterar(diaOutBO);

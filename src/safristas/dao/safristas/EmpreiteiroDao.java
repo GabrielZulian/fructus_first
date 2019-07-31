@@ -55,7 +55,7 @@ public class EmpreiteiroDao {
 			sentenca = conexao.createStatement();
 
 			// faz a consulta
-			registros = sentenca.executeQuery("SELECT empreiteiro.*, cidades.cid_nome, cidades.cid_uf FROM empreiteiro inner join cidades ON iro_codcidade = cid_codigo WHERE " + sentencaSQL + "ORDER BY " + ordem);
+			registros = sentenca.executeQuery("SELECT empreiteiro.*, cidades.cid_codigo, cidades.cid_nome, cidades.cid_uf FROM empreiteiro inner join cidades ON iro_codcidade = cid_codigo WHERE " + sentencaSQL + "ORDER BY " + ordem);
 
 			if (!registros.next()) {
 				JOptionPane.showMessageDialog(null,
@@ -70,7 +70,7 @@ public class EmpreiteiroDao {
 					iroBO.get(i).setCodigo(Integer.parseInt(registros.getString("iro_codigo")));
 					try {
 						iroBO.get(i).setNome(registros.getString("iro_nome"));
-						iroBO.get(i).cidBO.setCodigo(Integer.parseInt(registros.getString("iro_codigo")));
+						iroBO.get(i).cidBO.setCodigo(Integer.parseInt(registros.getString("cid_codigo")));
 						iroBO.get(i).cidBO.setNome(registros.getString("cid_nome"));
 						iroBO.get(i).cidBO.setUf(registros.getString("cid_uf"));
 						iroBO.get(i).setCpf(registros.getString("iro_cpf"));
@@ -86,7 +86,7 @@ public class EmpreiteiroDao {
 		}catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível carregar os dados!\n" +
+					"Nï¿½o foi possï¿½vel carregar os dados!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -112,7 +112,7 @@ public class EmpreiteiroDao {
 		catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível realizar a inclusão!\n" +
+					"Nï¿½o foi possï¿½vel realizar a inclusï¿½o!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -136,7 +136,7 @@ public class EmpreiteiroDao {
 		catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível realizar a inclusão!\n" +
+					"Nï¿½o foi possï¿½vel realizar a inclusï¿½o!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -152,8 +152,8 @@ public class EmpreiteiroDao {
 		}catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível realizar a operação!\n" +
-							"Mensagem: Esse registro está sendo referenciado por outra tabela",
+					"Nï¿½o foi possï¿½vel realizar a operaï¿½ï¿½o!\n" +
+							"Mensagem: Esse registro estï¿½ sendo referenciado por outra tabela",
 							"Erro", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

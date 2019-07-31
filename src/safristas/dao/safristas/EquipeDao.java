@@ -19,7 +19,7 @@ public class EquipeDao {
 		conexao = Conexao.conectaBanco();
 	}
 
-	public ArrayList <EquipeBO> consultaPorCodigo(int cod) {//where cid_codigo = xxx, "order by cid_codigo"
+	public ArrayList <EquipeBO> consultaPorCodigo(int cod) {
 		ArrayList<EquipeBO> equiBO = consulta("equipe_codigo =" + cod, "equipe_codigo");
 		return equiBO;
 	}
@@ -81,7 +81,7 @@ public class EquipeDao {
 		} catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível carregar os dados!\n" +
+					"Nï¿½o foi possï¿½vel carregar os dados!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -123,7 +123,7 @@ public class EquipeDao {
 		} catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível carregar os dados!\n" +
+					"Nï¿½o foi possï¿½vel carregar os dados!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -146,7 +146,7 @@ public class EquipeDao {
 		catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível realizar a inclusão!\n" +
+					"Nï¿½o foi possï¿½vel realizar a inclusï¿½o!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -166,7 +166,7 @@ public class EquipeDao {
 		} catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível realizar a inclusão!\n" +
+					"Nï¿½o foi possï¿½vel realizar a inclusï¿½o!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -182,8 +182,8 @@ public class EquipeDao {
 		}catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível realizar a operação!\n" +
-							"Mensagem: Esse registro está sendo referenciado por outra tabela",
+					"Nï¿½o foi possï¿½vel realizar a operaï¿½ï¿½o!\n" +
+							"Mensagem: Esse registro estï¿½ sendo referenciado por outra tabela",
 							"Erro", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

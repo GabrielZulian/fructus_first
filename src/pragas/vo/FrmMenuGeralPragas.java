@@ -22,7 +22,7 @@ public class FrmMenuGeralPragas extends FrmMenuGeralPai implements ActionListene
 	private JMenu menuCadastros = new JMenu("Cadastros");
 	private JMenu menuConsultas = new JMenu("Consultas");
 	private JMenu menuMapas = new JMenu("Mapas de controle");
-	private JMenu menuLancamentos = new JMenu("LanÁamentos");
+	private JMenu menuLancamentos = new JMenu("Lan√ßamentos");
 	private JMenu menuRelatorios = new JMenu("Relatorios");
 	private JMenu menuEspeciais = new JMenu("Especiais");
 	private JMenu menuSobre = new JMenu("Sobre");
@@ -33,7 +33,7 @@ public class FrmMenuGeralPragas extends FrmMenuGeralPai implements ActionListene
 	public FrmMenuGeralPragas() {
 		super();
 		
-		setTitle("¡rea de trabalho - Pragas");
+		setTitle("√Årea de trabalho - Pragas");
 		
 		menuCadastros.setMnemonic('C');
 		menuMapas.setMnemonic('p');
@@ -74,14 +74,14 @@ public class FrmMenuGeralPragas extends FrmMenuGeralPai implements ActionListene
 		
 		barraMenu.add(menuLancamentos);
 		
-		itemRelGraficoIndiceMedio = new JMenuItem("Gr·fico Ìndice mÈdio geral", new ImageIcon(getClass().getResource("/icons/icon_graficop.gif")));
-		itemRelGrafQuadra = new JMenuItem("Gr·fico Ìndice por quadra", new ImageIcon(getClass().getResource("/icons/icon_graficop.gif")));
+		itemRelGraficoIndiceMedio = new JMenuItem("Gr√°fico √≠ndice m√©dio geral", new ImageIcon(getClass().getResource("/icons/icon_graficop.gif")));
+		itemRelGrafQuadra = new JMenuItem("Gr√°fico √≠ndice por quadra", new ImageIcon(getClass().getResource("/icons/icon_graficop.gif")));
 		menuRelatorios.add(itemRelGraficoIndiceMedio);
 		menuRelatorios.add(itemRelGrafQuadra);
 		
 		barraMenu.add(menuRelatorios);
 		
-		itemMandaEmail = new JMenuItem("Enviar e-mail com Ìndices", new ImageIcon(getClass().getResource("/icons/icon_emailp.gif")));
+		itemMandaEmail = new JMenuItem("Enviar e-mail com ÔøΩndices", new ImageIcon(getClass().getResource("/icons/icon_emailp.gif")));
 		menuEspeciais.add(itemMandaEmail);
 		
 		barraMenu.add(menuEspeciais);
@@ -106,10 +106,10 @@ public class FrmMenuGeralPragas extends FrmMenuGeralPai implements ActionListene
 		btnMosca.setToolTipText("Mapa Mosca");
 		
 		btnLancaContagem = new JButton(new ImageIcon(getClass().getResource("/icons/icon_lancar.gif")));
-		btnLancaContagem.setToolTipText("LanÁar Contagem");
+		btnLancaContagem.setToolTipText("LanÔøΩar Contagem");
 		
 		btnLancaTroca = new JButton("TESTE");
-		btnLancaTroca.setToolTipText("LanÁar troca de atrativo");
+		btnLancaTroca.setToolTipText("Lan√ßar troca de atrativo");
 		
 		barra.add(btnConAtrativo);
 		barra.addSeparator();
@@ -121,7 +121,7 @@ public class FrmMenuGeralPragas extends FrmMenuGeralPai implements ActionListene
 //		barra.add(btnLancaTroca);
 		
 		btnTrocaModulo = new JButton(new ImageIcon(getClass().getResource("/icons/icon_troca_modulo.gif")));
-		btnTrocaModulo.setToolTipText("Trocar MÛdulo");
+		btnTrocaModulo.setToolTipText("Trocar M√≥dulo");
 		
 		barra.add(Box.createHorizontalGlue());
 		barra.add(btnTrocaModulo);

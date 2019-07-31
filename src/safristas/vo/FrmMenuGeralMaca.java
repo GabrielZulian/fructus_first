@@ -39,6 +39,7 @@ import safristas.vo.filtrorelatorios.FrmRelatorioEmpregadores;
 import safristas.vo.filtrorelatorios.FrmRelatorioEmpregados;
 import safristas.vo.filtrorelatorios.FrmRelatorioEmpregadosVisaoGeral;
 import safristas.vo.filtrorelatorios.FrmRelatorioEmpreiteiros;
+import safristas.vo.filtrorelatorios.FrmRelatorioGraficoSacolas;
 import safristas.vo.filtrorelatorios.FrmRelatorioPagamentos;
 import safristas.vo.lancamentos.FrmConsultaAdiantamentos;
 
@@ -56,6 +57,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 	private JMenu menuRelatorio = new JMenu("Relatórios");
 	private JMenu menuEspeciais = new JMenu("Especiais");
 	private JMenu menuPlanilhas = new JMenu("Planilhas");
+	private JMenu menuGraficos = new JMenu("Gráficos");
 	private JMenu menuRelEmpregados = new JMenu("Empregados");
 	private JMenu menuRelDiasTrabalhados = new JMenu("Dias trabalho");
 	private JMenu menuSobre = new JMenu("Sobre");
@@ -63,7 +65,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 	private JMenuItem itemEmpregadorCad, itemEmpreiteiroCad, itemEmpregadoCad, itemEquipeCad, itemCidadeCad, itemFuncaoCad, itemVeiculoCad, itemQuadraCad,
 	itemEmpregadorCon, itemEmpreiteiroCon, itemEmpregadoCon, itemEquipeCon, itemCidadeCon, itemFuncaoCon, itemVeiculoCon, itemQuadraCon,
 	itemLancaDia, itemLancaDiaOut, itemFechamento, itemFechamentoOut, itemAdiantamentos, itemRelEmpregadores, itemRelEmpreiteiros, itemRelEmpregadosSimples,
-	itemRelEmpregadosVisaoGeral, itemRelPagamentos, itemPlanilhaColetaDias, itemVisaoGeral, itemRelDiasTrabalho, itemDetalhes;
+	itemRelEmpregadosVisaoGeral, itemRelPagamentos, itemGraficoSacolas, itemPlanilhaColetaDias, itemVisaoGeral, itemRelDiasTrabalho, itemDetalhes;
 	
 	public FrmMenuGeralMaca() {
 		super();
@@ -138,7 +140,10 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 		itemRelEmpregadosVisaoGeral = new JMenuItem("Visão geral", new ImageIcon(getClass().getResource("/icons/icon_equipep.gif")));
 		itemRelPagamentos = new JMenuItem("Pagamentos", new ImageIcon(getClass().getResource("/icons/icon_pagamento.gif")));
 		itemRelDiasTrabalho = new JMenuItem("Dias trabalhados");
+		itemGraficoSacolas = new JMenuItem("Totais sacolas");
 		itemPlanilhaColetaDias = new JMenuItem("Planilha p/ coleta de dias", new ImageIcon(getClass().getResource("/icons/icon_relatoriop.gif")));
+		
+		menuGraficos.add(itemGraficoSacolas);
 		
 		menuPlanilhas.add(itemPlanilhaColetaDias);
 		menuRelEmpregados.add(itemRelEmpregadosSimples);
@@ -149,6 +154,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 		menuRelatorio.add(menuRelEmpregados);
 		menuRelatorio.add(itemRelPagamentos);
 		menuRelatorio.add(itemRelDiasTrabalho);
+		menuRelatorio.add(menuGraficos);
 		menuRelatorio.addSeparator();
 		menuRelatorio.add(menuPlanilhas);
 		menuRelatorio.setMnemonic(KeyEvent.VK_R);
@@ -241,6 +247,7 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 		itemRelPagamentos.addActionListener(this);
 		itemRelDiasTrabalho.addActionListener(this);
 		itemRelEmpregadosSimples.addActionListener(this);
+		itemGraficoSacolas.addActionListener(this);
 		itemPlanilhaColetaDias.addActionListener(this);
 		itemRelEmpregadosVisaoGeral.addActionListener(this);
 		itemVisaoGeral.addActionListener(this);
@@ -494,6 +501,14 @@ public class FrmMenuGeralMaca extends FrmMenuGeralPai implements ActionListener 
 				centralizaInternalFrame(fr, dPane);
 			} else if (origem == itemRelDiasTrabalho) {
 				FrmRelatorioDiasTrabalhados fr = new FrmRelatorioDiasTrabalhados();
+				fr.setVisible(true);
+				dPane.add(fr);
+				try {
+					fr.setSelected(true);
+				} catch (PropertyVetoException exc) { }
+				centralizaInternalFrame(fr, dPane);
+			} else if (origem == itemGraficoSacolas) {
+				FrmRelatorioGraficoSacolas fr = new FrmRelatorioGraficoSacolas();
 				fr.setVisible(true);
 				dPane.add(fr);
 				try {

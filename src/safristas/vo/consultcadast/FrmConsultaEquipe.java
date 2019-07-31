@@ -17,6 +17,7 @@ import gerais.vo.FrmConsultaPai;
 import safristas.bo.safristas.EquipeBO;
 import safristas.dao.safristas.EquipeDao;
 import safristas.vo.FrmMenuGeralMaca;
+import safristas.vo.lancamentos.FrmTrocarEquipePagos;
 import util.ModeloTabela;
 
 public class FrmConsultaEquipe extends FrmConsultaPai {
@@ -27,10 +28,21 @@ public class FrmConsultaEquipe extends FrmConsultaPai {
 	EquipeBO equiBO;
 	EquipeDao equiDao = new EquipeDao();
 	FrmCadastraEmpregado cadEmpregado = null;
+	FrmTrocarEquipePagos frmTrocaEquipe = null;
 
 	public FrmConsultaEquipe(FrmCadastraEmpregado cadEmpregado) {
 		this();
 		this.cadEmpregado = cadEmpregado;
+		btnAlterar.setVisible(false);
+		btnExcluir.setVisible(false);
+		btnIncluir.setText("Selecionar");
+		btnIncluir.setIcon(new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
+	}
+	
+
+	public FrmConsultaEquipe(FrmTrocarEquipePagos frmTrocarEquipePagos) {
+		this();
+		this.frmTrocaEquipe = frmTrocarEquipePagos;
 		btnAlterar.setVisible(false);
 		btnExcluir.setVisible(false);
 		btnIncluir.setText("Selecionar");
@@ -41,12 +53,12 @@ public class FrmConsultaEquipe extends FrmConsultaPai {
 
 		setTitle("Consulta Equipes");
 		setSize(800, 600);
-		cbConsulta.addItem("C骴. Empreiteiro");
+		cbConsulta.addItem("C贸d. Empreiteiro");
 		cbConsulta.addItem("Nome Empreiteiro");
 
 		ArrayList<Object> dados = new ArrayList<Object>();
 
-		String[] colunas = new String[] {"C骴igo", "Nome Equipe", "Empreiteiro"};
+		String[] colunas = new String[] {"C贸digo", "Nome Equipe", "Empreiteiro"};
 
 		boolean[] edicao = {false, false, false};
 
@@ -67,7 +79,7 @@ public class FrmConsultaEquipe extends FrmConsultaPai {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2){
-					if (cadEmpregado != null)
+					if (cadEmpregado != null || frmTrocaEquipe != null)
 						selecionar();
 					else
 						alterar();
@@ -89,11 +101,11 @@ public class FrmConsultaEquipe extends FrmConsultaPai {
 		for (int i = modelo.getRowCount() - 1; i >= 0; i--)
 			modelo.removeRow(i);
 
-		if (super.cbConsulta.getSelectedItem().equals("C骴igo")) {
+		if (super.cbConsulta.getSelectedItem().equals("C贸digo")) {
 			try{
 				equiBO = equiDao.consultaPorCodigo(Integer.parseInt(super.txtDadoConsulta.getText()));
 			}catch(NumberFormatException e1){
-				JOptionPane.showMessageDialog(this, "O c骴igo deve ser num閞ico", "Erro",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "O c贸digo deve ser num锟絩ico", "Erro",JOptionPane.ERROR_MESSAGE);
 				super.txtDadoConsulta.selectAll();
 				super.txtDadoConsulta.requestFocus();
 				return;
@@ -102,11 +114,11 @@ public class FrmConsultaEquipe extends FrmConsultaPai {
 			equiBO = equiDao.consultaPorNome(super.txtDadoConsulta.getText());
 		} else if (super.cbConsulta.getSelectedItem().equals("Nome Empreiteiro")) {
 			equiBO = equiDao.consultaPorNomeEmpreiteiro(super.txtDadoConsulta.getText());
-		} else if (super.cbConsulta.getSelectedItem().equals("C骴. Empreiteiro")) {
+		} else if (super.cbConsulta.getSelectedItem().equals("C贸d. Empreiteiro")) {
 			try{
 				equiBO = equiDao.consultaPorCodEmpreiteiro(Integer.parseInt(super.txtDadoConsulta.getText()));
 			}catch(NumberFormatException e1){
-				JOptionPane.showMessageDialog(this, "O c骴igo deve ser num閞ico", "Erro",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "O c贸digo deve ser num茅rico", "Erro",JOptionPane.ERROR_MESSAGE);
 				super.txtDadoConsulta.selectAll();
 				super.txtDadoConsulta.requestFocus();
 				return;
@@ -126,7 +138,7 @@ public class FrmConsultaEquipe extends FrmConsultaPai {
 
 	@Override
 	public void incluir() {
-		if (cadEmpregado == null) {
+		if (cadEmpregado == null && frmTrocaEquipe == null) {
 			FrmCadastraEquipe fr = new FrmCadastraEquipe();
 			fr.setVisible(true);
 			getDesktopPane().add(fr);   
@@ -142,7 +154,7 @@ public class FrmConsultaEquipe extends FrmConsultaPai {
 	@Override
 	public void alterar() {
 		if (tabela.getSelectedRow()>=0) {
-			equiBO = new EquipeBO();   // cria鏰o do objeto EmpregadorBO
+			equiBO = new EquipeBO();   // cria锟絘o do objeto EmpregadorBO
 
 			equiBO = equiDao.consultaPorCodigo(Integer.parseInt(modelo.getValueAt(tabela.getSelectedRow(),0).toString())).get(0);
 			FrmCadastraEquipe fr = new FrmCadastraEquipe(this);
@@ -168,6 +180,9 @@ public class FrmConsultaEquipe extends FrmConsultaPai {
 			if (cadEmpregado != null) {
 				cadEmpregado.txtCodEquipe.setText(modelo.getValueAt(tabela.getSelectedRow(),0).toString());
 				cadEmpregado.txtMostraEquipe.setText(modelo.getValueAt(tabela.getSelectedRow(),1).toString());
+			} else if (frmTrocaEquipe != null) {
+				frmTrocaEquipe.txtCodigoEquipe.setText(modelo.getValueAt(tabela.getSelectedRow(),0).toString());
+				frmTrocaEquipe.txtMostraEquipe.setText(modelo.getValueAt(tabela.getSelectedRow(),1).toString());
 			}
 		} catch (ArrayIndexOutOfBoundsException erro) {
 			JOptionPane.showMessageDialog(this, "Selecione um registro primeiro!", "Erro", JOptionPane.ERROR_MESSAGE);

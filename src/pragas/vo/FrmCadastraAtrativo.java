@@ -42,7 +42,7 @@ public class FrmCadastraAtrativo extends FrmCadastraPai{
 		lblTitulo.setText(super.lblTitulo.getText() + " de Atrativos");
 		lblImg.setIcon(new ImageIcon(getClass().getResource("/icons/icon_atrativo.gif")));
 
-		lblCodigo = new JLabel("Código");
+		lblCodigo = new JLabel("CÃ³digo");
 		lblCodigo.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -59,7 +59,7 @@ public class FrmCadastraAtrativo extends FrmCadastraPai{
 		constraints.anchor = GridBagConstraints.WEST;
 		painelMeio.add(txtCodigo, constraints);
 
-		lblDescricao = new JLabel("Descrição");
+		lblDescricao = new JLabel("DescriÃ§Ã£o");
 		lblDescricao.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 1;
@@ -107,14 +107,14 @@ public class FrmCadastraAtrativo extends FrmCadastraPai{
 			try {
 				atratBO.setDescricao(txtDescricao.getText());
 			} catch (StringVaziaException erro) {
-				JOptionPane.showMessageDialog(this, "Descrição incorreto", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "DescriÃ§Ã£o incorreto", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtDescricao.requestFocus();
 				return;
 			}
 
 			atratBO.setDiasTroca(Integer.parseInt(spDiasTroca.getValue().toString()));
 
-			if (consAtrativo == null){  // veio da inclusão
+			if (consAtrativo == null){  // veio da inclusï¿½o
 				atratDao.incluir(atratBO);
 				JOptionPane.showMessageDialog(this, "Registro salvo com sucesso!", "Registro Salvo", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
 			}else{

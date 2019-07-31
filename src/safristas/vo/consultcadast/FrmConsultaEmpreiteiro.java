@@ -90,7 +90,7 @@ public class FrmConsultaEmpreiteiro extends FrmConsultaPai{
 
 		ArrayList<Object> dados = new ArrayList<Object>();
 
-		String[] colunas = new String[] {"Código", "Nome", "Apelido", "CPF", "Cidade", "Telefone"};
+		String[] colunas = new String[] {"CÃ³digo", "Nome", "Apelido", "CPF", "Cidade", "Telefone"};
 
 		boolean[] edicao = {false, false, false, false, false, false};
 
@@ -141,11 +141,11 @@ public class FrmConsultaEmpreiteiro extends FrmConsultaPai{
 		for (int i = modelo.getRowCount() - 1; i >= 0; i--)
 			modelo.removeRow(i);
 
-		if (super.cbConsulta.getSelectedItem().equals("Código")) {
+		if (super.cbConsulta.getSelectedItem().equals("CÃ³digo")) {
 			try{
 				iroBO = iroDao.consultaPorCodigo(Integer.parseInt(super.txtDadoConsulta.getText()));
 			}catch(NumberFormatException e1){
-				JOptionPane.showMessageDialog(this, "O código deve ser numérico", "Erro",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "O cÃ³digo deve ser numÃ©rico", "Erro",JOptionPane.ERROR_MESSAGE);
 				super.txtDadoConsulta.selectAll();
 				super.txtDadoConsulta.requestFocus();
 				return;
@@ -191,7 +191,7 @@ public class FrmConsultaEmpreiteiro extends FrmConsultaPai{
 	@Override
 	public void alterar() {
 		if (tabela.getSelectedRow()>=0) {
-			iroBO = new EmpreiteiroBO();   // criaçao do objeto EmpreiteiroBO
+			iroBO = new EmpreiteiroBO();   // criaï¿½ao do objeto EmpreiteiroBO
 
 			iroBO = iroDao.consultaPorCodigo(Integer.parseInt(modelo.getValueAt(tabela.getSelectedRow(),0).toString())).get(0);
 			FrmCadastraEmpreiteiro fr = new FrmCadastraEmpreiteiro(this);

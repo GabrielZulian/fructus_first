@@ -2,6 +2,9 @@ package impressos;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +35,7 @@ public class RelatoriosSafristas {
 			JasperReport report = (JasperReport)JRLoader.loadObject(getClass().getResourceAsStream("/jasper/RelatorioEmpregadores.jasper"));
 			geraRelatorio(report);
 		} catch (JRException e) {
-			JOptionPane.showMessageDialog(null, "Erro ao gerar o relat�rio! \n Erro: " + e.getMessage(), "Erro Relatório", JOptionPane.ERROR_MESSAGE);
+			showErrorMessage(e);
 		}
 	}
 
@@ -41,7 +44,7 @@ public class RelatoriosSafristas {
 			JasperReport report = (JasperReport)JRLoader.loadObject(getClass().getResourceAsStream("/jasper/RelatorioEmpreiteiros.jasper"));
 			geraRelatorio(report);
 		} catch (JRException e) {
-			JOptionPane.showMessageDialog(null, "Erro ao gerar o relat�rio! \n Erro: " + e.getMessage(), "Erro Relat�rio", JOptionPane.ERROR_MESSAGE);
+			showErrorMessage(e);
 		}
 	}
 
@@ -50,7 +53,7 @@ public class RelatoriosSafristas {
 			JasperReport report = (JasperReport)JRLoader.loadObject(getClass().getResourceAsStream("/jasper/RelatorioEmpregados.jasper"));
 			geraRelatorio(report);
 		} catch (JRException e) {
-			JOptionPane.showMessageDialog(null, "Erro ao gerar o relat�rio! \n Erro: " + e.getMessage(), "Erro Relat�rio", JOptionPane.ERROR_MESSAGE);
+			showErrorMessage(e);
 		}
 	}
 	
@@ -60,7 +63,7 @@ public class RelatoriosSafristas {
 			JasperReport report = (JasperReport)JRLoader.loadObject(getClass().getResourceAsStream("/jasper/RelatorioEmpregadosFiltro.jasper"));
 			geraRelatorio(report);
 		} catch (JRException e) {
-			JOptionPane.showMessageDialog(null, "Erro ao gerar o relat�rio! \n Erro: " + e.getMessage(), "Erro Relat�rio", JOptionPane.ERROR_MESSAGE);
+			showErrorMessage(e);
 		}
 	}
 	
@@ -69,7 +72,7 @@ public class RelatoriosSafristas {
 			JasperReport report = (JasperReport)JRLoader.loadObject(getClass().getResourceAsStream("/jasper/RelatorioEmpregadosGeral.jasper"));
 			geraRelatorio(report);
 		} catch (JRException e) {
-			JOptionPane.showMessageDialog(null, "Erro ao gerar o relat�rio! \n Erro: " + e.getMessage(), "Erro Relat�rio", JOptionPane.ERROR_MESSAGE);
+			showErrorMessage(e);
 		}
 	}
 	
@@ -79,7 +82,7 @@ public class RelatoriosSafristas {
 			JasperReport report = (JasperReport)JRLoader.loadObject(getClass().getResourceAsStream("/jasper/RelatorioPagamentos.jasper"));
 			geraRelatorio(report);
 		} catch (JRException e) {
-			JOptionPane.showMessageDialog(null, "Erro ao gerar o relat�rio! \n Erro: " + e.getMessage(), "Erro Relat�rio", JOptionPane.ERROR_MESSAGE);
+			showErrorMessage(e);
 		}
 	}
 	
@@ -89,7 +92,7 @@ public class RelatoriosSafristas {
 			JasperReport report = (JasperReport)JRLoader.loadObject(getClass().getResourceAsStream("/jasper/RelatorioPagamentosOutros.jasper"));
 			geraRelatorio(report);
 		} catch (JRException e) {
-			JOptionPane.showMessageDialog(null, "Erro ao gerar o relat�rio! \n Erro: " + e.getMessage(), "Erro Relat�rio", JOptionPane.ERROR_MESSAGE);
+			showErrorMessage(e);
 		}
 	}
 	
@@ -99,7 +102,18 @@ public class RelatoriosSafristas {
 			JasperReport report = (JasperReport)JRLoader.loadObject(getClass().getResourceAsStream("/jasper/RelatorioDiasTrabalhadosSafristas.jasper"));
 			geraRelatorio(report);
 		} catch (JRException e) {
-			JOptionPane.showMessageDialog(null, "Erro ao gerar o relat�rio! \n Erro: " + e.getMessage(), "Erro Relat�rio", JOptionPane.ERROR_MESSAGE);
+			showErrorMessage(e);
+		}
+	}
+	
+	public void relatorioGraficoTotaisSacolas(LocalDate dataInicial, LocalDate dataFinal) {
+		parametros.put("dataInicial", Date.from(dataInicial.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		parametros.put("dataFinal", Date.from(dataFinal.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		try {
+			JasperReport report = (JasperReport)JRLoader.loadObject(getClass().getResourceAsStream("/jasper/RelatorioTotaisSacolas.jasper"));
+			geraRelatorio(report);
+		} catch (JRException e) {
+			showErrorMessage(e);
 		}
 	}
 	
@@ -107,16 +121,24 @@ public class RelatoriosSafristas {
 		try {
 			JasperPrint print = JasperFillManager.fillReport(report, parametros, con);
 			JasperViewer view = new JasperViewer(print, false);
-			view.setTitle("Varaschin Software - Relat�rios");
+			view.setTitle("Varaschin Software - Relatórios");
 			ImageIcon icon = new ImageIcon(getClass().getResource("/icons/icon_logo_varaschin.gif"));
 			view.setIconImage(icon.getImage());
 			view.setVisible(true);
 			con.close();
 		} catch (JRException e) {
-			JOptionPane.showMessageDialog(null, "Erro ao gerar o relat�rio! \n Erro: " + e.getMessage(), "Erro Relat�rio", JOptionPane.ERROR_MESSAGE);
+			showErrorMessage(e);
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "Erro no acesso ao banco de dados! \n Erro: " + e.getMessage(), "Erro Banco de dados", JOptionPane.ERROR_MESSAGE);
+			showSQLErrorMessage(e);
 		}
 		parametros.clear();
+	}
+	
+	private void showSQLErrorMessage(SQLException e) {
+		JOptionPane.showMessageDialog(null, "Erro ao gerar o relatório! \n Erro: " + e.getMessage(), "Erro Relatório", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	private void showErrorMessage(JRException e) {
+		JOptionPane.showMessageDialog(null, "Erro ao gerar o relatório! \n Erro: " + e.getMessage(), "Erro Relatório", JOptionPane.ERROR_MESSAGE);
 	}
 }

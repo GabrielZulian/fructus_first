@@ -84,11 +84,11 @@ public class FrmLancaContagem extends JInternalFrame implements ActionListener {
 
 	public FrmLancaContagem() {
 
-		super("Lançamento Dia",false,true,false,true);
+		super("LanÃ§amento Dia",false,true,false,true);
 
 		setSize(480, 300);
 		setResizable(true);
-		setTitle("Lançar Contagem");
+		setTitle("LanÃ§ar Contagem");
 		setFrameIcon(new ImageIcon(getClass().getResource("/icons/icon_logo_varaschin.gif")));
 
 		painelGeral.setLayout(new BorderLayout(2, 2));
@@ -109,7 +109,7 @@ public class FrmLancaContagem extends JInternalFrame implements ActionListener {
 
 		constraints.insets = new Insets(4, 4, 4, 4);
 
-		lblCodigoDia = new JLabel("Código:");
+		lblCodigoDia = new JLabel("CÃ³digo");
 		lblCodigoDia.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -178,7 +178,7 @@ public class FrmLancaContagem extends JInternalFrame implements ActionListener {
 		painelMeio.add(txtData, constraints);
 		constraints.gridwidth = 1;
 
-		lblNroQuadra = new JLabel("Número Quadra");
+		lblNroQuadra = new JLabel("NÃºmero Quadra");
 		lblNroQuadra.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 1;
@@ -356,17 +356,17 @@ public class FrmLancaContagem extends JInternalFrame implements ActionListener {
 			try {
 				contBO.data = new DateTime(df.parse(txtData.getText()));
 			} catch (ParseException e2) {
-				JOptionPane.showMessageDialog(this, "Data inválida!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Data invÃ¡lida!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 
 			try {
 				contBO.setQntdInsetos(Integer.parseInt(txtQntdInsetos.getText()));
 			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "Quantidade de insetos deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Quantidade de insetos deve ser numÃ©rico!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				return;
 			} catch (QuantidadeErradaException e1) {
-				JOptionPane.showMessageDialog(this, "Quantidade de insetos não pode ser negativa!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Quantidade de insetos nÃ£o pode ser negativa!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 

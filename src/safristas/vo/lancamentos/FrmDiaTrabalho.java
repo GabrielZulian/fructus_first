@@ -157,6 +157,10 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 	private JLabel lblValorSacola;
 
 	private JTextField txtValorSacola;
+	
+	private JLabel lblValorSacolaEscada;
+
+	private JTextField txtValorSacolaEscada;
 
 	private JLabel lblMetaSacolaChao;
 
@@ -217,12 +221,12 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 
 		if (consDia.diaBO.getMetodo() == 'S') { // ---------SACOLA
 			tabbedPane.setSelectedIndex(1);
+			tabbedPane.setEnabledAt(0, false);
 			do {
 				String presenca = "S";
 				boolean isClassif = false;
 
 				adoDao.consultaPorCodigo(consDia.diaAdoBO.get(i).adoBO.getCodigo());
-
 				if (consDia.diaAdoBO.get(i).getPresenca() == 'N')
 					presenca = "N";
 				else if (consDia.diaAdoBO.get(i).getPresenca() == 'M')
@@ -244,11 +248,17 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 				i++;
 			} while (i < consDia.diaAdoBO.size());
 
+			txtValorSacola.setText(decimal.format(consDia.diaBO.getValorSacola()));
+			txtMetaSacolaChao.setText(decimal.format(consDia.diaBO.getMetaChao()));
+			txtMetaSacolaEscada.setText(decimal.format(consDia.diaBO.getMetaEscada()));
+			txtMetaSacolaChaoEscada.setText(decimal.format(consDia.diaBO.getMetaChaoEscada()));
 			txtValorComissão.setText(decimal.format(consDia.diaBO.getValorComissao()));
 			txtValorTotalEqSacola.setText(decimal.format(consDia.diaBO.getValorTotalResto()));
 			txtValortotalEmpreiteiroSacola.setText(decimal.format(consDia.diaBO.getValorTotalComissao()));
 			lblQntdEmpregados.setText(lblQntdEmpregados.getText() + modeloTabelaSacola.getRowCount());
 		} else { // ---------BINS / DIA
+			tabbedPane.setSelectedIndex(0);
+			tabbedPane.setEnabledAt(1, false);
 			do {
 				String presenca = "S";
 				boolean isClassif = false;
@@ -309,7 +319,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 
 		super("Lançamento Dia",true,true,false,true);
 
-		setSize(1020, 740);
+		setSize(1040, 790);
 		setResizable(true);
 		setTitle("Lançar Dia - Safristas");
 		setFrameIcon(new ImageIcon(getClass().getResource("/icons/icon_logo_varaschin.gif")));
@@ -406,7 +416,6 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		constraints.gridwidth = 1;
 
 		tabela.addMouseListener(new MouseAdapter() {
-
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				int linha = tabela.rowAtPoint(e.getPoint());
@@ -539,8 +548,13 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 					EquipeDao equiDao = new EquipeDao();
 					ArrayList<EquipeBO> equiBO = equiDao.consultaPorCodEmpreiteiroSomenteAtivas(Integer.parseInt(txtCodEmpreiteiro.getText()));
 
-					for (int i = modelo.getRowCount() - 1; i >= 0; i--)
-						modelo.removeRow(i);
+					if (tabbedPane.getSelectedIndex() == 0) {
+						for (int i = modelo.getRowCount() - 1; i >= 0; i--)
+							modelo.removeRow(i);
+					} else {
+						for (int i = modeloTabelaSacola.getRowCount() - 1; i >= 0; i--)
+							modeloTabelaSacola.removeRow(i);
+					}
 
 					for (int i = modeloTabEquipe.getRowCount() - 1; i >= 0; i--)
 						modeloTabEquipe.removeRow(i);
@@ -903,7 +917,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		constraints.weightx = 0;
 		constraints.weighty = 0;
 
-		lblValorSacola = new JLabel("Valor sacola R$");
+		lblValorSacola = new JLabel("Valor sacola chão R$");
 		lblValorSacola.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -916,6 +930,20 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		constraints.gridy = 0;
 		constraints.anchor = GridBagConstraints.WEST;
 		pnlDadosSacola.add(txtValorSacola, constraints);
+		
+		lblValorSacolaEscada = new JLabel("Valor sacola escada R$");
+		lblValorSacolaEscada.setFont(f);
+		constraints.gridx = 2;
+		constraints.gridy = 0;
+		constraints.anchor = GridBagConstraints.EAST;
+		pnlDadosSacola.add(lblValorSacolaEscada, constraints);
+
+		txtValorSacolaEscada = new JTextField("0,65", 8);
+		txtValorSacolaEscada.setFont(f);
+		constraints.gridx = 3;
+		constraints.gridy = 0;
+		constraints.anchor = GridBagConstraints.WEST;
+		pnlDadosSacola.add(txtValorSacolaEscada, constraints);
 
 		lblMetaSacolaChao = new JLabel("Meta sacolas chão");
 		lblMetaSacolaChao.setFont(f);
@@ -924,7 +952,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		constraints.anchor = GridBagConstraints.EAST;
 		pnlDadosSacola.add(lblMetaSacolaChao, constraints);
 
-		txtMetaSacolaChao = new JTextField("99", 8);
+		txtMetaSacolaChao = new JTextField("70", 8);
 		txtMetaSacolaChao.setFont(f);
 		constraints.gridx = 1;
 		constraints.gridy = 1;
@@ -938,7 +966,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		constraints.anchor = GridBagConstraints.EAST;
 		pnlDadosSacola.add(lblMetaSacolaEscada, constraints);
 
-		txtMetaSacolaEscada = new JTextField("82,5", 8);
+		txtMetaSacolaEscada = new JTextField("70", 8);
 		txtMetaSacolaEscada.setFont(f);
 		constraints.gridx = 1;
 		constraints.gridy = 2;
@@ -952,7 +980,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		constraints.anchor = GridBagConstraints.EAST;
 		pnlDadosSacola.add(lblMetaSacolaChaoEscada, constraints);
 
-		txtMetaSacolaChaoEscada = new JTextField("90", 8);
+		txtMetaSacolaChaoEscada = new JTextField("70", 8);
 		txtMetaSacolaChaoEscada.setFont(f);
 		constraints.gridx = 1;
 		constraints.gridy = 3;
@@ -1161,24 +1189,32 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		double metaChao = Double.parseDouble(txtMetaSacolaChao.getText().replaceAll(",", "."));
 		double metaEscada = Double.parseDouble(txtMetaSacolaEscada.getText().replaceAll(",", "."));
 		double metaChaoEscada = Double.parseDouble(txtMetaSacolaChaoEscada.getText().replaceAll(",", "."));
-		double valorSacola = Double.parseDouble(txtValorSacola.getText().replaceAll(",", "."));
+		double valorSacolaChao = Double.parseDouble(txtValorSacola.getText().replaceAll(",", "."));
+		double valorSacolaEscada = Double.parseDouble(txtValorSacolaEscada.getText().replaceAll(",", "."));
 		double valorEmpregado = 0.00;
 		valorTotalEquipeSacola = 0.00;
+		
+		System.out.println(metaChao);
+		System.out.println(metaEscada);
+		System.out.println(metaChaoEscada);
+		System.out.println(valorSacolaChao);
+		System.out.println(valorEmpregado);
+		System.out.println(valorTotalEquipeSacola);
 
 		for (int x = 0; x < getQntdEmpregados(); x++) {
-			if (modeloTabelaSacola.getValueAt(x, COLUNA_SACOLA_PRESENCA).toString() == "S" && modeloTabelaSacola.getValueAt(x, COLUNA_SACOLA_CLASSIF).toString() == "false") {
+			if (modeloTabelaSacola.getValueAt(x, COLUNA_SACOLA_PRESENCA).toString().equals("S") && modeloTabelaSacola.getValueAt(x, COLUNA_SACOLA_CLASSIF).toString() == "false") {
 				Integer qntdSacolasEmpregado = Integer.parseInt(modeloTabelaSacola.getValueAt(x, COLUNA_SACOLA_QUANT).toString());
-				if (modeloTabelaSacola.getValueAt(x, COLUNA_SACOLA_CHAO_ESCADA).toString() == "C") {
+				if (modeloTabelaSacola.getValueAt(x, COLUNA_SACOLA_CHAO_ESCADA).toString().equals("C")) {
 					if (qntdSacolasEmpregado > metaChao) {
-						valorEmpregado = (qntdSacolasEmpregado-metaChao) * valorSacola;
+						valorEmpregado = (qntdSacolasEmpregado-metaChao) * valorSacolaChao;
 					}
-				} else if (modeloTabelaSacola.getValueAt(x, COLUNA_SACOLA_CHAO_ESCADA).toString() == "E") {
+				} else if (modeloTabelaSacola.getValueAt(x, COLUNA_SACOLA_CHAO_ESCADA).toString().equals("E")) {
 					if (qntdSacolasEmpregado > metaEscada) {
-						valorEmpregado = (qntdSacolasEmpregado-metaEscada) * valorSacola;
+						valorEmpregado = (qntdSacolasEmpregado-metaEscada) * valorSacolaEscada;
 					}
-				} else if (modeloTabelaSacola.getValueAt(x, COLUNA_SACOLA_CHAO_ESCADA).toString() == "C/E") {
+				} else if (modeloTabelaSacola.getValueAt(x, COLUNA_SACOLA_CHAO_ESCADA).toString().equals("C/E")) {
 					if (qntdSacolasEmpregado > metaChaoEscada) {
-						valorEmpregado = (qntdSacolasEmpregado-metaChaoEscada) * valorSacola;
+						valorEmpregado = (qntdSacolasEmpregado-metaChaoEscada) * ((valorSacolaChao+valorSacolaEscada)/2);
 					}
 				}
 			}
@@ -1200,12 +1236,25 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 		double valorComissaoEmpreiteiro = Double.parseDouble(txtValorComissão.getText().replace(",", "."));
 		valorTotalEmpreiteiroSacola = 0.00;
 		Integer qntdSacolas = 0;
+		Integer qntdEmpregadosMeios = 0;
+		Integer qntdFalta = 0;
+		
+		for (int aux = 0; aux < qntdEmpregados; aux++) {
+			
+			if (modeloTabelaSacola.getValueAt(aux, COLUNA_SACOLA_PRESENCA).toString().equals("M/T")) {
+				qntdEmpregadosMeios++;
+			}
+
+			if (modeloTabelaSacola.getValueAt(aux, COLUNA_SACOLA_PRESENCA).toString().equals("N")) {
+				qntdFalta++;
+			}
+		}
 
 		if (rBtnPorPessoa.isSelected()) {
-			valorTotalEmpreiteiroSacola = qntdEmpregados * valorComissaoEmpreiteiro;
+			valorTotalEmpreiteiroSacola = (qntdEmpregados - (qntdEmpregadosMeios/2) - qntdFalta) * valorComissaoEmpreiteiro;
 		} else if (rBtnPorSacola.isSelected()) {
-			for (int x = 0; x < getQntdEmpregados(); x++) {
-				qntdSacolas += Integer.parseInt(modeloTabelaSacola.getValueAt(x, COLUNA_SACOLA_QUANT).toString());
+			for (int aux = 0; aux < getQntdEmpregados(); aux++) {
+				qntdSacolas += Integer.parseInt(modeloTabelaSacola.getValueAt(aux, COLUNA_SACOLA_QUANT).toString());
 			}
 			valorTotalEmpreiteiroSacola = qntdSacolas * valorComissaoEmpreiteiro;
 		}
@@ -1438,11 +1487,11 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 				modeloTabelaSacola.addRow(new Object[] {
 						"S",
 						new Boolean(false),
-						"C",
+						"E",
 						new Integer(adoBO.get(index).getCodigo()),
 						adoBO.get(index).getNome(),
 						adoBO.get(index).funcaoBO.getNome(),
-						new Integer(0),
+						new Integer(170),
 						new Double(0.0)
 				});
 				index++;
@@ -1463,7 +1512,6 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 			totalComissao = 0;
 
 			do {
-
 				if (modelo.getValueAt(x, COLUNA_PRESENCA).toString().equals("S") && modelo.getValueAt(x, COLUNA_CLASSIF).toString() == "false") {
 					qntdEmpregados++;
 				}
@@ -1540,7 +1588,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 				diaBO.iroBO.setNome(txtMostraEmpreiteiro.getText());
 			} catch (StringVaziaException e3) {}
 
-			if (tabbedPane.getSelectedIndex() == 0) {
+			if (tabbedPane.getSelectedIndex() == 0) { // ---------------------- Bins/Dia
 				if (rBtnPorBins.isSelected())
 					diaBO.setMetodo('B');
 				else 
@@ -1576,12 +1624,12 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 				try {
 					diaBO.setValorComissIroClassif(Double.parseDouble(txtValorComissaoIroClassif.getText().trim().replace(',', '.')));
 				} catch (NumberFormatException e3) {
-					JOptionPane.showMessageDialog(this, "Valor comiss�o deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, "Valor comissão deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
 					txtValorComissaoIroClassif.requestFocus();
 					txtValorComissaoIroClassif.selectAll();
 					return;
 				} catch (ValorErradoException e3) {
-					JOptionPane.showMessageDialog(this, "Valor comiss�o inválido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, "Valor comissão inválido!", "ERRO", JOptionPane.ERROR_MESSAGE);
 					txtValorComissaoIroClassif.requestFocus();
 					txtValorComissaoIroClassif.selectAll();
 					return;
@@ -1638,8 +1686,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 				} catch (NumberFormatException e1) {
 					JOptionPane.showMessageDialog(this, "Valor deve ser numérico!", "ERRO", JOptionPane.ERROR_MESSAGE);
 					return;
-				} 
-				catch (ValorErradoException e1) {
+				} catch (ValorErradoException e1) {
 					JOptionPane.showMessageDialog(this, "Valor incorreto!", "ERRO", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -1660,7 +1707,7 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 					int cont = 0;
 					char presenca = 'S';
 
-					if (!txtCodigoDia.getText().equals("-")) //verifica se � altera��o para excluir os dados e gravar novamente
+					if (!txtCodigoDia.getText().equals("-")) //verifica se � alteração para excluir os dados e gravar novamente
 						diaAdoDao.excluir(Integer.parseInt(txtCodigoDia.getText()));
 
 					do {
@@ -1682,7 +1729,6 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 						diaAdoBO.get(cont).setPresenca(presenca);
 						diaAdoBO.get(cont).setValor(Double.parseDouble(modelo.getValueAt(cont, COLUNA_VALOR).toString()));
 						diaAdoBO.get(cont).setRateio(new BigDecimal(modelo.getValueAt(cont, COLUNA_RATEIO).toString()));
-						System.out.println(new BigDecimal(modelo.getValueAt(cont, COLUNA_RATEIO).toString()).toString());
 						diaAdoBO.get(cont).diaBO.setCodigo(diaBO.getCodigo());
 
 						diaAdoDao.incluir(diaAdoBO.get(cont));
@@ -1764,6 +1810,11 @@ public class FrmDiaTrabalho extends JInternalFrame implements ActionListener{
 					diaBO.setValorBins(0.00);
 					diaBO.setValorDia(0.00);
 
+					diaBO.setValorSacola(Double.parseDouble(txtValorSacola.getText().trim().replace(',', '.')));
+					diaBO.setValorSacolaEscada(Double.parseDouble(txtValorSacolaEscada.getText().trim().replace(',', '.')));
+					diaBO.setMetaChao(Double.parseDouble(txtMetaSacolaChao.getText().trim().replace(',', '.')));
+					diaBO.setMetaEscada(Double.parseDouble(txtMetaSacolaEscada.getText().trim().replace(',', '.')));
+					diaBO.setMetaChaoEscada(Double.parseDouble(txtMetaSacolaChaoEscada.getText().trim().replace(',', '.')));
 					diaBO.setValorTotalResto(valorTotalEquipeSacola);
 					diaBO.setValorTotal(valorTotalSacola);
 					diaBO.setValorComissao(Double.parseDouble(txtValorComissão.getText().trim().replace(',', '.')));

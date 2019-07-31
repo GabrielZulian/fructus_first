@@ -200,6 +200,7 @@ public class FrmPagamentoTotal extends JInternalFrame implements ActionListener 
 		btnLimpar.setVisible(false);
 		btnProcuraEmpreiteiro.setEnabled(false);
 		btnGeraRecibos.setEnabled(true);
+		btnTrocarDeEquipe.setEnabled(true);
 		auxSair = false;
 	}
 
@@ -234,11 +235,11 @@ public class FrmPagamentoTotal extends JInternalFrame implements ActionListener 
 		try {
 			mascaraData = new MaskFormatter("##/##/####");
 		} catch (ParseException e) {
-			JOptionPane.showMessageDialog(this, "Data incorreta ou inv�lida!", "ERRO", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Data incorreta ou inválida!", "ERRO", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
-		lblCodigo = new JLabel("C�digo");
+		lblCodigo = new JLabel("Código");
 		lblCodigo.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -369,10 +370,9 @@ public class FrmPagamentoTotal extends JInternalFrame implements ActionListener 
 
 		ArrayList<Object> dados = new ArrayList<Object>();
 
-		String[] colunas = new String[] {" ", "C�digo", "Nome", "Valor", "Acrescimos", "Descontos", "Desc. Hab./Ali./Tra.", "Valor Final", "N� dias trab.", "Fun��o", "CPF", 
-				"Observa��o Desconto", "C�d Adiant."};
+		String[] colunas = new String[] {" ", "Código", "Nome", "Valor", "Acrescimos", "Descontos", "Desc. Hab./Ali./Tra.", "Valor Final", "Nº dias trab.", "Função", "CPF", 
+				"Observação Desconto", "Cód. Adiant."};
 
-		// cria��o da tabela baseada no modelo ModeloTabela
 		modelo = new ModeloTabela(dados, colunas, edicao);
 		tabela = new JTable(modelo);
 		tabela.getColumnModel().getColumn(0).setPreferredWidth(30);
@@ -469,7 +469,7 @@ public class FrmPagamentoTotal extends JInternalFrame implements ActionListener 
 
 		tabela.setFocusable(false);
 
-		lblCodEmpreiteiro = new JLabel("C�d. Empreiteiro");
+		lblCodEmpreiteiro = new JLabel("Cód. Empreiteiro");
 		lblCodEmpreiteiro.setFont(f);
 		constraints.gridx = 0;
 		constraints.gridy = 3;
@@ -686,7 +686,7 @@ public class FrmPagamentoTotal extends JInternalFrame implements ActionListener 
 		constraints.gridheight = 1;
 		constraints.weightx = 0;
 
-		lblInstrucaoDesconto = new JLabel("Clique 2 vezes no empregado e/ou no valor desconto empreiteiro p/ lan�ar os descontos.");
+		lblInstrucaoDesconto = new JLabel("Clique 2 vezes no empregado e/ou no valor desconto empreiteiro p/ lançar os descontos.");
 		lblInstrucaoDesconto.setFont(new Font("Arial", Font.PLAIN, 10));
 		constraints.gridx = 1;
 		constraints.gridy = 4;
@@ -732,6 +732,7 @@ public class FrmPagamentoTotal extends JInternalFrame implements ActionListener 
 		
 		btnTrocarDeEquipe = new JButton("Trocar equipe");
 		btnTrocarDeEquipe.setFont(f);
+		btnTrocarDeEquipe.setEnabled(false);
 		constraints.gridx = 3;
 		constraints.gridy = 3;
 		constraints.gridwidth = 2;
@@ -801,6 +802,7 @@ public class FrmPagamentoTotal extends JInternalFrame implements ActionListener 
 		p.add(painelGeral);
 
 		btnGeraRecibos.addActionListener(this);
+		btnTrocarDeEquipe.addActionListener(this);
 		btnProcuraEmpregador.addActionListener(this);
 		btnProcuraEmpreiteiro.addActionListener(this);
 		btnSelecionarTodos.addActionListener(this);
@@ -894,7 +896,7 @@ public class FrmPagamentoTotal extends JInternalFrame implements ActionListener 
 			valorEmpreiteiro = valorTotalEmpreiteiro;
 			txtMostraDescontoIro.setText("");
 			txtValorDescontoIro.setText("");
-			JOptionPane.showMessageDialog(this, "Valor final do empreiteiro n�o pode ser negativo!", "Saldo Negativo", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/icons/icon_cancelar.gif")));
+			JOptionPane.showMessageDialog(this, "Valor final do empreiteiro não pode ser negativo!", "Saldo Negativo", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/icons/icon_cancelar.gif")));
 		}
 		txtValorTotalEmpreiteiro.setText(decimal.format(valorEmpreiteiro));
 
@@ -1085,6 +1087,7 @@ public class FrmPagamentoTotal extends JInternalFrame implements ActionListener 
 				pgtoTotalDao.desatualizaPagosDia(pgtoTotalBO.dataInicial, pgtoTotalBO.dataFinal, pgtoTotalBO.iroBO.getCodigo(), Integer.parseInt(txtCodigo.getText()));
 
 			btnGeraRecibos.setEnabled(true);
+			btnTrocarDeEquipe.setEnabled(true);
 			btnConfirmar.setEnabled(false);
 			btnProcuraEmpregador.setEnabled(false);
 			btnProcuraEmpreiteiro.setEnabled(false);
@@ -1112,7 +1115,7 @@ public class FrmPagamentoTotal extends JInternalFrame implements ActionListener 
 			if (cbPagarEmpreiteiro.isSelected())
 				reciboEmpreiteiro.geraReciboEmpreiteiro();
 			
-			recibo.geraReciboSafristas(codigosEmpregados);
+			recibo.geraReciboSafristasSacola(codigosEmpregados);
 
 			setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		} else if (origem == btnSelecionarTodos) {
@@ -1145,7 +1148,7 @@ public class FrmPagamentoTotal extends JInternalFrame implements ActionListener 
 			txtQntdEmpregados.setText("0");
 			calculaTotalEmpreiteiro();
 		} else if (origem == btnDescontoCheque) {
-			String valor = JOptionPane.showInputDialog(this, "Informe o valor � descontar nos cheques", "Desconto Cheque", JOptionPane.INFORMATION_MESSAGE);
+			String valor = JOptionPane.showInputDialog(this, "Informe o valor à descontar nos cheques", "Desconto Cheque", JOptionPane.INFORMATION_MESSAGE);
 			valorDescontoChq = Double.parseDouble(valor.replace(',', '.'));
 		} else if (origem == cbPagarEmpreiteiro) {
 			if (!cbPagarEmpreiteiro.isSelected()) {
@@ -1224,9 +1227,24 @@ public class FrmPagamentoTotal extends JInternalFrame implements ActionListener 
 			}
 			catch (PropertyVetoException exc) { }
 			FrmMenuGeralMaca.centralizaInternalFrame(fr, getDesktopPane());
+		} else if (origem == btnTrocarDeEquipe) {
+			List<Integer> codigos = new ArrayList<Integer>();
+			
+			for (int aux=0; aux<modelo.getRowCount(); aux++) {
+				codigos.add(Integer.parseInt(modelo.getValueAt(aux, COLUNA_CODIGO).toString()));
+			}
+			
+			FrmTrocarEquipePagos fr = new FrmTrocarEquipePagos(codigos);
+			fr.setVisible(true);
+			getDesktopPane().add(fr);
+			try {
+				fr.setSelected(true);
+			}
+			catch (PropertyVetoException exc) { }
+			FrmMenuGeralMaca.centralizaInternalFrame(fr, getDesktopPane());
 		} else if (origem == btnCancelar) {
 			if (auxSair) {
-				if (JOptionPane.showConfirmDialog(this, "Deseja cancelar a opera��o?", "Cancelar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+				if (JOptionPane.showConfirmDialog(this, "Deseja cancelar a operação?", "Cancelar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
 					doDefaultCloseAction();
 			} else {
 				doDefaultCloseAction();

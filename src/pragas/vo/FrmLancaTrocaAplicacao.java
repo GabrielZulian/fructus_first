@@ -54,12 +54,12 @@ public class FrmLancaTrocaAplicacao extends FrmCadastraPai{
 
 	public FrmLancaTrocaAplicacao() {
 
-		setTitle("Lança troca de Atrativo");
+		setTitle("LanÃ§a troca de Atrativo");
 		setSize(600, 340);
 		lblTitulo.setText("Troca de Atrativo");
 		lblImg.setIcon(new ImageIcon(getClass().getResource("/icons/icon_atrativo.gif")));
 
-		lblCodigo = new JLabel("Código");
+		lblCodigo = new JLabel("Cï¿½digo");
 		lblCodigo.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -95,7 +95,7 @@ public class FrmLancaTrocaAplicacao extends FrmCadastraPai{
 		painelMeio.add(txtData, constraints);
 		constraints.gridwidth = 1;
 
-		lblCodAtrativo = new JLabel("Cód. Atrativo");
+		lblCodAtrativo = new JLabel("CÃ³d. Atrativo");
 		lblCodAtrativo.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 2;
@@ -126,7 +126,7 @@ public class FrmLancaTrocaAplicacao extends FrmCadastraPai{
 		painelMeio.add(btnProcuraAtrativo, constraints);
 		constraints.ipady = 0;
 		
-		lblHistorico = new JLabel("Histórico");
+		lblHistorico = new JLabel("HistÃ³rico");
 		lblHistorico.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 3;
@@ -161,14 +161,14 @@ public class FrmLancaTrocaAplicacao extends FrmCadastraPai{
 			try {
 				atratBO.setDescricao(txtCodAtrativo.getText());
 			} catch (StringVaziaException erro) {
-				JOptionPane.showMessageDialog(this, "Descrição incorreto", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "DescriÃ§Ã£o incorreto", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtCodAtrativo.requestFocus();
 				return;
 			}
 
 			atratBO.setDiasTroca(Integer.parseInt(spDiasTroca.getValue().toString()));
 
-			if (consAtrativo == null) {  // veio da inclusão
+			if (consAtrativo == null) {  // veio da inclusï¿½o
 				atratDao.incluir(atratBO);
 				JOptionPane.showMessageDialog(this, "Registro salvo com sucesso!", "Registro Salvo", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
 			} else {

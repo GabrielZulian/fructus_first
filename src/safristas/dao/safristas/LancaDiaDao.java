@@ -81,7 +81,7 @@ public class LancaDiaDao {
 
 		} catch (SQLException eSQL) {
 			eSQL.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Não foi possível carregar os dados!\n" +"Mensagem: " + eSQL.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Nï¿½o foi possï¿½vel carregar os dados!\n" +"Mensagem: " + eSQL.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 		return 0;
 	}
@@ -94,12 +94,13 @@ public class LancaDiaDao {
 			sentenca = conexao.createStatement();
 			// faz a consulta
 			registros = sentenca.executeQuery("SELECT diatrabalho.dia_codigo, diatrabalho.dia_data, diatrabalho.dia_metodo, diatrabalho.dia_qntdbins,"
-					+ " diatrabalho.dia_qntdbinsclassif, diatrabalho.dia_valorbins, diatrabalho.dia_valordia, diatrabalho.dia_valorclassif,"
+					+ " diatrabalho.dia_qntdbinsclassif, diatrabalho.dia_valorbins, diatrabalho.dia_valordia, diatrabalho.dia_valorsacola, diatrabalho.dia_valorclassif,"
 					+ " diatrabalho.dia_valortotalresto, diatrabalho.dia_valortotal, diatrabalho.dia_valorcomissao, diatrabalho.dia_valorcomissaoiroclassif,"
-					+ " diatrabalho.dia_valoroutroiro, diatrabalho.dia_valortotalcomissao, diatrabalho.dia_codempreiteiro, empreiteiro.iro_nome, diatrabalho.dia_codequipe,"
+					+ " diatrabalho.dia_valoroutroiro, diatrabalho.dia_valortotalcomissao, diatrabalho.dia_metachao, diatrabalho.dia_metaescada,"
+					+ " diatrabalho.dia_metachaoescada, diatrabalho.dia_codempreiteiro, empreiteiro.iro_nome, diatrabalho.dia_codequipe,"
 					+ " equipe.equipe_nome, diatrabalho.dia_observacao, diatrabalho.dia_codpagamento FROM diatrabalho"
 					+ " INNER JOIN empreiteiro ON dia_codempreiteiro = iro_codigo"
-					+ " INNER JOIN equipe ON dia_codequipe = equipe_codigo WHERE " + sentencaSQL + "ORDER BY " + ordem);
+					+ " INNER JOIN equipe ON dia_codequipe = equipe_codigo WHERE " + sentencaSQL + " ORDER BY " + ordem);
 
 			if (!registros.next()) {
 				JOptionPane.showMessageDialog(null,
@@ -118,6 +119,7 @@ public class LancaDiaDao {
 						diaBO.get(i).setQntBinsEquipe(registros.getInt("dia_qntdbins"));
 						diaBO.get(i).setQntdBinsClassif(registros.getInt("dia_qntdbinsclassif"));
 						diaBO.get(i).setValorBins(registros.getDouble("dia_valorbins"));
+						diaBO.get(i).setValorSacola(registros.getDouble("dia_valorsacola"));
 						diaBO.get(i).setValorDia(registros.getDouble("dia_valordia"));
 						diaBO.get(i).setValorClassif(registros.getDouble("dia_valorclassif"));
 						diaBO.get(i).setValorTotalResto(registros.getDouble("dia_valortotalresto"));
@@ -126,12 +128,17 @@ public class LancaDiaDao {
 						diaBO.get(i).setValorComissIroClassif(registros.getDouble("dia_valorcomissaoiroclassif"));
 						diaBO.get(i).setValorOutroIro(registros.getDouble("dia_valoroutroiro"));
 						diaBO.get(i).setValorTotalComissao(registros.getDouble("dia_valortotalcomissao"));
+						diaBO.get(i).setMetaChao(registros.getDouble("dia_metachao"));
+						diaBO.get(i).setMetaEscada(registros.getDouble("dia_metaescada"));
+						diaBO.get(i).setMetaChaoEscada(registros.getDouble("dia_metachaoescada"));
 						diaBO.get(i).iroBO.setCodigo(registros.getInt("dia_codempreiteiro"));
 						diaBO.get(i).iroBO.setNome(registros.getString("iro_nome"));
 						diaBO.get(i).equipeBO.setCodigo(registros.getInt("dia_codequipe"));
 						diaBO.get(i).equipeBO.setNome(registros.getString("equipe_nome"));
 						diaBO.get(i).observacao.setText(registros.getString("dia_observacao"));
 						diaBO.get(i).pgtoBO.setCodigo(registros.getInt("dia_codpagamento"));
+						
+						System.out.println(diaBO.get(i).iroBO.getNome());
 					} catch (StringVaziaException e) {}
 					catch (ValorErradoException e) {}
 					catch (QuantidadeErradaException e) {}
@@ -143,7 +150,7 @@ public class LancaDiaDao {
 		}catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível carregar os dados!\n" +
+					"Nï¿½o foi possï¿½vel carregar os dados!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -157,8 +164,9 @@ public class LancaDiaDao {
 			String sentencaSQL = null;
 			sentencaSQL = "INSERT INTO diatrabalho (" +
 					"dia_codigo, dia_data, dia_codempreiteiro, dia_codequipe, dia_qntdbins, dia_qntdbinsclassif,"
-					+ " dia_metodo, dia_valorbins, dia_valordia, dia_valorclassif, dia_valortotalresto, dia_valortotal,"
-					+ " dia_valorcomissao, dia_valorcomissaoiroclassif, dia_valoroutroiro, dia_valortotalcomissao, dia_observacao) " +
+					+ " dia_metodo, dia_valorbins, dia_valorsacola, dia_valorsacolaescada, dia_valordia, dia_valorclassif, dia_valortotalresto, dia_valortotal,"
+					+ " dia_valorcomissao, dia_valorcomissaoiroclassif, dia_valoroutroiro, dia_valortotalcomissao, dia_metachao,"
+					+ " dia_metaescada, dia_metachaoescada, dia_observacao) " +
 					"VALUES ((SELECT COALESCE(MAX(dia_codigo), 0) + 1 FROM diatrabalho), '" +
 					diaBO.data.getDayOfMonth() + "." + diaBO.data.getMonthOfYear() + "." + diaBO.data.getYear() + "', " + 
 					diaBO.iroBO.getCodigo() + ", " +
@@ -167,6 +175,8 @@ public class LancaDiaDao {
 					diaBO.getQntdBinsClassif() + ", '" +
 					diaBO.getMetodo() + "', " +
 					diaBO.getValorBins() + ", " +
+					diaBO.getValorSacola() + ", " +
+					diaBO.getValorSacolaEscada() + ", " +
 					diaBO.getValorDia() + ", " +
 					diaBO.getValorClassif() + ", " +
 					diaBO.getValorTotalResto() + ", " +
@@ -174,7 +184,10 @@ public class LancaDiaDao {
 					diaBO.getValorComissao() + ", " +
 					diaBO.getValorComissIroClassif() + ", " +
 					diaBO.getValorOutroIro() + ", " +
-					diaBO.getValorTotalComissao() + ", '" +
+					diaBO.getValorTotalComissao() + ", " +
+					diaBO.getMetaChao() + ", " +
+					diaBO.getMetaEscada() + ", " +
+					diaBO.getMetaChaoEscada() + ", '" +
 					diaBO.observacao.getText() + "')";
 			sentenca.executeUpdate(sentencaSQL);
 			sentenca.close();
@@ -182,7 +195,7 @@ public class LancaDiaDao {
 		catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível realizar a inclusão!\n" +
+					"Nï¿½o foi possï¿½vel realizar a inclusï¿½o!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		return;
@@ -200,7 +213,9 @@ public class LancaDiaDao {
 					diaBO.equipeBO.getCodigo() + ", dia_qntdbins = " +
 					diaBO.getQntBinsEquipe() + ", dia_metodo = '" +
 					diaBO.getMetodo() + "', dia_valorbins = " +
-					diaBO.getValorBins() + ", dia_valordia = " +
+					diaBO.getValorBins() + ", dia_valorsacola = " +
+					diaBO.getValorSacola() + ", dia_valorsacolaescada = " + 
+					diaBO.getValorSacolaEscada() + ", dia_valordia = " +
 					diaBO.getValorDia() + ", dia_valorclassif = " +
 					diaBO.getValorClassif() + ", dia_valortotalresto = " +
 					diaBO.getValorTotalResto()  + ", dia_valortotal = " + 
@@ -209,7 +224,10 @@ public class LancaDiaDao {
 					diaBO.getQntdBinsClassif() + ", dia_valorcomissaoiroclassif = " +
 					diaBO.getValorComissIroClassif() + ", dia_valoroutroiro = " +
 					diaBO.getValorOutroIro() + ", dia_valortotalcomissao = " +
-					diaBO.getValorTotalComissao() + ", dia_observacao = '" +
+					diaBO.getValorTotalComissao() + ", dia_metachao = " +
+					diaBO.getMetaChao() + ", dia_metaescada = " + 
+					diaBO.getMetaEscada() + ", dia_metachaoescada = " + 
+					diaBO.getMetaChaoEscada() + ", dia_observacao = '" +
 					diaBO.observacao.getText() + "' WHERE dia_codigo = " + diaBO.getCodigo();
 
 			sentenca.executeUpdate(sentencaSQL); 
@@ -218,7 +236,7 @@ public class LancaDiaDao {
 		catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível realizar a inclusão!\n" +
+					"Nï¿½o foi possï¿½vel realizar a inclusï¿½o!\n" +
 							"Mensagem: " + eSQL.getMessage(),
 							"Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -234,8 +252,8 @@ public class LancaDiaDao {
 		}catch (SQLException eSQL) {
 			eSQL.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Não foi possível realizar a operação!\n" +
-							"Mensagem: Esse registro está sendo referenciado por outra tabela",
+					"Nï¿½o foi possï¿½vel realizar a operaï¿½ï¿½o!\n" +
+							"Mensagem: Esse registro estï¿½ sendo referenciado por outra tabela",
 							"Erro", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

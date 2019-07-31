@@ -58,7 +58,7 @@ public class FrmCadastraEmpreiteiro extends FrmCadastraPai{
 		lblTitulo.setText(super.lblTitulo.getText() + " de Empreiteiros");
 		lblImg.setIcon(new ImageIcon(getClass().getResource("/icons/icon_empreiteiro.gif")));
 
-		lblCodigo = new JLabel("Código");
+		lblCodigo = new JLabel("CÃ³digo");
 		lblCodigo.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -131,7 +131,7 @@ public class FrmCadastraEmpreiteiro extends FrmCadastraPai{
 		painelMeio.add(txtCPF, constraints);
 		constraints.gridwidth = 1;
 
-		lblCidade = new JLabel("Código Cidade");
+		lblCidade = new JLabel("CÃ³d Cidade");
 		lblCidade.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 4;
@@ -260,7 +260,7 @@ public class FrmCadastraEmpreiteiro extends FrmCadastraPai{
 				return;
 			}
 
-			if (consEmpreiteiro == null) { // veio inclusão
+			if (consEmpreiteiro == null) { // veio inclusï¿½o
 				iroDao.incluir(empreiteiro);
 				JOptionPane.showMessageDialog(this, "Registro salvo com sucesso!", "Registro Salvo", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
 				txtNome.setText("");

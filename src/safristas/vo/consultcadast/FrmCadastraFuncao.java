@@ -31,9 +31,9 @@ public class FrmCadastraFuncao  extends FrmCadastraPai {
 
 	public FrmCadastraFuncao() {
 		
-		setTitle("Cadastro de Funções");
+		setTitle("Cadastro de FunÃ§Ãµes");
 		setSize(570, 220);
-		lblTitulo.setText(super.lblTitulo.getText() + " de Funções");
+		lblTitulo.setText(super.lblTitulo.getText() + " de FunÃ§Ãµes");
 		lblImg.setIcon(new ImageIcon(getClass().getResource("/icons/icon_funcao.gif")));
 		
 		lblCodigo = new JLabel("Codigo");
@@ -53,7 +53,7 @@ public class FrmCadastraFuncao  extends FrmCadastraPai {
 		constraints.anchor = GridBagConstraints.WEST;
 		painelMeio.add(txtCodigo, constraints);
 
-		lblNome = new JLabel("Descrição");
+		lblNome = new JLabel("DescriÃ§Ã£o");
 		lblNome.setFont(f2);
 		constraints.gridx = 0;
 		constraints.gridy = 1;
@@ -86,12 +86,12 @@ public class FrmCadastraFuncao  extends FrmCadastraPai {
 			try {
 				funBO.setNome(txtNome.getText());
 			} catch (StringVaziaException erro) {
-				JOptionPane.showMessageDialog(this, "Descrição incorreta!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "DescriÃ§Ã£o incorreta!", "ERRO", JOptionPane.ERROR_MESSAGE);
 				txtNome.requestFocus();
 				return;
 			}
 
-			if (consFuncao == null){  // veio da inclusão
+			if (consFuncao == null){  // veio da inclusï¿½o
 				funDao.incluir(funBO);
 				JOptionPane.showMessageDialog(this, "Registro salvo com sucesso!", "Registro Salvo", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/icons/icon_ok.gif")));
 			}else{

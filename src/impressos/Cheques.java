@@ -33,7 +33,7 @@ public class Cheques {
 			view.setIconImage(icon.getImage());
 			view.setVisible(true);
 		} catch (JRException e) {
-			JOptionPane.showMessageDialog(null, "Erro ao gerar o relatório! \n Erro: " + e.getMessage(), "Erro Relatório", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Erro ao gerar o relatÃ³rio! \n Erro: " + e.getMessage(), "Erro RelatÃ³rio", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

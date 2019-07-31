@@ -60,7 +60,7 @@ public class FrmVisaoGeral extends JInternalFrame implements ActionListener {
 	protected Font f2 = new Font("Tahoma", Font.PLAIN, 14);
 
 	public FrmVisaoGeral() {
-		super("Vis„o geral pessoas",true,true,false,true);
+		super("Vis√£o geral pessoas",true,true,false,true);
 
 		setFrameIcon(new ImageIcon(getClass().getResource("/icons/icon_logo_varaschin.gif")));
 		setResizable(false);
@@ -85,7 +85,7 @@ public class FrmVisaoGeral extends JInternalFrame implements ActionListener {
 		constraints.anchor = GridBagConstraints.CENTER;
 		painelCima.add(lblImg, constraints);
 
-		lblTitulo = new JLabel("Vis„o geral Pessoas");
+		lblTitulo = new JLabel("Vis√£o geral Pessoas");
 		lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
 		constraints.gridx = 0;
 		constraints.gridy = 1;
