@@ -8,7 +8,7 @@ Vamos aos passos se você quiser rodar o sistema:
 
   - Baixar e instalar o serviço do Firebird.
 
-  https://firebirdsql.org/en/firebird-2-5-9/
+    https://firebirdsql.org/en/firebird-2-5-9/
 
 - Criar a pasta BANCOS no C:\ e colocar o arquivo BANCO.fdb disponível no repositório.
 
